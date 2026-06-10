@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const menuCategories = [
   {
-    title: '🥟 Momo Classics',
+    title: ' Momo Classics',
     items: [
       { name: 'Buff Momo', description: 'Steamed buffalo dumplings with traditional spices.', price: 'Rs. 180' },
       { name: 'Chicken Momo', description: 'Juicy chicken dumplings served with achar.', price: 'Rs. 220' },
@@ -11,7 +11,7 @@ const menuCategories = [
     ],
   },
   {
-    title: '🍜 Street Favorites',
+    title: ' Street Favorites',
     items: [
       { name: 'Chatpate', description: 'Spiced puffed rice with fresh vegetables.', price: 'Rs. 120' },
       { name: 'Pani Puri', description: 'Crispy shells with tangy tamarind water.', price: 'Rs. 150' },
@@ -20,7 +20,7 @@ const menuCategories = [
     ],
   },
   {
-    title: '🍛 Nepali Classics',
+    title: ' Nepali Classics',
     items: [
       { name: 'Dal Bhat Set', description: 'Rice, lentils, veggies, curry and pickle.', price: 'Rs. 450' },
       { name: 'Newari Khaja Set', description: 'Beaten rice platter with spicy sides.', price: 'Rs. 550' },
@@ -29,7 +29,7 @@ const menuCategories = [
     ],
   },
   {
-    title: '🥤 Refreshments',
+    title: ' Refreshments',
     items: [
       { name: 'Masala Tea', description: 'Spiced milk tea with bold flavor.', price: 'Rs. 60' },
       { name: 'Lassi', description: 'Creamy yogurt drink served chilled.', price: 'Rs. 120' },

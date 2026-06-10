@@ -25,3 +25,8 @@ Thumbs.db
 
 # turbopack cache
 .turbo/
+
+
+.env.local
+.env
+.env.*

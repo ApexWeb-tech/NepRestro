@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ReservationForm from '../../../components/public/ReservationForm';
 
 export default function ReservationPage() {
   return (
@@ -41,42 +42,7 @@ export default function ReservationPage() {
 
           <div className='rounded-[2rem] bg-white p-10 shadow-xl'>
             <h2 className='mb-8 text-3xl font-bold text-slate-950'>Reserve Your Table</h2>
-            <form className='space-y-6'>
-              <div>
-                <label htmlFor='name' className='mb-2 block text-sm font-medium text-slate-700'>Full Name</label>
-                <input id='name' type='text' placeholder='Your full name' className='w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-orange-500' />
-              </div>
-              <div>
-                <label htmlFor='email' className='mb-2 block text-sm font-medium text-slate-700'>Email</label>
-                <input id='email' type='email' placeholder='you@example.com' className='w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-orange-500' />
-              </div>
-              <div>
-                <label htmlFor='phone' className='mb-2 block text-sm font-medium text-slate-700'>Phone</label>
-                <input id='phone' type='tel' placeholder='+977 98XXXXXXXX' className='w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-orange-500' />
-              </div>
-              <div className='grid gap-6 md:grid-cols-2'>
-                <div>
-                  <label htmlFor='date' className='mb-2 block text-sm font-medium text-slate-700'>Date</label>
-                  <input id='date' type='date' className='w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-orange-500' />
-                </div>
-                <div>
-                  <label htmlFor='time' className='mb-2 block text-sm font-medium text-slate-700'>Time</label>
-                  <input id='time' type='time' className='w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-orange-500' />
-                </div>
-              </div>
-              <div>
-                <label htmlFor='guests' className='mb-2 block text-sm font-medium text-slate-700'>Guests</label>
-                <select id='guests' className='w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-orange-500'>
-                  <option>1 Person</option>
-                  <option>2 People</option>
-                  <option>3 People</option>
-                  <option>4 People</option>
-                  <option>5 People</option>
-                  <option>6+ People</option>
-                </select>
-              </div>
-              <button type='submit' className='inline-flex w-full justify-center rounded-full bg-orange-500 px-8 py-4 text-sm font-semibold text-white transition hover:bg-orange-600'>Book Now</button>
-            </form>
+            <ReservationForm />
           </div>
         </div>
       </section>

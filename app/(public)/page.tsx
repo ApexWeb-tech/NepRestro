@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import HomeAuth from '../../components/auth/HomeAuth';
 
 const featuredDishes = [
   {
@@ -83,6 +84,9 @@ export default function HomePage() {
           <div className='mx-auto mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row'>
             <Link href='/menu' className='rounded-full bg-orange-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600'>View Menu</Link>
             <Link href='/reservations' className='rounded-full border border-white/40 bg-white/10 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950'>Reserve a Table</Link>
+          </div>
+          <div className='mt-6'>
+            <HomeAuth />
           </div>
         </div>
       </section>

@@ -59,12 +59,41 @@ const testimonials = [
   },
 ];
 
+/*
+  ────────────────────────────────────────────
+  TYPOGRAPHY GUIDE (Phase 2, Step 5)
+  ────────────────────────────────────────────
+  Hero Title     → Playfair → text-5xl md:text-6xl lg:text-7xl
+  Section Title  → Playfair → text-3xl md:text-4xl lg:text-5xl
+  Card Title     → Playfair → text-xl md:text-2xl
+  Subtitle/Body  → Inter    → text-base md:text-lg
+  Buttons        → Inter    → text-base font-semibold
+  Small Text     → Inter    → text-sm
+  ────────────────────────────────────────────
+
+  COLOR GUIDE (Phase 3, Step 4)
+  ────────────────────────────────────────────
+  Primary Button   → var(--color-primary)
+  Button Hover     → var(--color-primary-hover)
+  Ratings          → var(--color-secondary)
+  Background       → var(--color-background)
+  Cards            → var(--color-surface)
+  Heading          → var(--color-heading)
+  Paragraph        → var(--color-text)
+  Border           → var(--color-border)
+  Success          → var(--color-success)
+  ────────────────────────────────────────────
+*/
+
 export default function HomePage() {
   return (
     <main className='bg-[#111111] text-white'>
 
       {/* ── HERO ── */}
-      <section className='relative flex min-h-[calc(100vh-88px)] items-center overflow-hidden bg-gradient-to-br from-[#1b120d] via-[#111111] to-[#24180f] py-16'>
+      <section
+        style={{ backgroundColor: 'var(--color-background)' }}
+        className='relative flex min-h-[calc(100vh-88px)] items-center overflow-hidden bg-gradient-to-br from-[#1b120d] via-[#111111] to-[#24180f] py-16'
+      >
 
         {/* Radial glow overlay */}
         <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(249,115,22,0.12),transparent_60%)]' />
@@ -80,15 +109,18 @@ export default function HomePage() {
 
             {/* Left: text */}
             <div>
-              <div className='inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-sm font-medium tracking-wide text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105'>
+              <div className='body-font inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-sm font-medium tracking-wide text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105'>
                 <UtensilsCrossed className='h-4 w-4' />
                 <span>Authentic Nepali Cuisine</span>
               </div>
 
               <div className='max-w-2xl'>
-                <h1 className='mt-6 text-5xl font-extrabold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl'>
+                <h1 className='heading-font mt-6 text-5xl font-extrabold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl'>
                   Experience{' '}
-                  <span className='text-orange-500 transition-colors duration-300 hover:text-orange-400'>
+                  <span
+                    style={{ color: 'var(--color-primary)' }}
+                    className='transition-colors duration-300 hover:text-orange-400'
+                  >
                     Authentic
                   </span>
                   <br />
@@ -97,7 +129,10 @@ export default function HomePage() {
               </div>
 
               <div className='max-w-xl'>
-                <p className='mt-8 text-base leading-7 text-gray-300 transition-all duration-300 hover:text-gray-200 md:text-lg md:leading-8'>
+                <p
+                  style={{ color: 'var(--color-text)' }}
+                  className='body-font mt-8 text-base leading-7 transition-all duration-300 hover:text-gray-200 md:text-lg md:leading-8'
+                >
                   Discover authentic Nepali flavors crafted from fresh, locally sourced ingredients. From traditional family recipes to modern culinary creations, every dish is prepared with passion to create an unforgettable dining experience.
                 </p>
               </div>
@@ -107,7 +142,8 @@ export default function HomePage() {
                 <Link
                   href='/reservations'
                   aria-label='Reserve a table'
-                  className='group inline-flex items-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-orange-600 hover:shadow-orange-500/30'
+                  style={{ backgroundColor: 'var(--color-primary)' }}
+                  className='body-font group inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-orange-600 hover:shadow-orange-500/30 md:text-lg'
                 >
                   <CalendarDays className='h-5 w-5' />
                   Reserve Table
@@ -115,7 +151,11 @@ export default function HomePage() {
                 <Link
                   href='/menu'
                   aria-label='Explore the menu'
-                  className='group inline-flex items-center gap-2 rounded-full border border-gray-600 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-orange-500 hover:bg-orange-500/10'
+                  style={{
+                    borderColor: 'var(--color-border)',
+                    color: 'var(--color-heading)',
+                  }}
+                  className='body-font group inline-flex items-center gap-2 rounded-full border px-8 py-4 text-base font-semibold transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-orange-500 hover:bg-orange-500/10 md:text-lg'
                 >
                   Explore Menu
                   <ArrowRight className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' />
@@ -123,7 +163,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* ── Right: PREMIUM hero image ── */}
+            {/* Right: PREMIUM hero image */}
             <div className='relative flex items-center justify-center py-12 lg:py-0'>
 
               {/* Glow behind image */}
@@ -167,11 +207,11 @@ export default function HomePage() {
             />
           </div>
           <div className='flex-1 md:pl-12'>
-            <h2 className='mb-4 text-4xl font-black md:text-5xl'>
+            <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>
               Our{' '}
-              <span className='text-orange-400'>BEST FOOD</span>
+              <span style={{ color: 'var(--color-primary)' }}>BEST FOOD</span>
             </h2>
-            <p className='max-w-md text-slate-400 leading-relaxed'>
+            <p className='body-font mt-4 max-w-md text-base leading-7 text-slate-400 md:text-lg'>
               From savory momos to hearty Thakali sets — discover the flavors that define our menu and keep our guests coming back.
             </p>
             <div className='mt-8 flex items-center gap-4'>
@@ -181,7 +221,11 @@ export default function HomePage() {
             </div>
             <Link
               href='/menu'
-              className='mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/5'
+              style={{
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-heading)',
+              }}
+              className='body-font mt-6 inline-flex items-center gap-2 rounded-full border px-8 py-3 text-base font-semibold transition hover:bg-white/5'
             >
               Check it out →
             </Link>
@@ -193,21 +237,25 @@ export default function HomePage() {
       <section className='bg-[#111111] px-6 py-24'>
         <div className='mx-auto max-w-7xl'>
           <div className='mb-16 text-center'>
-            <p className='mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>Why Choose Us</p>
-            <h2 className='text-4xl font-bold text-white'>A dining experience that feels both familiar and special.</h2>
+            <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>Why Choose Us</p>
+            <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>A dining experience that feels both familiar and special.</h2>
           </div>
 
           <div className='grid gap-6 md:grid-cols-3'>
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className='group rounded-3xl border border-white/5 bg-[#1a1a1a] p-8 transition hover:-translate-y-1 hover:border-orange-500/20 hover:bg-[#1f1f1f]'
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: 'var(--color-border)',
+                }}
+                className='group rounded-3xl border p-8 transition hover:-translate-y-1 hover:border-orange-500/40'
               >
                 <div className='mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/10 text-2xl text-orange-400 transition group-hover:bg-orange-500/20'>
                   🍽️
                 </div>
-                <h3 className='mb-3 text-xl font-semibold text-white'>{feature.title}</h3>
-                <p className='leading-relaxed text-slate-400'>{feature.description}</p>
+                <h3 className='heading-font text-xl font-semibold text-white md:text-2xl'>{feature.title}</h3>
+                <p className='body-font mt-3 text-base leading-7 text-slate-400 md:text-lg'>{feature.description}</p>
               </div>
             ))}
           </div>
@@ -218,13 +266,20 @@ export default function HomePage() {
       <section className='bg-[#0d0d0d] px-6 py-24'>
         <div className='mx-auto max-w-7xl'>
           <div className='mb-16 text-center'>
-            <p className='mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>Featured Dishes</p>
-            <h2 className='text-4xl font-bold text-white'>Taste our most beloved Nepalese dishes.</h2>
-            <p className='mt-4 text-slate-400'>From savory momos to hearty Thakali sets.</p>
+            <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>Featured Dishes</p>
+            <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>Taste our most beloved Nepalese dishes.</h2>
+            <p className='body-font mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-400 md:text-lg'>From savory momos to hearty Thakali sets.</p>
           </div>
           <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
             {featuredDishes.map((dish) => (
-              <div key={dish.id} className='group overflow-hidden rounded-3xl bg-[#1a1a1a] border border-white/5 transition hover:border-orange-500/20'>
+              <div
+                key={dish.id}
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: 'var(--color-border)',
+                }}
+                className='group overflow-hidden rounded-3xl border transition hover:border-orange-500/40'
+              >
                 <div className='relative h-52 overflow-hidden'>
                   <Image
                     src={dish.image}
@@ -235,10 +290,15 @@ export default function HomePage() {
                 </div>
                 <div className='p-6'>
                   <div className='mb-2 flex items-center justify-between'>
-                    <span className='text-sm font-semibold uppercase tracking-wider text-orange-400'>{dish.name}</span>
-                    <span className='rounded-full bg-orange-500/15 px-3 py-1 text-xs font-medium text-orange-300'>{dish.price}</span>
+                    <h3 className='heading-font text-xl font-semibold text-white md:text-2xl'>{dish.name}</h3>
+                    <span
+                      style={{ color: 'var(--color-primary)' }}
+                      className='body-font rounded-full bg-orange-500/15 px-3 py-1 text-lg font-bold'
+                    >
+                      {dish.price}
+                    </span>
                   </div>
-                  <p className='text-sm leading-relaxed text-slate-400'>{dish.description}</p>
+                  <p className='body-font text-base leading-7 text-slate-400'>{dish.description}</p>
                 </div>
               </div>
             ))}
@@ -249,16 +309,20 @@ export default function HomePage() {
       {/* ── TESTIMONIALS ── */}
       <section className='bg-[#111111] px-6 py-24'>
         <div className='mx-auto max-w-7xl text-center'>
-          <p className='mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>What Guests Say</p>
-          <h2 className='mb-12 text-4xl font-bold text-white'>Loved by diners from near and far.</h2>
+          <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>What Guests Say</p>
+          <h2 className='heading-font mb-12 text-3xl font-bold text-white md:text-4xl lg:text-5xl'>Loved by diners from near and far.</h2>
           <div className='grid gap-6 md:grid-cols-3'>
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className='rounded-3xl border border-white/5 bg-[#1a1a1a] p-8 text-left transition hover:border-orange-500/10'
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: 'var(--color-border)',
+                }}
+                className='rounded-3xl border p-8 text-left transition hover:border-orange-500/30'
               >
-                <p className='mb-6 leading-relaxed text-slate-300'>"{testimonial.quote}"</p>
-                <div className='font-semibold text-orange-400'>{testimonial.name}</div>
+                <p className='body-font mb-6 text-base leading-7 text-slate-300 md:text-lg'>"{testimonial.quote}"</p>
+                <div style={{ color: 'var(--color-primary)' }} className='heading-font text-lg font-semibold'>{testimonial.name}</div>
               </div>
             ))}
           </div>
@@ -268,20 +332,25 @@ export default function HomePage() {
       {/* ── CTA ── */}
       <section className='bg-[#0d0d0d] px-6 py-24'>
         <div className='mx-auto max-w-7xl text-center'>
-          <h2 className='text-4xl font-bold text-white'>Ready to taste Nepal?</h2>
-          <p className='mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-400'>
+          <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>Ready to taste Nepal?</h2>
+          <p className='body-font mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400 md:text-lg'>
             Reserve a table or browse our menu to start planning your perfect meal.
           </p>
           <div className='mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row'>
             <Link
               href='/reservations'
-              className='rounded-full bg-orange-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600'
+              style={{ backgroundColor: 'var(--color-primary)' }}
+              className='body-font rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600 md:text-lg'
             >
               Book a Table
             </Link>
             <Link
               href='/menu'
-              className='rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/10'
+              style={{
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-heading)',
+              }}
+              className='body-font rounded-full border px-8 py-4 text-base font-semibold transition hover:bg-white/10 md:text-lg'
             >
               Explore Menu
             </Link>

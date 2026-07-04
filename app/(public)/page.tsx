@@ -1,45 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { UtensilsCrossed, CalendarDays, ArrowRight } from 'lucide-react';
-
-const featuredDishes = [
-  {
-    id: 1,
-    name: 'Chicken Momo',
-    description: 'Steamed Nepali dumplings filled with juicy chicken and traditional spices.',
-    price: 'Rs. 250',
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1200&auto=format&fit=crop',
-  },
-  {
-    id: 2,
-    name: 'Buff Sekuwa',
-    description: 'Traditional Nepali grilled buffalo meat marinated with local herbs.',
-    price: 'Rs. 450',
-    image: 'https://images.pexels.com/photos/37058646/pexels-photo-37058646.jpeg',
-  },
-  {
-    id: 3,
-    name: 'Thakali Khana Set',
-    description: 'Rice, lentils, vegetables, pickle and curry served in authentic style.',
-    price: 'Rs. 550',
-    image: 'https://images.pexels.com/photos/36885753/pexels-photo-36885753.jpeg',
-  },
-];
-
-const features = [
-  {
-    title: 'Authentic Flavors',
-    description: 'Traditional Nepali recipes crafted with premium ingredients and modern finesse.',
-  },
-  {
-    title: 'Warm Service',
-    description: 'Friendly hospitality that makes every visit feel like a celebration.',
-  },
-  {
-    title: 'Stylish Setting',
-    description: 'A contemporary dining space inspired by Nepalese culture and comfort.',
-  },
-];
+import FeaturedDishes from '@/components/public/FeaturedDishes';
+import WhyChooseUs from '@/components/public/WhyChooseUs';
 
 const testimonials = [
   {
@@ -83,6 +46,17 @@ const testimonials = [
   Border           → var(--color-border)
   Success          → var(--color-success)
   ────────────────────────────────────────────
+
+  SPACING GUIDE (Phase 4, Step 1)
+  ────────────────────────────────────────────
+  Badge → Heading       mt-6
+  Heading → Description mt-8
+  Description → Buttons mt-10
+  Section padding       py-24
+  Container             mx-auto max-w-7xl px-6
+  Button gap            gap-5
+  Card grid gap         gap-8
+  ────────────────────────────────────────────
 */
 
 export default function HomePage() {
@@ -94,20 +68,13 @@ export default function HomePage() {
         style={{ backgroundColor: 'var(--color-background)' }}
         className='relative flex min-h-[calc(100vh-88px)] items-center overflow-hidden bg-gradient-to-br from-[#1b120d] via-[#111111] to-[#24180f] py-16'
       >
-
-        {/* Radial glow overlay */}
         <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(249,115,22,0.12),transparent_60%)]' />
-
-        {/* Decorative glow #1 — orange, top right, behind image */}
         <div className='absolute top-10 right-10 h-96 w-96 rounded-full bg-orange-500/20 blur-[100px]' />
-
-        {/* Decorative glow #2 — yellow, bottom left */}
         <div className='absolute bottom-0 left-0 h-80 w-80 rounded-full bg-yellow-500/10 blur-[100px]' />
 
         <div className='relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-10'>
           <div className='grid grid-cols-1 items-center gap-16 lg:grid-cols-2'>
 
-            {/* Left: text */}
             <div>
               <div className='body-font inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-sm font-medium tracking-wide text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105'>
                 <UtensilsCrossed className='h-4 w-4' />
@@ -137,7 +104,6 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Premium CTA Buttons */}
               <div className='mt-10 flex flex-wrap items-center gap-5'>
                 <Link
                   href='/reservations'
@@ -163,22 +129,13 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right: PREMIUM hero image */}
             <div className='relative flex items-center justify-center py-12 lg:py-0'>
-
-              {/* Glow behind image */}
               <div className='absolute inset-0 flex items-center justify-center'>
                 <div className='h-80 w-80 rounded-full bg-orange-500/20 blur-3xl md:h-96 md:w-96' />
               </div>
-
-              {/* Decorative ring */}
               <div className='absolute h-[420px] w-[420px] rounded-full border border-orange-500/20 md:h-[520px] md:w-[520px]' />
-
-              {/* Small floating decorative circles */}
               <div className='absolute top-6 right-6 h-5 w-5 rounded-full bg-orange-400 md:top-10 md:right-10' />
               <div className='absolute bottom-10 left-6 h-3 w-3 rounded-full bg-yellow-400 md:bottom-16 md:left-10' />
-
-              {/* The image itself */}
               <div className='relative z-10 h-[340px] w-[340px] animate-float transition-all duration-500 hover:scale-105 md:h-[460px] md:w-[460px]'>
                 <Image
                   src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop'
@@ -196,7 +153,7 @@ export default function HomePage() {
       </section>
 
       {/* ── OUR BEST FOOD ── */}
-      <section className='relative overflow-hidden bg-[#1a1a1a] px-6 py-20'>
+      <section className='relative overflow-hidden bg-[#1a1a1a] px-6 py-24'>
         <div className='mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center'>
           <div className='relative h-72 w-72 flex-shrink-0 md:h-80 md:w-80'>
             <Image
@@ -233,85 +190,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── WHY CHOOSE US ── */}
-      <section className='bg-[#111111] px-6 py-24'>
-        <div className='mx-auto max-w-7xl'>
-          <div className='mb-16 text-center'>
-            <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>Why Choose Us</p>
-            <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>A dining experience that feels both familiar and special.</h2>
-          </div>
-
-          <div className='grid gap-6 md:grid-cols-3'>
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                style={{
-                  backgroundColor: 'var(--color-surface)',
-                  borderColor: 'var(--color-border)',
-                }}
-                className='group rounded-3xl border p-8 transition hover:-translate-y-1 hover:border-orange-500/40'
-              >
-                <div className='mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/10 text-2xl text-orange-400 transition group-hover:bg-orange-500/20'>
-                  🍽️
-                </div>
-                <h3 className='heading-font text-xl font-semibold text-white md:text-2xl'>{feature.title}</h3>
-                <p className='body-font mt-3 text-base leading-7 text-slate-400 md:text-lg'>{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── FEATURED DISHES ── */}
-      <section className='bg-[#0d0d0d] px-6 py-24'>
-        <div className='mx-auto max-w-7xl'>
-          <div className='mb-16 text-center'>
-            <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>Featured Dishes</p>
-            <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>Taste our most beloved Nepalese dishes.</h2>
-            <p className='body-font mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-400 md:text-lg'>From savory momos to hearty Thakali sets.</p>
-          </div>
-          <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-            {featuredDishes.map((dish) => (
-              <div
-                key={dish.id}
-                style={{
-                  backgroundColor: 'var(--color-surface)',
-                  borderColor: 'var(--color-border)',
-                }}
-                className='group overflow-hidden rounded-3xl border transition hover:border-orange-500/40'
-              >
-                <div className='relative h-52 overflow-hidden'>
-                  <Image
-                    src={dish.image}
-                    alt={dish.name}
-                    fill
-                    className='object-cover transition duration-500 group-hover:scale-105'
-                  />
-                </div>
-                <div className='p-6'>
-                  <div className='mb-2 flex items-center justify-between'>
-                    <h3 className='heading-font text-xl font-semibold text-white md:text-2xl'>{dish.name}</h3>
-                    <span
-                      style={{ color: 'var(--color-primary)' }}
-                      className='body-font rounded-full bg-orange-500/15 px-3 py-1 text-lg font-bold'
-                    >
-                      {dish.price}
-                    </span>
-                  </div>
-                  <p className='body-font text-base leading-7 text-slate-400'>{dish.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeaturedDishes />
+
+      {/* ── WHY CHOOSE US ── */}
+      <WhyChooseUs />
 
       {/* ── TESTIMONIALS ── */}
       <section className='bg-[#111111] px-6 py-24'>
         <div className='mx-auto max-w-7xl text-center'>
           <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>What Guests Say</p>
-          <h2 className='heading-font mb-12 text-3xl font-bold text-white md:text-4xl lg:text-5xl'>Loved by diners from near and far.</h2>
-          <div className='grid gap-6 md:grid-cols-3'>
+          <h2 className='heading-font mb-12 text-3xl font-bold text-white sm:text-4xl lg:text-5xl'>Loved by diners from near and far.</h2>
+
+          <div className='grid gap-8 md:grid-cols-3'>
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
@@ -332,11 +223,11 @@ export default function HomePage() {
       {/* ── CTA ── */}
       <section className='bg-[#0d0d0d] px-6 py-24'>
         <div className='mx-auto max-w-7xl text-center'>
-          <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>Ready to taste Nepal?</h2>
+          <h2 className='heading-font text-3xl font-bold text-white sm:text-4xl lg:text-5xl'>Ready to taste Nepal?</h2>
           <p className='body-font mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400 md:text-lg'>
             Reserve a table or browse our menu to start planning your perfect meal.
           </p>
-          <div className='mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row'>
+          <div className='mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row'>
             <Link
               href='/reservations'
               style={{ backgroundColor: 'var(--color-primary)' }}

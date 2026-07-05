@@ -3,24 +3,8 @@ import Link from 'next/link';
 import { UtensilsCrossed, CalendarDays, ArrowRight } from 'lucide-react';
 import FeaturedDishes from '@/components/public/FeaturedDishes';
 import WhyChooseUs from '@/components/public/WhyChooseUs';
-
-const testimonials = [
-  {
-    id: 1,
-    name: 'Sagar K.',
-    quote: 'The best momo I have had in Kathmandu. Great atmosphere and service.',
-  },
-  {
-    id: 2,
-    name: 'Priya R.',
-    quote: 'A beautiful restaurant with delicious dishes and a friendly team.',
-  },
-  {
-    id: 3,
-    name: 'Anish P.',
-    quote: 'The Thakali set was unforgettable. Highly recommended!',
-  },
-];
+import Gallery from '@/components/public/Gallery';
+import Testimonials from '@/components/public/Testimonials';
 
 /*
   ────────────────────────────────────────────
@@ -196,29 +180,11 @@ export default function HomePage() {
       {/* ── WHY CHOOSE US ── */}
       <WhyChooseUs />
 
-      {/* ── TESTIMONIALS ── */}
-      <section className='bg-[#111111] px-6 py-24'>
-        <div className='mx-auto max-w-7xl text-center'>
-          <p className='body-font mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-orange-400'>What Guests Say</p>
-          <h2 className='heading-font mb-12 text-3xl font-bold text-white sm:text-4xl lg:text-5xl'>Loved by diners from near and far.</h2>
+      {/* ── GALLERY ── */}
+      <Gallery />
 
-          <div className='grid gap-8 md:grid-cols-3'>
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.id}
-                style={{
-                  backgroundColor: 'var(--color-surface)',
-                  borderColor: 'var(--color-border)',
-                }}
-                className='rounded-3xl border p-8 text-left transition hover:border-orange-500/30'
-              >
-                <p className='body-font mb-6 text-base leading-7 text-slate-300 md:text-lg'>"{testimonial.quote}"</p>
-                <div style={{ color: 'var(--color-primary)' }} className='heading-font text-lg font-semibold'>{testimonial.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── TESTIMONIALS ── */}
+      <Testimonials />
 
       {/* ── CTA ── */}
       <section className='bg-[#0d0d0d] px-6 py-24'>

@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 const galleryImages = [
   {
@@ -46,6 +49,32 @@ const galleryImages = [
 ];
 
 export default function Gallery() {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  // ── Keyboard support ──
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+
+      if (event.key === 'Escape') {
+        setSelectedIndex(null);
+      }
+
+      if (event.key === 'ArrowRight') {
+        setSelectedIndex((selectedIndex + 1) % galleryImages.length);
+      }
+
+      if (event.key === 'ArrowLeft') {
+        setSelectedIndex(
+          (selectedIndex - 1 + galleryImages.length) % galleryImages.length
+        );
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex]);
+
   return (
     <section className='bg-[#0d0d0d] py-20 lg:py-24'>
       <div className='mx-auto max-w-7xl px-6'>
@@ -79,10 +108,11 @@ export default function Gallery() {
 
         {/* ── Gallery Grid ── */}
         <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {galleryImages.map((image) => (
+          {galleryImages.map((image, index) => (
             <div
               key={image.id}
               className='group relative aspect-square cursor-pointer overflow-hidden rounded-2xl'
+              onClick={() => setSelectedIndex(index)}
             >
               {/* Image */}
               <Image
@@ -112,6 +142,85 @@ export default function Gallery() {
         </div>
 
       </div>
+
+      {/* ── Lightbox Modal ── */}
+      {selectedIndex !== null && (
+        <div
+          className='fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 p-6 backdrop-blur-sm'
+          role='dialog'
+          aria-modal='true'
+          aria-labelledby='gallery-title'
+        >
+          <div className='relative w-full max-w-5xl'>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedIndex(null)}
+              aria-label='Close gallery'
+              className='absolute -top-12 right-0 text-3xl text-white transition hover:text-orange-500'
+            >
+              ✕
+            </button>
+
+            {/* Large Image */}
+            <div className='relative aspect-[4/3] overflow-hidden rounded-2xl'>
+              <Image
+                src={galleryImages[selectedIndex].src}
+                alt={galleryImages[selectedIndex].alt}
+                fill
+                className='object-contain'
+                quality={90}
+              />
+            </div>
+
+            {/* Title & description */}
+            <div className='mt-4 text-center'>
+              <h3
+                id='gallery-title'
+                className='heading-font text-2xl font-bold text-white'
+              >
+                {galleryImages[selectedIndex].title}
+              </h3>
+              <p className='body-font mt-2 text-gray-300'>
+                {galleryImages[selectedIndex].subtitle}
+              </p>
+            </div>
+
+            {/* Previous & Next Buttons */}
+            <div className='mt-6 flex items-center justify-between'>
+              <button
+                onClick={() =>
+                  setSelectedIndex(
+                    (selectedIndex - 1 + galleryImages.length) % galleryImages.length
+                  )
+                }
+                aria-label='Previous image'
+                className='body-font rounded-full bg-slate-800 px-6 py-3 text-white transition hover:bg-orange-500'
+              >
+                ← Previous
+              </button>
+
+              <span className='body-font text-sm text-gray-400'>
+                {selectedIndex + 1} / {galleryImages.length}
+              </span>
+
+              <button
+                onClick={() =>
+                  setSelectedIndex(
+                    (selectedIndex + 1) % galleryImages.length
+                  )
+                }
+                aria-label='Next image'
+                className='body-font rounded-full bg-slate-800 px-6 py-3 text-white transition hover:bg-orange-500'
+              >
+                Next →
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }

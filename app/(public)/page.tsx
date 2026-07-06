@@ -5,6 +5,7 @@ import FeaturedDishes from '@/components/public/FeaturedDishes';
 import WhyChooseUs from '@/components/public/WhyChooseUs';
 import Gallery from '@/components/public/Gallery';
 import Testimonials from '@/components/public/Testimonials';
+import ReservationCTA from '@/components/public/ReservationCTA';
 
 /*
   ────────────────────────────────────────────
@@ -186,34 +187,8 @@ export default function HomePage() {
       {/* ── TESTIMONIALS ── */}
       <Testimonials />
 
-      {/* ── CTA ── */}
-      <section className='bg-[#0d0d0d] px-6 py-24'>
-        <div className='mx-auto max-w-7xl text-center'>
-          <h2 className='heading-font text-3xl font-bold text-white sm:text-4xl lg:text-5xl'>Ready to taste Nepal?</h2>
-          <p className='body-font mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400 md:text-lg'>
-            Reserve a table or browse our menu to start planning your perfect meal.
-          </p>
-          <div className='mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row'>
-            <Link
-              href='/reservations'
-              style={{ backgroundColor: 'var(--color-primary)' }}
-              className='body-font rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600 md:text-lg'
-            >
-              Book a Table
-            </Link>
-            <Link
-              href='/menu'
-              style={{
-                borderColor: 'var(--color-border)',
-                color: 'var(--color-heading)',
-              }}
-              className='body-font rounded-full border px-8 py-4 text-base font-semibold transition hover:bg-white/10 md:text-lg'
-            >
-              Explore Menu
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* ── RESERVATION CTA ── */}
+      <ReservationCTA />
 
     </main>
   );

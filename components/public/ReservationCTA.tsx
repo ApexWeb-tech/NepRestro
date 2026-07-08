@@ -1,4 +1,41 @@
 import Link from 'next/link';
+import {
+  MapPin,
+  Phone,
+  Clock,
+  CalendarCheck,
+  CheckCircle,
+} from 'lucide-react';
+
+const restaurantInfo = [
+  {
+    id: 1,
+    title: 'Visit Us',
+    value: 'New Road, Kathmandu, Nepal',
+    icon: MapPin,
+    multiline: false,
+  },
+  {
+    id: 2,
+    title: 'Call Us',
+    value: '+977 9800000000',
+    icon: Phone,
+    multiline: false,
+  },
+  {
+    id: 3,
+    title: 'Opening Hours',
+    value: 'Sun – Fri\n10:00 AM – 10:00 PM\n\nSaturday\n11:00 AM – 11:00 PM',
+    icon: Clock,
+    multiline: true,
+  },
+];
+
+const trustBadges = [
+  'Instant Confirmation',
+  'Easy Online Booking',
+  'No Booking Fee',
+];
 
 export default function ReservationCTA() {
   return (
@@ -20,7 +57,6 @@ export default function ReservationCTA() {
         style={{ background: 'rgba(245,158,11,0.10)' }}
       />
 
-      {/* Content above glows */}
       <div className='relative z-10 mx-auto max-w-7xl px-6'>
 
         {/* ── Section Header ── */}
@@ -43,7 +79,7 @@ export default function ReservationCTA() {
           </h2>
 
           {/* Subtitle */}
-          <p className='body-font mx-auto mt-6 max-w-3xl text-base leading-8 text-gray-400 sm:text-lg'>
+          <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
             Whether you're planning a family dinner, a celebration, or a casual meal
             with friends, we're ready to welcome you with authentic Nepali cuisine,
             exceptional service, and a memorable dining experience.
@@ -64,7 +100,7 @@ export default function ReservationCTA() {
 
           {/* ── Left Column: Restaurant Information ── */}
           <div
-            className='rounded-2xl border p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl'
+            className='rounded-2xl border p-6 shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl sm:p-8'
             style={{
               backgroundColor: 'var(--color-surface)',
               borderColor: 'var(--color-border)',
@@ -78,83 +114,53 @@ export default function ReservationCTA() {
               We'd love to welcome you. Here's everything you need before your visit.
             </p>
 
+            {/* Info blocks — refactored to data array */}
             <div className='mt-10 space-y-8'>
-
-              {/* Address */}
-              <div className='flex items-start gap-4'>
-                <div
-                  className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-xl'
-                  style={{
-                    backgroundColor: 'rgba(249,115,22,0.12)',
-                    color: 'var(--color-primary)',
-                  }}
-                >
-                  📍
-                </div>
-                <div>
-                  <h4 className='heading-font text-lg font-semibold text-white'>
-                    Visit Us
-                  </h4>
-                  <p className='body-font mt-1 text-gray-400'>
-                    New Road, Kathmandu, Nepal
-                  </p>
-                </div>
-              </div>
-
-              {/* Phone */}
-              <div className='flex items-start gap-4'>
-                <div
-                  className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-xl'
-                  style={{
-                    backgroundColor: 'rgba(249,115,22,0.12)',
-                    color: 'var(--color-primary)',
-                  }}
-                >
-                  📞
-                </div>
-                <div>
-                  <h4 className='heading-font text-lg font-semibold text-white'>
-                    Call Us
-                  </h4>
-                  <p className='body-font mt-1 text-gray-400'>
-                    +977 9800000000
-                  </p>
-                </div>
-              </div>
-
-              {/* Opening Hours */}
-              <div className='flex items-start gap-4'>
-                <div
-                  className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-xl'
-                  style={{
-                    backgroundColor: 'rgba(249,115,22,0.12)',
-                    color: 'var(--color-primary)',
-                  }}
-                >
-                  🕒
-                </div>
-                <div>
-                  <h4 className='heading-font text-lg font-semibold text-white'>
-                    Opening Hours
-                  </h4>
-                  <p className='body-font mt-1 whitespace-pre-line text-gray-400'>
-                    {`Sun – Fri\n10:00 AM – 10:00 PM\n\nSaturday\n11:00 AM – 11:00 PM`}
-                  </p>
-                </div>
-              </div>
-
+              {restaurantInfo.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.id} className='flex items-start gap-4'>
+                    <div
+                      className='flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full sm:h-12 sm:w-12'
+                      style={{
+                        backgroundColor: 'rgba(249,115,22,0.12)',
+                      }}
+                    >
+                      <Icon
+                        size={20}
+                        style={{ color: 'var(--color-primary)' }}
+                      />
+                    </div>
+                    <div>
+                      <h4 className='heading-font text-lg font-semibold text-white'>
+                        {item.title}
+                      </h4>
+                      <p
+                        className={`body-font mt-1 text-gray-400 ${item.multiline ? 'whitespace-pre-line' : ''}`}
+                      >
+                        {item.value}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Reservation note */}
             <div
-              className='mt-10 rounded-xl p-5'
+              className='mt-10 flex items-start gap-3 rounded-xl p-5'
               style={{ backgroundColor: 'rgba(34,197,94,0.12)' }}
             >
+              <CalendarCheck
+                size={18}
+                className='mt-0.5 flex-shrink-0'
+                style={{ color: 'var(--color-success)' }}
+              />
               <p
                 className='body-font text-sm font-medium'
                 style={{ color: 'var(--color-success)' }}
               >
-                🍽 Walk-ins are welcome, but we recommend reserving your table in advance
+                Walk-ins are welcome, but we recommend reserving your table in advance
                 for weekends and special occasions.
               </p>
             </div>
@@ -163,7 +169,7 @@ export default function ReservationCTA() {
 
           {/* ── Right Column: Reservation Action Card ── */}
           <div
-            className='rounded-2xl border p-8 shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl'
+            className='rounded-2xl border p-6 shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl sm:p-8'
             style={{
               backgroundColor: 'var(--color-surface)',
               borderColor: 'var(--color-border)',
@@ -185,7 +191,8 @@ export default function ReservationCTA() {
             <div className='mt-8'>
               <Link
                 href='/reservations'
-                className='body-font block w-full rounded-full px-6 py-4 text-center font-semibold text-white transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-xl active:scale-95'
+                aria-label='Reserve a table at NepRestro'
+                className='body-font block w-full rounded-full px-6 py-3 text-center font-semibold text-white transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:py-4'
                 style={{ backgroundColor: 'var(--color-primary)' }}
               >
                 Reserve a Table
@@ -193,7 +200,8 @@ export default function ReservationCTA() {
 
               <Link
                 href='/menu'
-                className='body-font mt-4 block w-full rounded-full border px-6 py-4 text-center font-semibold transition-all duration-300 hover:-translate-y-1 hover:bg-white/5'
+                aria-label='View our menu'
+                className='body-font mt-4 block w-full rounded-full border px-6 py-3 text-center font-semibold transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:py-4'
                 style={{
                   borderColor: 'var(--color-border)',
                   color: 'var(--color-primary)',
@@ -209,26 +217,18 @@ export default function ReservationCTA() {
               style={{ borderColor: 'var(--color-border)' }}
             />
 
-            {/* Trust Badges */}
+            {/* Trust Badges — refactored to data array */}
             <div className='space-y-4'>
-              <p
-                className='body-font flex items-center gap-3 text-sm'
-                style={{ color: 'var(--color-success)' }}
-              >
-                ✅ Instant Confirmation
-              </p>
-              <p
-                className='body-font flex items-center gap-3 text-sm'
-                style={{ color: 'var(--color-success)' }}
-              >
-                ✅ Easy Online Booking
-              </p>
-              <p
-                className='body-font flex items-center gap-3 text-sm'
-                style={{ color: 'var(--color-success)' }}
-              >
-                ✅ No Booking Fee
-              </p>
+              {trustBadges.map((badge) => (
+                <p
+                  key={badge}
+                  className='body-font flex items-center gap-3 text-sm sm:text-base'
+                  style={{ color: 'var(--color-success)' }}
+                >
+                  <CheckCircle size={16} style={{ color: 'var(--color-success)' }} />
+                  {badge}
+                </p>
+              ))}
             </div>
 
           </div>

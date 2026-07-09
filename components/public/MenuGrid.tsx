@@ -74,7 +74,7 @@ export default function MenuGrid() {
           {menuItems.map((item) => (
             <div
               key={item.id}
-              className='group flex flex-col rounded-2xl border shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
+              className='group flex cursor-pointer flex-col rounded-2xl border shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-2xl'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 borderColor: 'var(--color-border)',
@@ -86,7 +86,7 @@ export default function MenuGrid() {
                   src={item.image}
                   alt={item.name}
                   fill
-                  className='object-cover transition-transform duration-500 group-hover:scale-110'
+                  className='object-cover transition-transform duration-500 ease-out group-hover:scale-110'
                   quality={90}
                   sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                 />
@@ -109,7 +109,7 @@ export default function MenuGrid() {
 
                   {item.featured && (
                     <span
-                      className='body-font rounded-full px-3 py-1 text-xs font-semibold'
+                      className='body-font rounded-full px-3 py-1 text-xs font-semibold transition-all duration-300 group-hover:scale-105'
                       style={{
                         backgroundColor: 'rgba(249,115,22,0.15)',
                         color: 'var(--color-primary)',
@@ -133,7 +133,7 @@ export default function MenuGrid() {
                 {/* Price — pushed to bottom */}
                 <div className='mt-auto pt-6'>
                   <span
-                    className='body-font text-2xl font-bold'
+                    className='body-font text-2xl font-bold transition-all duration-300 group-hover:tracking-wide'
                     style={{ color: 'var(--color-primary)' }}
                   >
                     {item.price}

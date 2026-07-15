@@ -69,8 +69,8 @@ export default function MenuGrid() {
     <section className='bg-[#111111] pb-24'>
       <div className='mx-auto max-w-7xl px-6'>
 
-        {/* ── Menu Grid ── */}
-        <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+        {/* ── Menu Grid — Step 7.1: gap-6 ── */}
+        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {menuItems.map((item) => (
             <div
               key={item.id}
@@ -80,8 +80,8 @@ export default function MenuGrid() {
                 borderColor: 'var(--color-border)',
               }}
             >
-              {/* Image */}
-              <div className='relative h-56 overflow-hidden rounded-t-2xl'>
+              {/* Image — Step 7.2: responsive height */}
+              <div className='relative h-48 overflow-hidden rounded-t-2xl sm:h-56'>
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -94,8 +94,8 @@ export default function MenuGrid() {
                 <div className='absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/20' />
               </div>
 
-              {/* Content */}
-              <div className='flex flex-1 flex-col p-6'>
+              {/* Content — Step 7.3: responsive padding */}
+              <div className='flex flex-1 flex-col p-5 sm:p-6'>
 
                 {/* Rating & Badge row */}
                 <div className='flex items-center justify-between'>
@@ -107,10 +107,12 @@ export default function MenuGrid() {
                     {item.rating}
                   </span>
 
+                  {/* Badge — Step 7.7: responsive sizing */}
                   {item.featured && (
                     <span
-                      className='body-font rounded-full px-3 py-1 text-xs font-semibold transition-all duration-300 group-hover:scale-105'
+                      className='body-font rounded-full px-2.5 py-1 font-semibold transition-all duration-300 group-hover:scale-105 sm:px-3'
                       style={{
+                        fontSize: '11px',
                         backgroundColor: 'rgba(249,115,22,0.15)',
                         color: 'var(--color-primary)',
                       }}
@@ -120,20 +122,20 @@ export default function MenuGrid() {
                   )}
                 </div>
 
-                {/* Dish name */}
-                <h3 className='heading-font mt-4 text-xl font-bold text-white'>
+                {/* Dish name — Step 7.4: responsive sizing */}
+                <h3 className='heading-font mt-4 text-lg font-bold text-white sm:mt-5 sm:text-xl'>
                   {item.name}
                 </h3>
 
-                {/* Description */}
-                <p className='body-font mt-3 line-clamp-3 leading-7 text-gray-400'>
+                {/* Description — Step 7.5: responsive text */}
+                <p className='body-font mt-3 line-clamp-3 text-sm leading-6 text-gray-400 sm:text-base sm:leading-7'>
                   {item.description}
                 </p>
 
-                {/* Price — pushed to bottom */}
+                {/* Price — Step 7.6: responsive sizing */}
                 <div className='mt-auto pt-6'>
                   <span
-                    className='body-font text-2xl font-bold transition-all duration-300 group-hover:tracking-wide'
+                    className='body-font text-xl font-bold transition-all duration-300 group-hover:tracking-wide sm:text-2xl'
                     style={{ color: 'var(--color-primary)' }}
                   >
                     {item.price}

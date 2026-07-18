@@ -1,4 +1,10 @@
 import Image from 'next/image';
+import {
+  Award,
+  Users,
+  UtensilsCrossed,
+  Clock3,
+} from 'lucide-react';
 
 const features = [
   {
@@ -51,6 +57,33 @@ const chefs = [
   },
 ];
 
+const statistics = [
+  {
+    id: 1,
+    icon: Clock3,
+    number: '15+',
+    title: 'Years of Experience',
+  },
+  {
+    id: 2,
+    icon: UtensilsCrossed,
+    number: '25+',
+    title: 'Signature Dishes',
+  },
+  {
+    id: 3,
+    icon: Users,
+    number: '10K+',
+    title: 'Happy Customers',
+  },
+  {
+    id: 4,
+    icon: Award,
+    number: '12+',
+    title: 'Awards Won',
+  },
+];
+
 export default function AboutPage() {
   return (
     <main className='bg-[#111111] text-white'>
@@ -75,7 +108,7 @@ export default function AboutPage() {
           <div className='mx-auto max-w-4xl text-center'>
 
             <span
-              className='inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 color: 'var(--color-secondary)',
@@ -115,7 +148,7 @@ export default function AboutPage() {
           <div className='flex flex-col justify-center'>
 
             <span
-              className='inline-block w-fit rounded-full px-4 py-2 text-sm font-semibold'
+              className='body-font inline-block w-fit rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 color: 'var(--color-secondary)',
@@ -169,7 +202,7 @@ export default function AboutPage() {
 
           <div className='mb-16 text-center'>
             <span
-              className='inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 color: 'var(--color-secondary)',
@@ -245,7 +278,7 @@ export default function AboutPage() {
 
           <div className='mb-16 text-center'>
             <span
-              className='inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 color: 'var(--color-secondary)',
@@ -297,10 +330,9 @@ export default function AboutPage() {
       <section className='bg-[#0d0d0d] py-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
-          {/* Section Header */}
           <div className='mb-16 text-center'>
             <span
-              className='inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 color: 'var(--color-secondary)',
@@ -319,7 +351,6 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Chef Cards Grid */}
           <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
             {chefs.map((chef) => (
               <div
@@ -330,7 +361,6 @@ export default function AboutPage() {
                   borderColor: 'var(--color-border)',
                 }}
               >
-                {/* Chef Image */}
                 <div className='relative h-80 overflow-hidden'>
                   <Image
                     src={chef.image}
@@ -342,19 +372,16 @@ export default function AboutPage() {
                   />
                 </div>
 
-                {/* Chef Info */}
                 <div className='flex h-full flex-col p-8'>
                   <h3 className='heading-font text-2xl font-bold text-white'>
                     {chef.name}
                   </h3>
-
                   <p
                     className='body-font mt-2 font-semibold'
                     style={{ color: 'var(--color-primary)' }}
                   >
                     {chef.role}
                   </p>
-
                   <p className='body-font mt-5 flex-grow leading-7 text-gray-400'>
                     {chef.bio}
                   </p>
@@ -362,6 +389,77 @@ export default function AboutPage() {
 
               </div>
             ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Restaurant Statistics ── */}
+      <section className='bg-[#111111] py-24'>
+        <div className='mx-auto max-w-7xl px-6'>
+
+          {/* Section Header */}
+          <div className='mb-16 text-center'>
+            <span
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-secondary)',
+              }}
+            >
+              Our Achievements
+            </span>
+
+            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+              Our Journey in Numbers
+            </h2>
+
+            <p className='body-font mx-auto mt-6 max-w-3xl text-base leading-8 text-gray-400 sm:text-lg'>
+              Every meal served and every guest welcomed has helped shape the story of
+              NepRestro. Here are a few milestones we're proud of.
+            </p>
+          </div>
+
+          {/* Statistics Grid */}
+          <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4'>
+            {statistics.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={stat.id}
+                  className='group flex flex-col items-center rounded-3xl border p-8 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
+                  style={{
+                    backgroundColor: 'var(--color-surface)',
+                    borderColor: 'var(--color-border)',
+                  }}
+                >
+                  {/* Icon */}
+                  <div
+                    className='mb-6 flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110'
+                    style={{
+                      backgroundColor: 'rgba(249,115,22,0.12)',
+                      color: 'var(--color-primary)',
+                    }}
+                  >
+                    <Icon size={30} />
+                  </div>
+
+                  {/* Number */}
+                  <h3
+                    className='heading-font text-4xl font-bold'
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    {stat.number}
+                  </h3>
+
+                  {/* Title */}
+                  <p className='body-font mt-3 text-gray-400'>
+                    {stat.title}
+                  </p>
+
+                </div>
+              );
+            })}
           </div>
 
         </div>

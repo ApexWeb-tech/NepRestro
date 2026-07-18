@@ -26,29 +26,27 @@ export default function MenuCategories() {
 
           {/* Category Buttons */}
           <div className='mt-10 flex flex-wrap justify-center gap-4'>
-
             {categories.map((category) =>
               category.active ? (
-                // Active button
                 <button
                   key={category.id}
-                  className='body-font rounded-full px-5 py-2.5 font-semibold text-white transition-all duration-300 ease-out hover:scale-105 sm:px-6 sm:py-3'
+                  aria-label={`Filter by ${category.label}`}
+                  className='body-font rounded-full px-5 py-2.5 font-semibold text-white shadow-md transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-6 sm:py-3'
                   style={{ backgroundColor: 'var(--color-primary)' }}
                 >
                   {category.label}
                 </button>
               ) : (
-                // Inactive button
                 <button
                   key={category.id}
-                  className='body-font rounded-full border px-5 py-2.5 font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500 hover:bg-white/5 sm:px-6 sm:py-3'
+                  aria-label={`Filter by ${category.label}`}
+                  className='body-font rounded-full border px-5 py-2.5 font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-6 sm:py-3'
                   style={{ borderColor: 'var(--color-border)' }}
                 >
                   {category.label}
                 </button>
               )
             )}
-
           </div>
 
         </div>

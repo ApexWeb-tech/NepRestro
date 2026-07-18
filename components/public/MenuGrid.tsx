@@ -69,7 +69,7 @@ export default function MenuGrid() {
     <section className='bg-[#111111] pb-24'>
       <div className='mx-auto max-w-7xl px-6'>
 
-        {/* ── Menu Grid — Step 7.1: gap-6 ── */}
+        {/* ── Menu Grid ── */}
         <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {menuItems.map((item) => (
             <div
@@ -80,7 +80,7 @@ export default function MenuGrid() {
                 borderColor: 'var(--color-border)',
               }}
             >
-              {/* Image — Step 7.2: responsive height */}
+              {/* Image */}
               <div className='relative h-48 overflow-hidden rounded-t-2xl sm:h-56'>
                 <Image
                   src={item.image}
@@ -94,7 +94,7 @@ export default function MenuGrid() {
                 <div className='absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/20' />
               </div>
 
-              {/* Content — Step 7.3: responsive padding */}
+              {/* Content */}
               <div className='flex flex-1 flex-col p-5 sm:p-6'>
 
                 {/* Rating & Badge row */}
@@ -107,7 +107,6 @@ export default function MenuGrid() {
                     {item.rating}
                   </span>
 
-                  {/* Badge — Step 7.7: responsive sizing */}
                   {item.featured && (
                     <span
                       className='body-font rounded-full px-2.5 py-1 font-semibold transition-all duration-300 group-hover:scale-105 sm:px-3'
@@ -122,17 +121,17 @@ export default function MenuGrid() {
                   )}
                 </div>
 
-                {/* Dish name — Step 7.4: responsive sizing */}
+                {/* Dish name */}
                 <h3 className='heading-font mt-4 text-lg font-bold text-white sm:mt-5 sm:text-xl'>
                   {item.name}
                 </h3>
 
-                {/* Description — Step 7.5: responsive text */}
+                {/* Description */}
                 <p className='body-font mt-3 line-clamp-3 text-sm leading-6 text-gray-400 sm:text-base sm:leading-7'>
                   {item.description}
                 </p>
 
-                {/* Price — Step 7.6: responsive sizing */}
+                {/* Price — pushed to bottom */}
                 <div className='mt-auto pt-6'>
                   <span
                     className='body-font text-xl font-bold transition-all duration-300 group-hover:tracking-wide sm:text-2xl'

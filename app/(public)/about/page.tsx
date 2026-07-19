@@ -4,6 +4,9 @@ import {
   Users,
   UtensilsCrossed,
   Clock3,
+  Trophy,
+  Medal,
+  BadgeCheck,
 } from 'lucide-react';
 
 const features = [
@@ -84,6 +87,30 @@ const statistics = [
   },
 ];
 
+const awards = [
+  {
+    id: 1,
+    icon: Trophy,
+    title: 'Best Nepali Restaurant',
+    year: '2024',
+    description: 'Awarded for preserving authentic Nepali flavors while delivering exceptional dining experiences.',
+  },
+  {
+    id: 2,
+    icon: BadgeCheck,
+    title: 'Excellence in Hospitality',
+    year: '2023',
+    description: 'Recognized for outstanding customer service and warm hospitality.',
+  },
+  {
+    id: 3,
+    icon: Medal,
+    title: "Chef's Choice Award",
+    year: '2022',
+    description: 'Honoring our dedication to traditional recipes crafted with premium ingredients.',
+  },
+];
+
 export default function AboutPage() {
   return (
     <main className='bg-[#111111] text-white'>
@@ -138,7 +165,7 @@ export default function AboutPage() {
           <div className='relative overflow-hidden rounded-3xl'>
             <Image
               src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop'
-              alt='NepRestro Restaurant'
+              alt='NepRestro Restaurant interior'
               width={700}
               height={700}
               className='h-full w-full object-cover transition-transform duration-500 hover:scale-105'
@@ -398,7 +425,6 @@ export default function AboutPage() {
       <section className='bg-[#111111] py-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
-          {/* Section Header */}
           <div className='mb-16 text-center'>
             <span
               className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
@@ -420,7 +446,6 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Statistics Grid */}
           <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4'>
             {statistics.map((stat) => {
               const Icon = stat.icon;
@@ -428,6 +453,73 @@ export default function AboutPage() {
                 <div
                   key={stat.id}
                   className='group flex flex-col items-center rounded-3xl border p-8 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
+                  style={{
+                    backgroundColor: 'var(--color-surface)',
+                    borderColor: 'var(--color-border)',
+                  }}
+                >
+                  <div
+                    className='mb-6 flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110'
+                    style={{
+                      backgroundColor: 'rgba(249,115,22,0.12)',
+                      color: 'var(--color-primary)',
+                    }}
+                  >
+                    <Icon size={30} />
+                  </div>
+
+                  <h3
+                    className='heading-font text-4xl font-bold'
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    {stat.number}
+                  </h3>
+
+                  <p className='body-font mt-3 text-gray-400'>
+                    {stat.title}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Awards & Recognition ── */}
+      <section className='bg-[#0d0d0d] py-24'>
+        <div className='mx-auto max-w-7xl px-6'>
+
+          {/* Section Header */}
+          <div className='mb-16 text-center'>
+            <span
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-secondary)',
+              }}
+            >
+              Recognition
+            </span>
+
+            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+              Awards & Recognition
+            </h2>
+
+            <p className='body-font mx-auto mt-6 max-w-3xl text-base leading-8 text-gray-400 sm:text-lg'>
+              Over the years, our commitment to authentic Nepali cuisine and exceptional
+              hospitality has been recognized by our community and industry.
+            </p>
+          </div>
+
+          {/* Awards Grid */}
+          <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
+            {awards.map((award) => {
+              const Icon = award.icon;
+              return (
+                <div
+                  key={award.id}
+                  className='group rounded-3xl border p-8 shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
                   style={{
                     backgroundColor: 'var(--color-surface)',
                     borderColor: 'var(--color-border)',
@@ -444,17 +536,22 @@ export default function AboutPage() {
                     <Icon size={30} />
                   </div>
 
-                  {/* Number */}
-                  <h3
-                    className='heading-font text-4xl font-bold'
-                    style={{ color: 'var(--color-primary)' }}
+                  {/* Year */}
+                  <span
+                    className='body-font text-sm font-semibold'
+                    style={{ color: 'var(--color-secondary)' }}
                   >
-                    {stat.number}
-                  </h3>
+                    {award.year}
+                  </span>
 
                   {/* Title */}
-                  <p className='body-font mt-3 text-gray-400'>
-                    {stat.title}
+                  <h3 className='heading-font mt-3 text-2xl font-bold text-white'>
+                    {award.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className='body-font mt-4 leading-7 text-gray-400'>
+                    {award.description}
                   </p>
 
                 </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import {
   MapPin,
   Phone,
@@ -48,6 +49,29 @@ const openingHours = [
   { day: 'Sunday', hours: '9:00 AM – 10:00 PM' },
 ];
 
+const faqs = [
+  {
+    id: 1,
+    question: 'Do I need to reserve a table?',
+    answer: 'Walk-ins are always welcome, but we recommend making a reservation during weekends and holidays.',
+  },
+  {
+    id: 2,
+    question: 'Do you offer vegetarian options?',
+    answer: 'Yes! We have a wide selection of vegetarian and vegan Nepali dishes.',
+  },
+  {
+    id: 3,
+    question: 'Is parking available?',
+    answer: 'Yes, convenient parking is available near the restaurant.',
+  },
+  {
+    id: 4,
+    question: 'Can I host private events?',
+    answer: 'Absolutely! Contact us to discuss birthdays, family gatherings, and corporate events.',
+  },
+];
+
 export default function ContactPage() {
   return (
     <main className='bg-[#111111] text-white'>
@@ -70,7 +94,6 @@ export default function ContactPage() {
 
         <div className='relative z-10 mx-auto max-w-5xl px-6 text-center'>
 
-          {/* Badge */}
           <span
             className='body-font inline-flex rounded-full px-5 py-2 text-sm font-semibold'
             style={{
@@ -81,19 +104,16 @@ export default function ContactPage() {
             Contact Us
           </span>
 
-          {/* Heading */}
           <h1 className='heading-font mt-8 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'>
             We'd Love to Hear From You
           </h1>
 
-          {/* Description */}
           <p className='body-font mx-auto mt-8 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
             Whether you have a question, want to reserve a table, or simply want to
             learn more about NepRestro, our team is always happy to help. Get in touch
             with us through the contact details below.
           </p>
 
-          {/* Breadcrumb */}
           <div className='body-font mt-10 flex items-center justify-center gap-2 text-sm text-gray-400'>
             <span>Home</span>
             <span>/</span>
@@ -178,7 +198,6 @@ export default function ContactPage() {
 
           <div className='grid gap-12 lg:grid-cols-2'>
 
-            {/* Left info */}
             <div className='flex flex-col justify-center'>
               <span
                 className='body-font inline-block w-fit rounded-full px-4 py-2 text-sm font-semibold'
@@ -200,7 +219,6 @@ export default function ContactPage() {
               </p>
             </div>
 
-            {/* Right form card */}
             <div
               className='rounded-3xl border p-8 shadow-md'
               style={{
@@ -210,47 +228,48 @@ export default function ContactPage() {
             >
               <form className='space-y-6'>
 
-                {/* Row 1: Name & Email */}
                 <div className='grid gap-6 sm:grid-cols-2'>
                   <input
                     type='text'
                     placeholder='Full Name'
+                    aria-label='Full Name'
                     className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                   <input
                     type='email'
                     placeholder='Email Address'
+                    aria-label='Email Address'
                     className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                 </div>
 
-                {/* Row 2: Phone & Subject */}
                 <div className='grid gap-6 sm:grid-cols-2'>
                   <input
                     type='tel'
                     placeholder='Phone Number'
+                    aria-label='Phone Number'
                     className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                   <input
                     type='text'
                     placeholder='Subject'
+                    aria-label='Subject'
                     className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                 </div>
 
-                {/* Message */}
                 <textarea
                   rows={6}
                   placeholder='Write your message...'
+                  aria-label='Message'
                   className='body-font w-full resize-none rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                   style={{ borderColor: 'var(--color-border)' }}
                 />
 
-                {/* Submit button */}
                 <button
                   type='submit'
                   className='body-font w-full rounded-full px-8 py-4 font-semibold text-white transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
@@ -267,7 +286,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── Step 4: Google Map Section ── */}
+      {/* ── Step 4: Google Map ── */}
       <section className='bg-[#111111] pb-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
@@ -299,7 +318,6 @@ export default function ContactPage() {
               borderColor: 'var(--color-border)',
             }}
           >
-            {/* Map */}
             <iframe
               title='NepRestro Location'
               src='https://www.google.com/maps?q=Pokhara,Nepal&output=embed'
@@ -308,21 +326,16 @@ export default function ContactPage() {
               referrerPolicy='no-referrer-when-downgrade'
             />
 
-            {/* Location footer */}
             <div className='flex flex-col items-center justify-between gap-4 p-6 text-center sm:flex-row sm:text-left'>
               <div>
-                <h3 className='heading-font text-xl font-bold text-white'>
-                  NepRestro
-                </h3>
-                <p className='body-font mt-2 text-gray-400'>
-                  Lakeside, Pokhara, Nepal
-                </p>
+                <h3 className='heading-font text-xl font-bold text-white'>NepRestro</h3>
+                <p className='body-font mt-2 text-gray-400'>Lakeside, Pokhara, Nepal</p>
               </div>
               <a
                 href='https://maps.google.com/?q=Pokhara,Nepal'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='body-font rounded-full px-6 py-3 font-semibold text-white transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg'
+                className='body-font rounded-full px-6 py-3 font-semibold text-white transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
                 style={{ backgroundColor: 'var(--color-primary)' }}
               >
                 Open in Google Maps
@@ -358,7 +371,6 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* Schedule card */}
           <div
             className='rounded-3xl border p-8 shadow-md'
             style={{
@@ -393,7 +405,6 @@ export default function ContactPage() {
               );
             })}
 
-            {/* Notice */}
             <div
               className='mt-8 rounded-2xl p-5 text-center'
               style={{ backgroundColor: 'rgba(249,115,22,0.10)' }}
@@ -404,6 +415,115 @@ export default function ContactPage() {
               >
                 🍽️ Last orders are accepted 30 minutes before closing time.
               </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Step 6: FAQ Section ── */}
+      <section className='bg-[#111111] pb-24'>
+        <div className='mx-auto max-w-5xl px-6'>
+
+          <div className='mb-12 text-center'>
+            <span
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-secondary)',
+              }}
+            >
+              FAQ
+            </span>
+
+            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+              Frequently Asked Questions
+            </h2>
+
+            <p className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
+              Here are answers to some of the questions our guests ask most often.
+            </p>
+          </div>
+
+          <div className='space-y-4'>
+            {faqs.map((faq) => (
+              <details
+                key={faq.id}
+                className='group rounded-2xl border p-6 transition-all duration-300 ease-out'
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: 'var(--color-border)',
+                }}
+              >
+                <summary className='heading-font flex cursor-pointer list-none items-center justify-between text-lg font-semibold text-white'>
+                  {faq.question}
+                  <span
+                    className='text-2xl transition-transform duration-300 group-open:rotate-45'
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    +
+                  </span>
+                </summary>
+
+                <p className='body-font mt-4 leading-7 text-gray-400'>
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Step 7: Contact CTA ── */}
+      <section className='bg-[#0d0d0d] pb-24'>
+        <div className='mx-auto max-w-7xl px-6'>
+
+          <div
+            className='relative overflow-hidden rounded-3xl border px-8 py-16 text-center shadow-md'
+            style={{
+              background: 'linear-gradient(135deg, rgba(249,115,22,0.12), rgba(245,158,11,0.08))',
+              borderColor: 'var(--color-border)',
+            }}
+          >
+            {/* Decorative glow */}
+            <div
+              className='absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl'
+              style={{ background: 'rgba(249,115,22,0.15)' }}
+            />
+
+            <div className='relative z-10'>
+              <h2 className='heading-font text-3xl font-bold text-white sm:text-4xl lg:text-5xl'>
+                Ready to Experience Authentic Nepali Cuisine?
+              </h2>
+
+              <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
+                Reserve your table today and enjoy freshly prepared Nepali dishes in a warm,
+                welcoming atmosphere with family and friends.
+              </p>
+
+              <div className='mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row'>
+                <Link
+                  href='/reservations'
+                  aria-label='Reserve a table at NepRestro'
+                  className='body-font rounded-full px-8 py-4 font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                  style={{ backgroundColor: 'var(--color-primary)' }}
+                >
+                  Reserve a Table
+                </Link>
+
+                <Link
+                  href='/menu'
+                  aria-label='Explore our menu'
+                  className='body-font rounded-full border px-8 py-4 font-semibold transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white/5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                  style={{
+                    borderColor: 'var(--color-primary)',
+                    color: 'var(--color-primary)',
+                  }}
+                >
+                  Explore Menu
+                </Link>
+              </div>
             </div>
           </div>
 

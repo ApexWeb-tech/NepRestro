@@ -1,3 +1,5 @@
+'use client';
+
 import {
   ChefHat,
   Leaf,
@@ -6,6 +8,14 @@ import {
   CalendarCheck,
   UtensilsCrossed,
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  fadeInUp,
+  fadeInDown,
+  staggerContainer,
+  staggerItem,
+  viewport,
+} from '@/lib/animations';
 
 const features = [
   {
@@ -46,67 +56,78 @@ export default function WhyChooseUs() {
       <div className='mx-auto max-w-6xl px-6'>
 
         {/* ── Section Header ── */}
-        <div className='mb-16 text-center'>
-
-          {/* Badge — Step 8.3: responsive sizing */}
-          <span
-            className='inline-block rounded-full px-3 py-2 text-xs font-semibold sm:px-4 sm:text-sm'
+        <motion.div
+          variants={staggerContainer}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
+          className='mb-16 text-center'
+        >
+          <motion.span
+            variants={fadeInDown}
+            className='inline-block rounded-full px-4 py-2 text-sm font-semibold'
             style={{
               backgroundColor: 'var(--color-surface)',
               color: 'var(--color-secondary)',
             }}
           >
             Why Choose Us
-          </span>
+          </motion.span>
 
-          {/* Heading — Step 8.2: added leading-tight */}
-          <h2 className='heading-font mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl'>
+          <motion.h2
+            variants={fadeInUp}
+            className='heading-font mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl'
+          >
             Experience the Best of Nepali Hospitality
-          </h2>
+          </motion.h2>
 
-          {/* Subtitle — Step 8.4: responsive padding and line height */}
-          <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-7 text-gray-400 sm:px-0 sm:text-lg sm:leading-8'>
+          <motion.p
+            variants={fadeInUp}
+            className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+          >
             From authentic recipes and locally sourced ingredients to warm hospitality
             and unforgettable dining experiences, we bring the rich flavors of Nepal
             to every table.
-          </p>
+          </motion.p>
+        </motion.div>
 
-        </div>
-
-        {/* ── Feature Grid — Step 8.5: gap-6 lg:gap-8 ── */}
-        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8'>
+        {/* ── Feature Grid ── */}
+        <motion.div
+          variants={staggerContainer}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
+          className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8'
+        >
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <div
+              <motion.div
                 key={feature.title}
+                variants={staggerItem}
                 style={{
                   backgroundColor: 'var(--color-surface)',
                   borderColor: 'var(--color-border)',
                 }}
-                className='group flex h-full flex-col rounded-2xl border p-5 shadow-md transition-all duration-300 hover:-translate-y-2 hover:border-orange-500 hover:bg-slate-800/80 hover:shadow-2xl sm:p-6 lg:p-8'
+                className='group flex h-full flex-col rounded-2xl border p-6 shadow-md transition-all duration-300 hover:-translate-y-2 hover:border-orange-500 hover:bg-slate-800/80 hover:shadow-2xl lg:p-8'
               >
-                {/* Icon circle — Step 8.7: responsive size */}
-                <div className='mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-orange-500 sm:h-16 sm:w-16'>
+                <div className='mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-orange-500/10 transition-all duration-300 group-hover:bg-orange-500'>
                   <Icon
                     className='h-7 w-7 text-orange-500 transition-all duration-300 group-hover:rotate-6 group-hover:text-white sm:h-8 sm:w-8'
                   />
                 </div>
 
-                {/* Title — Step 8.8: responsive sizing */}
                 <h3 className='heading-font text-center text-lg font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-primary)] sm:text-xl lg:text-2xl'>
                   {feature.title}
                 </h3>
 
-                {/* Description — Step 8.9: responsive line height */}
                 <p className='body-font mt-3 text-center text-sm leading-6 text-gray-300 sm:text-base sm:leading-7'>
                   {feature.description}
                 </p>
-
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>

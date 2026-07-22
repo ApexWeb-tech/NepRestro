@@ -1,11 +1,25 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { UtensilsCrossed, CalendarDays, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import FeaturedDishes from '@/components/public/FeaturedDishes';
 import WhyChooseUs from '@/components/public/WhyChooseUs';
 import Gallery from '@/components/public/Gallery';
 import Testimonials from '@/components/public/Testimonials';
 import ReservationCTA from '@/components/public/ReservationCTA';
+import {
+  fadeIn,
+  fadeInUp,
+  fadeInDown,
+  fadeInLeft,
+  fadeInRight,
+  scaleIn,
+  staggerContainer,
+  staggerItem,
+  viewport,
+} from '@/lib/animations';
 
 /*
   ────────────────────────────────────────────
@@ -60,13 +74,22 @@ export default function HomePage() {
         <div className='relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-10'>
           <div className='grid grid-cols-1 items-center gap-16 lg:grid-cols-2'>
 
-            <div>
-              <div className='body-font inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-sm font-medium tracking-wide text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105'>
-                <UtensilsCrossed className='h-4 w-4' />
-                <span>Authentic Nepali Cuisine</span>
-              </div>
+            {/* Left: text */}
+            <motion.div
+              variants={staggerContainer}
+              initial='hidden'
+              animate='visible'
+            >
+              {/* Badge */}
+              <motion.div variants={fadeInDown}>
+                <div className='body-font inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-sm font-medium tracking-wide text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105'>
+                  <UtensilsCrossed className='h-4 w-4' />
+                  <span>Authentic Nepali Cuisine</span>
+                </div>
+              </motion.div>
 
-              <div className='max-w-2xl'>
+              {/* Heading */}
+              <motion.div variants={fadeInUp} className='max-w-2xl'>
                 <h1 className='heading-font mt-6 text-5xl font-extrabold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl'>
                   Experience{' '}
                   <span
@@ -78,18 +101,26 @@ export default function HomePage() {
                   <br />
                   Nepali Cuisine
                 </h1>
-              </div>
+              </motion.div>
 
-              <div className='max-w-xl'>
+              {/* Description */}
+              <motion.div variants={fadeInUp} className='max-w-xl'>
                 <p
                   style={{ color: 'var(--color-text)' }}
                   className='body-font mt-8 text-base leading-7 transition-all duration-300 hover:text-gray-200 md:text-lg md:leading-8'
                 >
-                  Discover authentic Nepali flavors crafted from fresh, locally sourced ingredients. From traditional family recipes to modern culinary creations, every dish is prepared with passion to create an unforgettable dining experience.
+                  Discover authentic Nepali flavors crafted from fresh, locally sourced
+                  ingredients. From traditional family recipes to modern culinary
+                  creations, every dish is prepared with passion to create an
+                  unforgettable dining experience.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className='mt-10 flex flex-wrap items-center gap-5'>
+              {/* Buttons */}
+              <motion.div
+                variants={fadeInUp}
+                className='mt-10 flex flex-wrap items-center gap-5'
+              >
                 <Link
                   href='/reservations'
                   aria-label='Reserve a table'
@@ -111,10 +142,16 @@ export default function HomePage() {
                   Explore Menu
                   <ArrowRight className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' />
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            <div className='relative flex items-center justify-center py-12 lg:py-0'>
+            {/* Right: floating food image */}
+            <motion.div
+              variants={scaleIn}
+              initial='hidden'
+              animate='visible'
+              className='relative flex items-center justify-center py-12 lg:py-0'
+            >
               <div className='absolute inset-0 flex items-center justify-center'>
                 <div className='h-80 w-80 rounded-full bg-orange-500/20 blur-3xl md:h-96 md:w-96' />
               </div>
@@ -130,7 +167,8 @@ export default function HomePage() {
                   priority
                 />
               </div>
-            </div>
+            </motion.div>
+
           </div>
         </div>
 
@@ -140,21 +178,34 @@ export default function HomePage() {
       {/* ── OUR BEST FOOD ── */}
       <section className='relative overflow-hidden bg-[#1a1a1a] px-6 py-24'>
         <div className='mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center'>
-          <div className='relative h-72 w-72 flex-shrink-0 md:h-80 md:w-80'>
+          <motion.div
+            variants={fadeInLeft}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='relative h-72 w-72 flex-shrink-0 md:h-80 md:w-80'
+          >
             <Image
               src='https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1000&auto=format&fit=crop'
               alt='Our best food'
               fill
               className='rounded-3xl object-cover shadow-2xl'
             />
-          </div>
-          <div className='flex-1 md:pl-12'>
+          </motion.div>
+          <motion.div
+            variants={fadeInRight}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='flex-1 md:pl-12'
+          >
             <h2 className='heading-font text-3xl font-bold text-white md:text-4xl lg:text-5xl'>
               Our{' '}
               <span style={{ color: 'var(--color-primary)' }}>BEST FOOD</span>
             </h2>
             <p className='body-font mt-4 max-w-md text-base leading-7 text-slate-400 md:text-lg'>
-              From savory momos to hearty Thakali sets — discover the flavors that define our menu and keep our guests coming back.
+              From savory momos to hearty Thakali sets — discover the flavors that
+              define our menu and keep our guests coming back.
             </p>
             <div className='mt-8 flex items-center gap-4'>
               <div className='h-px w-16 bg-orange-500/40' />
@@ -171,7 +222,7 @@ export default function HomePage() {
             >
               Check it out →
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 

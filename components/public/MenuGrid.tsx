@@ -1,5 +1,15 @@
+'use client';
+
 import Image from 'next/image';
 import { Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  fadeInUp,
+  fadeInDown,
+  staggerContainer,
+  staggerItem,
+  viewport,
+} from '@/lib/animations';
 
 const menuItems = [
   {
@@ -70,10 +80,17 @@ export default function MenuGrid() {
       <div className='mx-auto max-w-7xl px-6'>
 
         {/* ── Menu Grid ── */}
-        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+        <motion.div
+          variants={staggerContainer}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
+          className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'
+        >
           {menuItems.map((item) => (
-            <div
+            <motion.div
               key={item.id}
+              variants={staggerItem}
               className='group flex cursor-pointer flex-col rounded-2xl border shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-2xl'
               style={{
                 backgroundColor: 'var(--color-surface)',
@@ -90,14 +107,12 @@ export default function MenuGrid() {
                   quality={90}
                   sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                 />
-                {/* Hover overlay */}
                 <div className='absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/20' />
               </div>
 
               {/* Content */}
               <div className='flex flex-1 flex-col p-5 sm:p-6'>
 
-                {/* Rating & Badge row */}
                 <div className='flex items-center justify-between'>
                   <span
                     className='body-font flex items-center gap-1 text-sm font-semibold'
@@ -121,17 +136,14 @@ export default function MenuGrid() {
                   )}
                 </div>
 
-                {/* Dish name */}
                 <h3 className='heading-font mt-4 text-lg font-bold text-white sm:mt-5 sm:text-xl'>
                   {item.name}
                 </h3>
 
-                {/* Description */}
                 <p className='body-font mt-3 line-clamp-3 text-sm leading-6 text-gray-400 sm:text-base sm:leading-7'>
                   {item.description}
                 </p>
 
-                {/* Price — pushed to bottom */}
                 <div className='mt-auto pt-6'>
                   <span
                     className='body-font text-xl font-bold transition-all duration-300 group-hover:tracking-wide sm:text-2xl'
@@ -142,9 +154,9 @@ export default function MenuGrid() {
                 </div>
 
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

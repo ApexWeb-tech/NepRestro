@@ -1,12 +1,22 @@
 'use client';
 
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   MapPin,
   Phone,
   Mail,
   Clock3,
 } from 'lucide-react';
+import {
+  fadeInUp,
+  fadeInDown,
+  fadeInLeft,
+  fadeInRight,
+  staggerContainer,
+  staggerItem,
+  viewport,
+} from '@/lib/animations';
 
 const contactInfo = [
   {
@@ -93,33 +103,47 @@ export default function ContactPage() {
         />
 
         <div className='relative z-10 mx-auto max-w-5xl px-6 text-center'>
-
-          <span
-            className='body-font inline-flex rounded-full px-5 py-2 text-sm font-semibold'
-            style={{
-              backgroundColor: 'var(--color-surface)',
-              color: 'var(--color-secondary)',
-            }}
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            animate='visible'
           >
-            Contact Us
-          </span>
+            <motion.span
+              variants={fadeInDown}
+              className='body-font inline-flex rounded-full px-5 py-2 text-sm font-semibold'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-secondary)',
+              }}
+            >
+              Contact Us
+            </motion.span>
 
-          <h1 className='heading-font mt-8 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'>
-            We'd Love to Hear From You
-          </h1>
+            <motion.h1
+              variants={fadeInUp}
+              className='heading-font mt-8 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'
+            >
+              We'd Love to Hear From You
+            </motion.h1>
 
-          <p className='body-font mx-auto mt-8 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
-            Whether you have a question, want to reserve a table, or simply want to
-            learn more about NepRestro, our team is always happy to help. Get in touch
-            with us through the contact details below.
-          </p>
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-8 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+            >
+              Whether you have a question, want to reserve a table, or simply want to
+              learn more about NepRestro, our team is always happy to help. Get in touch
+              with us through the contact details below.
+            </motion.p>
 
-          <div className='body-font mt-10 flex items-center justify-center gap-2 text-sm text-gray-400'>
-            <span>Home</span>
-            <span>/</span>
-            <span style={{ color: 'var(--color-primary)' }}>Contact</span>
-          </div>
-
+            <motion.div
+              variants={fadeInUp}
+              className='body-font mt-10 flex items-center justify-center gap-2 text-sm text-gray-400'
+            >
+              <span>Home</span>
+              <span>/</span>
+              <span style={{ color: 'var(--color-primary)' }}>Contact</span>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -127,8 +151,15 @@ export default function ContactPage() {
       <section className='bg-[#111111] py-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
-          <div className='mb-16 text-center'>
-            <span
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='mb-16 text-center'
+          >
+            <motion.span
+              variants={fadeInDown}
               className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
@@ -136,24 +167,35 @@ export default function ContactPage() {
               }}
             >
               Get In Touch
-            </span>
-
-            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+            </motion.span>
+            <motion.h2
+              variants={fadeInUp}
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'
+            >
               Contact Information
-            </h2>
-
-            <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+            >
               Reach us through any of the following channels. Our team is always ready to
               help you with reservations, questions, or feedback.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4'>
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4'
+          >
             {contactInfo.map((item) => {
               const Icon = item.icon;
               return (
-                <div
+                <motion.div
                   key={item.id}
+                  variants={staggerItem}
                   className='group rounded-3xl border p-8 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
                   style={{
                     backgroundColor: 'var(--color-surface)',
@@ -169,36 +211,36 @@ export default function ContactPage() {
                   >
                     <Icon size={30} />
                   </div>
-
-                  <h3 className='heading-font text-xl font-bold text-white'>
-                    {item.title}
-                  </h3>
-
+                  <h3 className='heading-font text-xl font-bold text-white'>{item.title}</h3>
                   <p
                     className='body-font mt-3 font-semibold'
                     style={{ color: 'var(--color-primary)' }}
                   >
                     {item.value}
                   </p>
-
                   <p className='body-font mt-4 text-sm leading-7 text-gray-400'>
                     {item.description}
                   </p>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
 
         </div>
       </section>
 
-      {/* ── Step 3: Contact Form (UI Only) ── */}
+      {/* ── Step 3: Contact Form ── */}
       <section className='bg-[#0d0d0d] pb-24'>
         <div className='mx-auto max-w-7xl px-6'>
-
           <div className='grid gap-12 lg:grid-cols-2'>
 
-            <div className='flex flex-col justify-center'>
+            <motion.div
+              variants={fadeInLeft}
+              initial='hidden'
+              whileInView='visible'
+              viewport={viewport}
+              className='flex flex-col justify-center'
+            >
               <span
                 className='body-font inline-block w-fit rounded-full px-4 py-2 text-sm font-semibold'
                 style={{
@@ -208,18 +250,20 @@ export default function ContactPage() {
               >
                 Send a Message
               </span>
-
               <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
                 We'd Love to Hear From You
               </h2>
-
               <p className='body-font mt-6 text-base leading-8 text-gray-400 sm:text-lg'>
                 Whether you're planning a family dinner, celebrating a special occasion,
                 or simply have a question about our menu, our team is ready to assist you.
               </p>
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              variants={fadeInRight}
+              initial='hidden'
+              whileInView='visible'
+              viewport={viewport}
               className='rounded-3xl border p-8 shadow-md'
               style={{
                 backgroundColor: 'var(--color-surface)',
@@ -227,7 +271,6 @@ export default function ContactPage() {
               }}
             >
               <form className='space-y-6'>
-
                 <div className='grid gap-6 sm:grid-cols-2'>
                   <input
                     type='text'
@@ -244,7 +287,6 @@ export default function ContactPage() {
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                 </div>
-
                 <div className='grid gap-6 sm:grid-cols-2'>
                   <input
                     type='tel'
@@ -261,7 +303,6 @@ export default function ContactPage() {
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                 </div>
-
                 <textarea
                   rows={6}
                   placeholder='Write your message...'
@@ -269,7 +310,6 @@ export default function ContactPage() {
                   className='body-font w-full resize-none rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                   style={{ borderColor: 'var(--color-border)' }}
                 />
-
                 <button
                   type='submit'
                   className='body-font w-full rounded-full px-8 py-4 font-semibold text-white transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
@@ -277,12 +317,10 @@ export default function ContactPage() {
                 >
                   Send Message
                 </button>
-
               </form>
-            </div>
+            </motion.div>
 
           </div>
-
         </div>
       </section>
 
@@ -290,8 +328,15 @@ export default function ContactPage() {
       <section className='bg-[#111111] pb-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
-          <div className='mb-12 text-center'>
-            <span
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='mb-12 text-center'
+          >
+            <motion.span
+              variants={fadeInDown}
               className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
@@ -299,19 +344,27 @@ export default function ContactPage() {
               }}
             >
               Find Us
-            </span>
-
-            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+            </motion.span>
+            <motion.h2
+              variants={fadeInUp}
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'
+            >
               Visit NepRestro
-            </h2>
-
-            <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+            >
               Conveniently located in the heart of Pokhara, we're easy to reach whether
               you're a local resident or visiting Nepal.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div
+          <motion.div
+            variants={fadeInUp}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
             className='overflow-hidden rounded-3xl border shadow-md'
             style={{
               backgroundColor: 'var(--color-surface)',
@@ -325,7 +378,6 @@ export default function ContactPage() {
               loading='lazy'
               referrerPolicy='no-referrer-when-downgrade'
             />
-
             <div className='flex flex-col items-center justify-between gap-4 p-6 text-center sm:flex-row sm:text-left'>
               <div>
                 <h3 className='heading-font text-xl font-bold text-white'>NepRestro</h3>
@@ -341,7 +393,7 @@ export default function ContactPage() {
                 Open in Google Maps
               </a>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -350,8 +402,15 @@ export default function ContactPage() {
       <section className='bg-[#0d0d0d] pb-24'>
         <div className='mx-auto max-w-4xl px-6'>
 
-          <div className='mb-12 text-center'>
-            <span
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='mb-12 text-center'
+          >
+            <motion.span
+              variants={fadeInDown}
               className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
@@ -359,19 +418,27 @@ export default function ContactPage() {
               }}
             >
               Opening Hours
-            </span>
-
-            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+            </motion.span>
+            <motion.h2
+              variants={fadeInUp}
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'
+            >
               We're Open Every Day
-            </h2>
-
-            <p className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+            >
               Visit us any day of the week and enjoy authentic Nepali cuisine in a warm
               and welcoming atmosphere.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div
+          <motion.div
+            variants={fadeInUp}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
             className='rounded-3xl border p-8 shadow-md'
             style={{
               backgroundColor: 'var(--color-surface)',
@@ -416,17 +483,24 @@ export default function ContactPage() {
                 🍽️ Last orders are accepted 30 minutes before closing time.
               </p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
 
-      {/* ── Step 6: FAQ Section ── */}
+      {/* ── Step 6: FAQ ── */}
       <section className='bg-[#111111] pb-24'>
         <div className='mx-auto max-w-5xl px-6'>
 
-          <div className='mb-12 text-center'>
-            <span
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='mb-12 text-center'
+          >
+            <motion.span
+              variants={fadeInDown}
               className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
               style={{
                 backgroundColor: 'var(--color-surface)',
@@ -434,21 +508,32 @@ export default function ContactPage() {
               }}
             >
               FAQ
-            </span>
-
-            <h2 className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'>
+            </motion.span>
+            <motion.h2
+              variants={fadeInUp}
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'
+            >
               Frequently Asked Questions
-            </h2>
-
-            <p className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+            >
               Here are answers to some of the questions our guests ask most often.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className='space-y-4'>
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='space-y-4'
+          >
             {faqs.map((faq) => (
-              <details
+              <motion.details
                 key={faq.id}
+                variants={staggerItem}
                 className='group rounded-2xl border p-6 transition-all duration-300 ease-out'
                 style={{
                   backgroundColor: 'var(--color-surface)',
@@ -464,13 +549,12 @@ export default function ContactPage() {
                     +
                   </span>
                 </summary>
-
                 <p className='body-font mt-4 leading-7 text-gray-400'>
                   {faq.answer}
                 </p>
-              </details>
+              </motion.details>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -479,14 +563,17 @@ export default function ContactPage() {
       <section className='bg-[#0d0d0d] pb-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
-          <div
+          <motion.div
+            variants={fadeInUp}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
             className='relative overflow-hidden rounded-3xl border px-8 py-16 text-center shadow-md'
             style={{
               background: 'linear-gradient(135deg, rgba(249,115,22,0.12), rgba(245,158,11,0.08))',
               borderColor: 'var(--color-border)',
             }}
           >
-            {/* Decorative glow */}
             <div
               className='absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl'
               style={{ background: 'rgba(249,115,22,0.15)' }}
@@ -496,12 +583,10 @@ export default function ContactPage() {
               <h2 className='heading-font text-3xl font-bold text-white sm:text-4xl lg:text-5xl'>
                 Ready to Experience Authentic Nepali Cuisine?
               </h2>
-
               <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'>
                 Reserve your table today and enjoy freshly prepared Nepali dishes in a warm,
                 welcoming atmosphere with family and friends.
               </p>
-
               <div className='mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row'>
                 <Link
                   href='/reservations'
@@ -511,7 +596,6 @@ export default function ContactPage() {
                 >
                   Reserve a Table
                 </Link>
-
                 <Link
                   href='/menu'
                   aria-label='Explore our menu'
@@ -525,7 +609,7 @@ export default function ContactPage() {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>

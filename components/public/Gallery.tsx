@@ -2,6 +2,14 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import {
+  fadeInUp,
+  fadeInDown,
+  staggerContainer,
+  staggerItem,
+  viewport,
+} from '@/lib/animations';
 
 const galleryImages = [
   {
@@ -51,26 +59,13 @@ const galleryImages = [
 export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  // ── Keyboard support ──
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (selectedIndex === null) return;
-
-      if (event.key === 'Escape') {
-        setSelectedIndex(null);
-      }
-
-      if (event.key === 'ArrowRight') {
-        setSelectedIndex((selectedIndex + 1) % galleryImages.length);
-      }
-
-      if (event.key === 'ArrowLeft') {
-        setSelectedIndex(
-          (selectedIndex - 1 + galleryImages.length) % galleryImages.length
-        );
-      }
+      if (event.key === 'Escape') setSelectedIndex(null);
+      if (event.key === 'ArrowRight') setSelectedIndex((selectedIndex + 1) % galleryImages.length);
+      if (event.key === 'ArrowLeft') setSelectedIndex((selectedIndex - 1 + galleryImages.length) % galleryImages.length);
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedIndex]);
@@ -80,10 +75,15 @@ export default function Gallery() {
       <div className='mx-auto max-w-7xl px-6'>
 
         {/* ── Section Header ── */}
-        <div className='mb-16 text-center'>
-
-          {/* Badge */}
-          <span
+        <motion.div
+          variants={staggerContainer}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
+          className='mb-16 text-center'
+        >
+          <motion.span
+            variants={fadeInDown}
             className='inline-block rounded-full px-3 py-2 text-xs font-semibold sm:px-4 sm:text-sm'
             style={{
               backgroundColor: 'var(--color-surface)',
@@ -91,30 +91,39 @@ export default function Gallery() {
             }}
           >
             Our Gallery
-          </span>
+          </motion.span>
 
-          {/* Heading */}
-          <h2 className='heading-font mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl'>
+          <motion.h2
+            variants={fadeInUp}
+            className='heading-font mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl'
+          >
             A Feast for Your Eyes
-          </h2>
+          </motion.h2>
 
-          {/* Subtitle */}
-          <p className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-7 text-gray-400 sm:px-0 sm:text-lg sm:leading-8'>
+          <motion.p
+            variants={fadeInUp}
+            className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-7 text-gray-400 sm:px-0 sm:text-lg sm:leading-8'
+          >
             Explore our delicious dishes, elegant interiors, and the warm atmosphere
             that makes every visit to NepRestro a memorable dining experience.
-          </p>
-
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* ── Gallery Grid ── */}
-        <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+        <motion.div
+          variants={staggerContainer}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
+          className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
+        >
           {galleryImages.map((image, index) => (
-            <div
+            <motion.div
               key={image.id}
+              variants={staggerItem}
               className='group relative aspect-square cursor-pointer overflow-hidden rounded-2xl'
               onClick={() => setSelectedIndex(index)}
             >
-              {/* Image */}
               <Image
                 src={image.src}
                 alt={image.alt}
@@ -124,7 +133,7 @@ export default function Gallery() {
                 sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
               />
 
-              {/* Dark gradient overlay */}
+              {/* Hover overlay */}
               <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
 
               {/* Title & subtitle */}
@@ -136,10 +145,9 @@ export default function Gallery() {
                   {image.subtitle}
                 </p>
               </div>
-
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
 
@@ -151,8 +159,12 @@ export default function Gallery() {
           aria-modal='true'
           aria-labelledby='gallery-title'
         >
-          <div className='relative w-full max-w-5xl'>
-
+          <motion.div
+            variants={fadeInUp}
+            initial='hidden'
+            animate='visible'
+            className='relative w-full max-w-5xl'
+          >
             {/* Close Button */}
             <button
               onClick={() => setSelectedIndex(null)}
@@ -186,7 +198,7 @@ export default function Gallery() {
               </p>
             </div>
 
-            {/* Previous & Next Buttons */}
+            {/* Previous & Next */}
             <div className='mt-6 flex items-center justify-between'>
               <button
                 onClick={() =>
@@ -206,9 +218,7 @@ export default function Gallery() {
 
               <button
                 onClick={() =>
-                  setSelectedIndex(
-                    (selectedIndex + 1) % galleryImages.length
-                  )
+                  setSelectedIndex((selectedIndex + 1) % galleryImages.length)
                 }
                 aria-label='Next image'
                 className='body-font rounded-full bg-slate-800 px-6 py-3 text-white transition hover:bg-orange-500'
@@ -216,8 +226,7 @@ export default function Gallery() {
                 Next →
               </button>
             </div>
-
-          </div>
+          </motion.div>
         </div>
       )}
 

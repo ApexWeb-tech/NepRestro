@@ -1,12 +1,11 @@
 // ============================================
 // Global Animation Variants — NepRestro
 // ============================================
-// Usage:
-// import { fadeIn, slideUp, staggerContainer } from '@/lib/animations';
-// <motion.div variants={fadeIn} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+
+import type { Variants } from 'framer-motion';
 
 // ── Fade In ──
-export const fadeIn = {
+export const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -15,7 +14,7 @@ export const fadeIn = {
 };
 
 // ── Fade In Up (most used — cards, sections) ──
-export const fadeInUp = {
+export const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -25,7 +24,7 @@ export const fadeInUp = {
 };
 
 // ── Fade In Down (hero badge, headings from top) ──
-export const fadeInDown = {
+export const fadeInDown: Variants = {
   hidden: { opacity: 0, y: -30 },
   visible: {
     opacity: 1,
@@ -35,7 +34,7 @@ export const fadeInDown = {
 };
 
 // ── Fade In Left ──
-export const fadeInLeft = {
+export const fadeInLeft: Variants = {
   hidden: { opacity: 0, x: -40 },
   visible: {
     opacity: 1,
@@ -45,7 +44,7 @@ export const fadeInLeft = {
 };
 
 // ── Fade In Right ──
-export const fadeInRight = {
+export const fadeInRight: Variants = {
   hidden: { opacity: 0, x: 40 },
   visible: {
     opacity: 1,
@@ -55,7 +54,7 @@ export const fadeInRight = {
 };
 
 // ── Scale In (images, icons, badges) ──
-export const scaleIn = {
+export const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.85 },
   visible: {
     opacity: 1,
@@ -65,7 +64,7 @@ export const scaleIn = {
 };
 
 // ── Stagger Container (parent of animated children) ──
-export const staggerContainer = {
+export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -77,7 +76,7 @@ export const staggerContainer = {
 };
 
 // ── Stagger Item (child inside staggerContainer) ──
-export const staggerItem = {
+export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
@@ -87,7 +86,7 @@ export const staggerItem = {
 };
 
 // ── Slide Up (subtle, for smaller elements) ──
-export const slideUp = {
+export const slideUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -97,7 +96,7 @@ export const slideUp = {
 };
 
 // ── Zoom In (hero image, gallery) ──
-export const zoomIn = {
+export const zoomIn: Variants = {
   hidden: { opacity: 0, scale: 0.75 },
   visible: {
     opacity: 1,
@@ -107,4 +106,7 @@ export const zoomIn = {
 };
 
 // ── Viewport settings (reuse across all components) ──
-export const viewport = { once: true, margin: '-80px' };
+export const viewport = {
+  once: true,
+  margin: '-80px',
+} as const;

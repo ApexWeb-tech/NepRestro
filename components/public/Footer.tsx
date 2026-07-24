@@ -1,6 +1,7 @@
 ﻿'use client';
 
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   MapPin,
   Phone,
@@ -12,6 +13,12 @@ import {
   MessageCircle,
   PlayCircle,
 } from 'lucide-react';
+import {
+  fadeInUp,
+  staggerContainer,
+  staggerItem,
+  viewport,
+} from '@/lib/animations';
 
 const quickLinks = [
   { href: '/', label: 'Home' },
@@ -31,53 +38,17 @@ const menuLinks = [
 ];
 
 const contactDetails = [
-  {
-    id: 1,
-    icon: MapPin,
-    value: 'Lakeside, Pokhara, Nepal',
-  },
-  {
-    id: 2,
-    icon: Phone,
-    value: '+977 9800000000',
-  },
-  {
-    id: 3,
-    icon: Mail,
-    value: 'info@neprestro.com',
-  },
-  {
-    id: 4,
-    icon: Clock3,
-    value: '10:00 AM – 10:00 PM Daily',
-  },
+  { id: 1, icon: MapPin, value: 'Lakeside, Pokhara, Nepal' },
+  { id: 2, icon: Phone, value: '+977 9800000000' },
+  { id: 3, icon: Mail, value: 'info@neprestro.com' },
+  { id: 4, icon: Clock3, value: '10:00 AM – 10:00 PM Daily' },
 ];
 
 const socialLinks = [
-  {
-    id: 1,
-    icon: Share2,
-    href: 'https://facebook.com',
-    label: 'Facebook',
-  },
-  {
-    id: 2,
-    icon: Camera,
-    href: 'https://instagram.com',
-    label: 'Instagram',
-  },
-  {
-    id: 3,
-    icon: MessageCircle,
-    href: 'https://twitter.com',
-    label: 'Twitter',
-  },
-  {
-    id: 4,
-    icon: PlayCircle,
-    href: 'https://youtube.com',
-    label: 'YouTube',
-  },
+  { id: 1, icon: Share2, href: 'https://facebook.com', label: 'Facebook' },
+  { id: 2, icon: Camera, href: 'https://instagram.com', label: 'Instagram' },
+  { id: 3, icon: MessageCircle, href: 'https://twitter.com', label: 'Twitter' },
+  { id: 4, icon: PlayCircle, href: 'https://youtube.com', label: 'YouTube' },
 ];
 
 export default function Footer() {
@@ -91,13 +62,11 @@ export default function Footer() {
         borderTop: '1px solid var(--color-border)',
       }}
     >
-      {/* Decorative glow — top left */}
+      {/* Decorative glows */}
       <div
         className='absolute -left-24 -top-24 h-72 w-72 rounded-full blur-3xl'
         style={{ background: 'rgba(249,115,22,0.08)' }}
       />
-
-      {/* Decorative glow — top right */}
       <div
         className='absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl'
         style={{ background: 'rgba(245,158,11,0.06)' }}
@@ -106,7 +75,11 @@ export default function Footer() {
       <div className='relative z-10 mx-auto max-w-7xl px-6'>
 
         {/* ── Newsletter Strip ── */}
-        <div
+        <motion.div
+          variants={fadeInUp}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
           className='mb-16 rounded-3xl border p-8 md:p-10'
           style={{
             background: 'linear-gradient(135deg, rgba(249,115,22,0.10), rgba(245,158,11,0.06))',
@@ -143,13 +116,19 @@ export default function Footer() {
             </div>
 
           </div>
-        </div>
+        </motion.div>
 
         {/* ── Top Grid ── */}
-        <div className='grid gap-12 pb-16 md:grid-cols-2 lg:grid-cols-4'>
+        <motion.div
+          variants={staggerContainer}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
+          className='grid gap-12 pb-16 md:grid-cols-2 lg:grid-cols-4'
+        >
 
           {/* Column 1: Brand */}
-          <div>
+          <motion.div variants={staggerItem}>
             <Link
               href='/'
               className='heading-font inline-flex items-center gap-2 text-3xl font-extrabold tracking-tight'
@@ -165,7 +144,6 @@ export default function Footer() {
               from the heart of Nepal.
             </p>
 
-            {/* Social Links */}
             <div className='mt-8 flex gap-4'>
               {socialLinks.map((social) => {
                 const Icon = social.icon;
@@ -187,19 +165,17 @@ export default function Footer() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
 
           {/* Column 2: Quick Links */}
-          <div>
+          <motion.div variants={staggerItem}>
             <h3
               className='heading-font text-xl font-bold'
               style={{ color: 'var(--color-heading)' }}
             >
               Quick Links
             </h3>
-
             <hr className='my-6' style={{ borderColor: 'var(--color-border)' }} />
-
             <ul className='space-y-4'>
               {quickLinks.map((link) => (
                 <li key={link.label}>
@@ -216,19 +192,17 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Column 3: Our Menu */}
-          <div>
+          <motion.div variants={staggerItem}>
             <h3
               className='heading-font text-xl font-bold'
               style={{ color: 'var(--color-heading)' }}
             >
               Our Menu
             </h3>
-
             <hr className='my-6' style={{ borderColor: 'var(--color-border)' }} />
-
             <ul className='space-y-4'>
               {menuLinks.map((link) => (
                 <li key={link.label}>
@@ -245,19 +219,17 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Column 4: Contact */}
-          <div>
+          <motion.div variants={staggerItem}>
             <h3
               className='heading-font text-xl font-bold'
               style={{ color: 'var(--color-heading)' }}
             >
               Contact Us
             </h3>
-
             <hr className='my-6' style={{ borderColor: 'var(--color-border)' }} />
-
             <ul className='space-y-5'>
               {contactDetails.map((item) => {
                 const Icon = item.icon;
@@ -279,12 +251,16 @@ export default function Footer() {
                 );
               })}
             </ul>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* ── Bottom Bar ── */}
-        <div
+        <motion.div
+          variants={fadeInUp}
+          initial='hidden'
+          whileInView='visible'
+          viewport={viewport}
           className='flex flex-col items-center justify-between gap-6 border-t py-8 sm:flex-row'
           style={{ borderColor: 'var(--color-border)' }}
         >
@@ -312,7 +288,6 @@ export default function Footer() {
               Cookie Policy
             </Link>
 
-            {/* Back to Top */}
             <button
               type='button'
               aria-label='Back to top'
@@ -323,7 +298,7 @@ export default function Footer() {
               ↑ Back to Top
             </button>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </footer>

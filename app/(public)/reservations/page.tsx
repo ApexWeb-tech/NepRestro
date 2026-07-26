@@ -1,15 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { CalendarDays, UtensilsCrossed } from 'lucide-react';
 import ReservationForm from '../../../components/public/ReservationForm';
 import {
   fadeInUp,
   fadeInDown,
-  fadeInLeft,
-  fadeInRight,
   staggerContainer,
-  staggerItem,
   viewport,
 } from '@/lib/animations';
 
@@ -17,48 +16,112 @@ export default function ReservationPage() {
   return (
     <main className='bg-[#111111] text-white'>
 
-      {/* ── Hero ── */}
-      <section className='relative min-h-[55vh] overflow-hidden'>
-        <div className='absolute inset-0 bg-[url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop")] bg-cover bg-center' />
-        <div className='absolute inset-0 bg-slate-950/75' />
+      {/* ── Step 1: Premium Hero ── */}
+      <section className='relative flex min-h-[60vh] items-center justify-center overflow-hidden'>
 
+        {/* Background Image */}
+        <Image
+          src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop'
+          alt='NepRestro Restaurant Dining Area'
+          fill
+          className='object-cover'
+          priority
+        />
+
+        {/* Dark Overlay */}
+        <div className='absolute inset-0 bg-black/65' />
+
+        {/* Decorative orange glow */}
+        <div
+          className='absolute bottom-0 left-0 h-64 w-64 rounded-full blur-3xl'
+          style={{ background: 'rgba(249,115,22,0.15)' }}
+        />
+        <div
+          className='absolute right-0 top-0 h-64 w-64 rounded-full blur-3xl'
+          style={{ background: 'rgba(245,158,11,0.10)' }}
+        />
+
+        {/* Hero Content */}
         <motion.div
           variants={staggerContainer}
           initial='hidden'
           animate='visible'
-          className='relative z-10 mx-auto flex min-h-[55vh] max-w-7xl flex-col justify-center px-6 text-center text-white'
+          className='relative z-10 mx-auto max-w-4xl px-6 text-center'
         >
-          <motion.p
+          {/* Decorative accent — icon + line */}
+          <motion.div
             variants={fadeInDown}
-            className='mb-4 inline-flex rounded-full bg-orange-500/10 px-4 py-2 text-sm uppercase tracking-[0.35em] text-orange-100'
+            className='mb-6 flex items-center justify-center gap-3'
           >
-            Reserve a Table
-          </motion.p>
+            <div className='h-px w-12 bg-orange-400/60' />
+            <UtensilsCrossed
+              size={20}
+              style={{ color: 'var(--color-primary)' }}
+            />
+            <div className='h-px w-12 bg-orange-400/60' />
+          </motion.div>
 
+          {/* Badge */}
+          <motion.span
+            variants={fadeInDown}
+            className='body-font inline-block rounded-full px-5 py-2 text-sm font-semibold'
+            style={{
+              backgroundColor: 'rgba(249,115,22,0.15)',
+              color: 'var(--color-secondary)',
+            }}
+          >
+            Table Reservations
+          </motion.span>
+
+          {/* Heading */}
           <motion.h1
             variants={fadeInUp}
-            className='heading-font text-5xl font-black leading-tight md:text-6xl'
+            className='heading-font mt-6 text-5xl font-bold text-white md:text-6xl lg:text-7xl'
           >
-            Secure your table for a delicious Nepali dining experience.
+            Reserve Your Table
           </motion.h1>
 
+          {/* Description */}
           <motion.p
             variants={fadeInUp}
-            className='body-font mx-auto mt-8 max-w-2xl text-lg leading-8 text-slate-200'
+            className='body-font mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300'
           >
-            Tell us your preferred date and time, and we'll prepare a warm welcome
-            for your group.
+            Experience authentic Nepali cuisine in a warm, elegant atmosphere.
+            Reserve your table today and let us make your dining experience
+            unforgettable.
           </motion.p>
+
+          {/* CTA Button */}
+          <motion.div variants={fadeInUp} className='mt-10'>
+            <a
+              href='#reservation-form'
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById('reservation-form')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className='body-font inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+              style={{ backgroundColor: 'var(--color-primary)' }}
+            >
+              <CalendarDays size={20} />
+              Book Your Table
+            </a>
+          </motion.div>
+
         </motion.div>
+
+        {/* Bottom fade */}
+        <div className='pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#111111] to-transparent' />
       </section>
 
       {/* ── Booking Section ── */}
-      <section className='px-6 py-24'>
+      <section id='reservation-form' className='px-6 py-24'>
         <div className='mx-auto grid max-w-7xl gap-12 xl:grid-cols-[1.05fr_0.95fr]'>
 
           {/* Left: Info Cards */}
           <motion.div
-            variants={fadeInLeft}
+            variants={staggerContainer}
             initial='hidden'
             whileInView='visible'
             viewport={viewport}
@@ -75,82 +138,35 @@ export default function ReservationPage() {
               Booking is easy and fast.
             </h2>
 
-            <motion.div
-              variants={staggerContainer}
-              initial='hidden'
-              whileInView='visible'
-              viewport={viewport}
-              className='grid gap-6 sm:grid-cols-2'
-            >
-              <motion.div
-                variants={staggerItem}
-                className='rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40'
-                style={{ borderColor: 'var(--color-border)' }}
-              >
-                <p
-                  className='body-font text-sm uppercase tracking-[0.35em]'
-                  style={{ color: 'var(--color-primary)' }}
+            <div className='grid gap-6 sm:grid-cols-2'>
+              {[
+                { label: 'Opening Hours', value: 'Monday - Sunday\n10:00 AM - 10:00 PM' },
+                { label: 'Location', value: '123 Restaurant Street\nKathmandu, Nepal' },
+                { label: 'Phone', value: '+977 9800000000' },
+                { label: 'Email', value: 'reservations@restro.com' },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className='rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40'
+                  style={{ borderColor: 'var(--color-border)' }}
                 >
-                  Opening Hours
-                </p>
-                <p className='body-font mt-3 text-lg text-gray-300'>
-                  Monday - Sunday<br />10:00 AM - 10:00 PM
-                </p>
-              </motion.div>
-
-              <motion.div
-                variants={staggerItem}
-                className='rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40'
-                style={{ borderColor: 'var(--color-border)' }}
-              >
-                <p
-                  className='body-font text-sm uppercase tracking-[0.35em]'
-                  style={{ color: 'var(--color-primary)' }}
-                >
-                  Location
-                </p>
-                <p className='body-font mt-3 text-lg text-gray-300'>
-                  123 Restaurant Street<br />Kathmandu, Nepal
-                </p>
-              </motion.div>
-
-              <motion.div
-                variants={staggerItem}
-                className='rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40'
-                style={{ borderColor: 'var(--color-border)' }}
-              >
-                <p
-                  className='body-font text-sm uppercase tracking-[0.35em]'
-                  style={{ color: 'var(--color-primary)' }}
-                >
-                  Phone
-                </p>
-                <p className='body-font mt-3 text-lg text-gray-300'>
-                  +977 9800000000
-                </p>
-              </motion.div>
-
-              <motion.div
-                variants={staggerItem}
-                className='rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40'
-                style={{ borderColor: 'var(--color-border)' }}
-              >
-                <p
-                  className='body-font text-sm uppercase tracking-[0.35em]'
-                  style={{ color: 'var(--color-primary)' }}
-                >
-                  Email
-                </p>
-                <p className='body-font mt-3 text-lg text-gray-300'>
-                  reservations@restro.com
-                </p>
-              </motion.div>
-            </motion.div>
+                  <p
+                    className='body-font text-sm uppercase tracking-[0.35em]'
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    {item.label}
+                  </p>
+                  <p className='body-font mt-3 whitespace-pre-line text-lg text-gray-300'>
+                    {item.value}
+                  </p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Right: Reservation Form — backend untouched */}
           <motion.div
-            variants={fadeInRight}
+            variants={fadeInUp}
             initial='hidden'
             whileInView='visible'
             viewport={viewport}
@@ -180,7 +196,6 @@ export default function ReservationPage() {
               borderColor: 'var(--color-border)',
             }}
           >
-            {/* Decorative glow */}
             <div
               className='absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl'
               style={{ background: 'rgba(249,115,22,0.15)' }}

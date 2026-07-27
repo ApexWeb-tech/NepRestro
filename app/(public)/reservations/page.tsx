@@ -4,10 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CalendarDays, UtensilsCrossed } from 'lucide-react';
-import ReservationForm from '../../../components/public/ReservationForm';
 import {
   fadeInUp,
   fadeInDown,
+  fadeInLeft,
+  fadeInRight,
   staggerContainer,
   viewport,
 } from '@/lib/animations';
@@ -19,7 +20,6 @@ export default function ReservationPage() {
       {/* ── Step 1: Premium Hero ── */}
       <section className='relative flex min-h-[60vh] items-center justify-center overflow-hidden'>
 
-        {/* Background Image */}
         <Image
           src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop'
           alt='NepRestro Restaurant Dining Area'
@@ -28,10 +28,8 @@ export default function ReservationPage() {
           priority
         />
 
-        {/* Dark Overlay */}
         <div className='absolute inset-0 bg-black/65' />
 
-        {/* Decorative orange glow */}
         <div
           className='absolute bottom-0 left-0 h-64 w-64 rounded-full blur-3xl'
           style={{ background: 'rgba(249,115,22,0.15)' }}
@@ -41,27 +39,21 @@ export default function ReservationPage() {
           style={{ background: 'rgba(245,158,11,0.10)' }}
         />
 
-        {/* Hero Content */}
         <motion.div
           variants={staggerContainer}
           initial='hidden'
           animate='visible'
           className='relative z-10 mx-auto max-w-4xl px-6 text-center'
         >
-          {/* Decorative accent — icon + line */}
           <motion.div
             variants={fadeInDown}
             className='mb-6 flex items-center justify-center gap-3'
           >
             <div className='h-px w-12 bg-orange-400/60' />
-            <UtensilsCrossed
-              size={20}
-              style={{ color: 'var(--color-primary)' }}
-            />
+            <UtensilsCrossed size={20} style={{ color: 'var(--color-primary)' }} />
             <div className='h-px w-12 bg-orange-400/60' />
           </motion.div>
 
-          {/* Badge */}
           <motion.span
             variants={fadeInDown}
             className='body-font inline-block rounded-full px-5 py-2 text-sm font-semibold'
@@ -73,7 +65,6 @@ export default function ReservationPage() {
             Table Reservations
           </motion.span>
 
-          {/* Heading */}
           <motion.h1
             variants={fadeInUp}
             className='heading-font mt-6 text-5xl font-bold text-white md:text-6xl lg:text-7xl'
@@ -81,7 +72,6 @@ export default function ReservationPage() {
             Reserve Your Table
           </motion.h1>
 
-          {/* Description */}
           <motion.p
             variants={fadeInUp}
             className='body-font mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300'
@@ -91,16 +81,9 @@ export default function ReservationPage() {
             unforgettable.
           </motion.p>
 
-          {/* CTA Button */}
           <motion.div variants={fadeInUp} className='mt-10'>
             <a
               href='#reservation-form'
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById('reservation-form')
-                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
               className='body-font inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
               style={{ backgroundColor: 'var(--color-primary)' }}
             >
@@ -108,77 +91,218 @@ export default function ReservationPage() {
               Book Your Table
             </a>
           </motion.div>
-
         </motion.div>
 
-        {/* Bottom fade */}
         <div className='pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#111111] to-transparent' />
       </section>
 
-      {/* ── Booking Section ── */}
-      <section id='reservation-form' className='px-6 py-24'>
-        <div className='mx-auto grid max-w-7xl gap-12 xl:grid-cols-[1.05fr_0.95fr]'>
+      {/* ── Step 2: Premium Reservation Form Section ── */}
+      <section id='reservation-form' className='py-24'>
+        <div className='mx-auto max-w-7xl px-6'>
 
-          {/* Left: Info Cards */}
-          <motion.div
-            variants={staggerContainer}
-            initial='hidden'
-            whileInView='visible'
-            viewport={viewport}
-            className='rounded-[2rem] p-10 shadow-xl'
-            style={{ backgroundColor: 'var(--color-surface)' }}
-          >
-            <p
-              className='body-font mb-4 text-sm font-semibold uppercase tracking-[0.35em]'
-              style={{ color: 'var(--color-primary)' }}
+          <div className='grid items-start gap-12 lg:grid-cols-2'>
+
+            {/* ── Left: Premium Form Card ── */}
+            <motion.div
+              variants={fadeInLeft}
+              initial='hidden'
+              whileInView='visible'
+              viewport={viewport}
+              className='rounded-3xl border p-8 shadow-xl md:p-10'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                borderColor: 'var(--color-border)',
+              }}
             >
-              Plan Your Visit
-            </p>
-            <h2 className='heading-font mb-8 text-3xl font-bold text-white'>
-              Booking is easy and fast.
-            </h2>
-
-            <div className='grid gap-6 sm:grid-cols-2'>
-              {[
-                { label: 'Opening Hours', value: 'Monday - Sunday\n10:00 AM - 10:00 PM' },
-                { label: 'Location', value: '123 Restaurant Street\nKathmandu, Nepal' },
-                { label: 'Phone', value: '+977 9800000000' },
-                { label: 'Email', value: 'reservations@restro.com' },
-              ].map((item) => (
+              {/* Decorative Icon */}
+              <div className='mb-6 flex items-center gap-4'>
                 <div
-                  key={item.label}
-                  className='rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40'
-                  style={{ borderColor: 'var(--color-border)' }}
+                  className='flex h-14 w-14 items-center justify-center rounded-full'
+                  style={{ backgroundColor: 'rgba(249,115,22,0.12)' }}
                 >
-                  <p
-                    className='body-font text-sm uppercase tracking-[0.35em]'
+                  <CalendarDays
+                    size={28}
                     style={{ color: 'var(--color-primary)' }}
+                  />
+                </div>
+                <div>
+                  <h2
+                    className='heading-font text-3xl font-bold'
+                    style={{ color: 'var(--color-heading)' }}
                   >
-                    {item.label}
-                  </p>
-                  <p className='body-font mt-3 whitespace-pre-line text-lg text-gray-300'>
-                    {item.value}
+                    Reserve a Table
+                  </h2>
+                  <p className='body-font mt-1 text-sm text-gray-400'>
+                    Fill in the details below and we'll prepare the perfect
+                    dining experience for you.
                   </p>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+              </div>
 
-          {/* Right: Reservation Form — backend untouched */}
-          <motion.div
-            variants={fadeInUp}
-            initial='hidden'
-            whileInView='visible'
-            viewport={viewport}
-            className='rounded-[2rem] p-10 shadow-xl'
-            style={{ backgroundColor: 'var(--color-surface)' }}
-          >
-            <h2 className='heading-font mb-8 text-3xl font-bold text-white'>
-              Reserve Your Table
-            </h2>
-            <ReservationForm />
-          </motion.div>
+              <hr className='mb-8' style={{ borderColor: 'var(--color-border)' }} />
 
+              {/* Form Fields */}
+              <div className='space-y-6'>
+
+                {/* Row 1: Name & Email */}
+                <div className='grid gap-6 md:grid-cols-2'>
+                  <div>
+                    <label
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      type='text'
+                      placeholder='John Doe'
+                      aria-label='Full Name'
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)' }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Email
+                    </label>
+                    <input
+                      type='email'
+                      placeholder='john@example.com'
+                      aria-label='Email Address'
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Phone & Guests */}
+                <div className='grid gap-6 md:grid-cols-2'>
+                  <div>
+                    <label
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Phone
+                    </label>
+                    <input
+                      type='tel'
+                      placeholder='+977 98XXXXXXXX'
+                      aria-label='Phone Number'
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)' }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Guests
+                    </label>
+                    <select
+                      aria-label='Number of Guests'
+                      className='body-font w-full rounded-xl border bg-[#1e293b] px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)' }}
+                    >
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                        <option key={n} value={n}>
+                          {n} {n === 1 ? 'Guest' : 'Guests'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Row 3: Date & Time */}
+                <div className='grid gap-6 md:grid-cols-2'>
+                  <div>
+                    <label
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Date
+                    </label>
+                    <input
+                      type='text'
+                      placeholder='DD/MM/YYYY'
+                      aria-label='Reservation Date'
+                      onFocus={(e) => (e.target.type = 'date')}
+                      onBlur={(e) => {
+                        if (!e.target.value) e.target.type = 'text';
+                      }}
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)' }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Time
+                    </label>
+                    <input
+                      type='text'
+                      placeholder='HH:MM'
+                      aria-label='Reservation Time'
+                      onFocus={(e) => (e.target.type = 'time')}
+                      onBlur={(e) => {
+                        if (!e.target.value) e.target.type = 'text';
+                      }}
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Special Requests — full width */}
+                <div>
+                  <label
+                    className='body-font mb-2 block text-sm font-medium text-gray-300'
+                  >
+                    Special Requests
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder='Let us know your preferences, dietary requirements, or any special occasion...'
+                    aria-label='Special Requests'
+                    className='body-font w-full resize-none rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                    style={{ borderColor: 'var(--color-border)' }}
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type='button'
+                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                  style={{ backgroundColor: 'var(--color-primary)' }}
+                >
+                  Reserve Your Table
+                </button>
+
+                {/* Note below button */}
+                <p className='body-font text-center text-sm text-gray-500'>
+                  ✅ Free cancellation up to 24 hours before your booking
+                </p>
+
+              </div>
+            </motion.div>
+
+            {/* ── Right: Placeholder (Step 3 will fill this) ── */}
+            <motion.div
+              variants={fadeInRight}
+              initial='hidden'
+              whileInView='visible'
+              viewport={viewport}
+              className='rounded-3xl border p-8 shadow-xl md:p-10'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                borderColor: 'var(--color-border)',
+              }}
+            >
+              <p className='body-font text-center text-gray-400'>
+                Booking information coming in Step 3.
+              </p>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
@@ -200,7 +324,6 @@ export default function ReservationPage() {
               className='absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl'
               style={{ background: 'rgba(249,115,22,0.15)' }}
             />
-
             <div className='relative z-10'>
               <h2 className='heading-font text-3xl font-bold text-white sm:text-4xl'>
                 Need help with a group booking?

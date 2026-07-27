@@ -3,15 +3,96 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { CalendarDays, UtensilsCrossed } from 'lucide-react';
+import {
+  CalendarDays,
+  UtensilsCrossed,
+  Clock3,
+  Phone,
+  Info,
+  Users,
+} from 'lucide-react';
 import {
   fadeInUp,
   fadeInDown,
   fadeInLeft,
   fadeInRight,
   staggerContainer,
+  staggerItem,
   viewport,
 } from '@/lib/animations';
+
+const infoCards = [
+  {
+    id: 1,
+    icon: Clock3,
+    title: 'Opening Hours',
+    content: (
+      <p className='body-font mt-3 leading-7 text-gray-400'>
+        Monday – Sunday<br />
+        10:00 AM – 10:00 PM
+      </p>
+    ),
+  },
+  {
+    id: 2,
+    icon: Phone,
+    title: 'Need Assistance?',
+    content: (
+      <div className='mt-3 space-y-1'>
+        <p className='body-font text-gray-400'>+977 9800000000</p>
+        <p className='body-font text-gray-400'>info@neprestro.com</p>
+      </div>
+    ),
+  },
+  {
+    id: 3,
+    icon: Info,
+    title: 'Reservation Guidelines',
+    content: (
+      <ul className='body-font mt-3 space-y-2 text-gray-400'>
+        <li className='flex items-start gap-2'>
+          <span style={{ color: 'var(--color-primary)' }}>•</span>
+          Please arrive 10 minutes early.
+        </li>
+        <li className='flex items-start gap-2'>
+          <span style={{ color: 'var(--color-primary)' }}>•</span>
+          Reservations are held for 15 minutes.
+        </li>
+        <li className='flex items-start gap-2'>
+          <span style={{ color: 'var(--color-primary)' }}>•</span>
+          Special requests are accommodated when possible.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    id: 4,
+    icon: Users,
+    title: 'Group Dining',
+    content: (
+      <div className='body-font mt-3 space-y-1 text-gray-400'>
+        <p>Suitable for:</p>
+        <ul className='mt-2 space-y-1'>
+          <li className='flex items-start gap-2'>
+            <span style={{ color: 'var(--color-primary)' }}>•</span>
+            Couples
+          </li>
+          <li className='flex items-start gap-2'>
+            <span style={{ color: 'var(--color-primary)' }}>•</span>
+            Families
+          </li>
+          <li className='flex items-start gap-2'>
+            <span style={{ color: 'var(--color-primary)' }}>•</span>
+            Groups up to 20 guests
+          </li>
+        </ul>
+        <p className='mt-3 text-sm text-gray-500'>
+          For larger events, please contact us directly.
+        </p>
+      </div>
+    ),
+  },
+];
 
 export default function ReservationPage() {
   return (
@@ -96,10 +177,9 @@ export default function ReservationPage() {
         <div className='pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#111111] to-transparent' />
       </section>
 
-      {/* ── Step 2: Premium Reservation Form Section ── */}
+      {/* ── Steps 2 & 3: Form + Info Cards ── */}
       <section id='reservation-form' className='py-24'>
         <div className='mx-auto max-w-7xl px-6'>
-
           <div className='grid items-start gap-12 lg:grid-cols-2'>
 
             {/* ── Left: Premium Form Card ── */}
@@ -114,16 +194,13 @@ export default function ReservationPage() {
                 borderColor: 'var(--color-border)',
               }}
             >
-              {/* Decorative Icon */}
+              {/* Icon + Heading */}
               <div className='mb-6 flex items-center gap-4'>
                 <div
                   className='flex h-14 w-14 items-center justify-center rounded-full'
                   style={{ backgroundColor: 'rgba(249,115,22,0.12)' }}
                 >
-                  <CalendarDays
-                    size={28}
-                    style={{ color: 'var(--color-primary)' }}
-                  />
+                  <CalendarDays size={28} style={{ color: 'var(--color-primary)' }} />
                 </div>
                 <div>
                   <h2
@@ -147,9 +224,7 @@ export default function ReservationPage() {
                 {/* Row 1: Name & Email */}
                 <div className='grid gap-6 md:grid-cols-2'>
                   <div>
-                    <label
-                      className='body-font mb-2 block text-sm font-medium text-gray-300'
-                    >
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Full Name
                     </label>
                     <input
@@ -161,9 +236,7 @@ export default function ReservationPage() {
                     />
                   </div>
                   <div>
-                    <label
-                      className='body-font mb-2 block text-sm font-medium text-gray-300'
-                    >
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Email
                     </label>
                     <input
@@ -179,9 +252,7 @@ export default function ReservationPage() {
                 {/* Row 2: Phone & Guests */}
                 <div className='grid gap-6 md:grid-cols-2'>
                   <div>
-                    <label
-                      className='body-font mb-2 block text-sm font-medium text-gray-300'
-                    >
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Phone
                     </label>
                     <input
@@ -193,9 +264,7 @@ export default function ReservationPage() {
                     />
                   </div>
                   <div>
-                    <label
-                      className='body-font mb-2 block text-sm font-medium text-gray-300'
-                    >
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Guests
                     </label>
                     <select
@@ -215,48 +284,38 @@ export default function ReservationPage() {
                 {/* Row 3: Date & Time */}
                 <div className='grid gap-6 md:grid-cols-2'>
                   <div>
-                    <label
-                      className='body-font mb-2 block text-sm font-medium text-gray-300'
-                    >
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Date
                     </label>
                     <input
                       type='text'
                       placeholder='DD/MM/YYYY'
                       aria-label='Reservation Date'
-                      onFocus={(e) => (e.target.type = 'date')}
-                      onBlur={(e) => {
-                        if (!e.target.value) e.target.type = 'text';
-                      }}
+                      onFocus={(e) => { e.target.type = 'date'; }}
+                      onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)' }}
                     />
                   </div>
                   <div>
-                    <label
-                      className='body-font mb-2 block text-sm font-medium text-gray-300'
-                    >
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Time
                     </label>
                     <input
                       type='text'
                       placeholder='HH:MM'
                       aria-label='Reservation Time'
-                      onFocus={(e) => (e.target.type = 'time')}
-                      onBlur={(e) => {
-                        if (!e.target.value) e.target.type = 'text';
-                      }}
+                      onFocus={(e) => { e.target.type = 'time'; }}
+                      onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)' }}
                     />
                   </div>
                 </div>
 
-                {/* Special Requests — full width */}
+                {/* Special Requests */}
                 <div>
-                  <label
-                    className='body-font mb-2 block text-sm font-medium text-gray-300'
-                  >
+                  <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                     Special Requests
                   </label>
                   <textarea
@@ -277,7 +336,6 @@ export default function ReservationPage() {
                   Reserve Your Table
                 </button>
 
-                {/* Note below button */}
                 <p className='body-font text-center text-sm text-gray-500'>
                   ✅ Free cancellation up to 24 hours before your booking
                 </p>
@@ -285,21 +343,46 @@ export default function ReservationPage() {
               </div>
             </motion.div>
 
-            {/* ── Right: Placeholder (Step 3 will fill this) ── */}
+            {/* ── Right: Step 3 Info Cards ── */}
             <motion.div
-              variants={fadeInRight}
+              variants={staggerContainer}
               initial='hidden'
               whileInView='visible'
               viewport={viewport}
-              className='rounded-3xl border p-8 shadow-xl md:p-10'
-              style={{
-                backgroundColor: 'var(--color-surface)',
-                borderColor: 'var(--color-border)',
-              }}
+              className='space-y-6'
             >
-              <p className='body-font text-center text-gray-400'>
-                Booking information coming in Step 3.
-              </p>
+              {infoCards.map((card) => {
+                const Icon = card.icon;
+                return (
+                  <motion.div
+                    key={card.id}
+                    variants={staggerItem}
+                    className='rounded-2xl border p-6 shadow-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500/40 hover:shadow-xl'
+                    style={{
+                      backgroundColor: 'var(--color-surface)',
+                      borderColor: 'var(--color-border)',
+                    }}
+                  >
+                    <div className='flex items-start gap-4'>
+                      <div
+                        className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full'
+                        style={{
+                          backgroundColor: 'rgba(249,115,22,0.12)',
+                          color: 'var(--color-primary)',
+                        }}
+                      >
+                        <Icon size={22} />
+                      </div>
+                      <div className='flex-1'>
+                        <h3 className='heading-font text-lg font-bold text-white'>
+                          {card.title}
+                        </h3>
+                        {card.content}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
 
           </div>

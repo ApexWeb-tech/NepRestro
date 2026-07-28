@@ -4,6 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReservationSuccess from '@/components/public/ReservationSuccess';
+import ReservationError from '@/components/public/ReservationError';
+{/* Uncomment one at a time to preview: */}
+{/* <ReservationSuccess /> */}
+{/* <ReservationError /> */}
 import {
   CalendarDays,
   UtensilsCrossed,

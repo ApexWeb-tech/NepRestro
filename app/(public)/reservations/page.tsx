@@ -10,12 +10,14 @@ import {
   Phone,
   Info,
   Users,
+  CalendarCheck,
+  ChefHat,
+  Sparkles,
 } from 'lucide-react';
 import {
   fadeInUp,
   fadeInDown,
   fadeInLeft,
-  fadeInRight,
   staggerContainer,
   staggerItem,
   viewport,
@@ -28,7 +30,8 @@ const infoCards = [
     title: 'Opening Hours',
     content: (
       <p className='body-font mt-3 leading-7 text-gray-400'>
-        Monday – Sunday<br />
+        Monday – Sunday
+        <br />
         10:00 AM – 10:00 PM
       </p>
     ),
@@ -91,6 +94,33 @@ const infoCards = [
         </p>
       </div>
     ),
+  },
+];
+
+const benefits = [
+  {
+    id: 1,
+    icon: CalendarCheck,
+    title: 'Guaranteed Table',
+    description: 'Your table will be prepared before you arrive.',
+  },
+  {
+    id: 2,
+    icon: ChefHat,
+    title: 'Freshly Prepared Meals',
+    description: 'Every dish is prepared using fresh ingredients and traditional recipes.',
+  },
+  {
+    id: 3,
+    icon: Users,
+    title: 'Perfect for Groups',
+    description: 'Comfortable seating for families, friends, and celebrations.',
+  },
+  {
+    id: 4,
+    icon: Sparkles,
+    title: 'Warm Hospitality',
+    description: 'Experience attentive service in a welcoming Nepali atmosphere.',
   },
 ];
 
@@ -194,7 +224,6 @@ export default function ReservationPage() {
                 borderColor: 'var(--color-border)',
               }}
             >
-              {/* Icon + Heading */}
               <div className='mb-6 flex items-center gap-4'>
                 <div
                   className='flex h-14 w-14 items-center justify-center rounded-full'
@@ -218,10 +247,8 @@ export default function ReservationPage() {
 
               <hr className='mb-8' style={{ borderColor: 'var(--color-border)' }} />
 
-              {/* Form Fields */}
               <div className='space-y-6'>
 
-                {/* Row 1: Name & Email */}
                 <div className='grid gap-6 md:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
@@ -249,7 +276,6 @@ export default function ReservationPage() {
                   </div>
                 </div>
 
-                {/* Row 2: Phone & Guests */}
                 <div className='grid gap-6 md:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
@@ -281,7 +307,6 @@ export default function ReservationPage() {
                   </div>
                 </div>
 
-                {/* Row 3: Date & Time */}
                 <div className='grid gap-6 md:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
@@ -313,7 +338,6 @@ export default function ReservationPage() {
                   </div>
                 </div>
 
-                {/* Special Requests */}
                 <div>
                   <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                     Special Requests
@@ -327,7 +351,6 @@ export default function ReservationPage() {
                   />
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type='button'
                   className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
@@ -343,7 +366,7 @@ export default function ReservationPage() {
               </div>
             </motion.div>
 
-            {/* ── Right: Step 3 Info Cards ── */}
+            {/* ── Right: Info Cards ── */}
             <motion.div
               variants={staggerContainer}
               initial='hidden'
@@ -389,8 +412,90 @@ export default function ReservationPage() {
         </div>
       </section>
 
+      {/* ── Step 4: Reservation Benefits ── */}
+      <section className='bg-[#0d0d0d] py-24'>
+        <div className='mx-auto max-w-7xl px-6'>
+
+          {/* Section Header */}
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='mb-16 text-center'
+          >
+            <motion.span
+              variants={fadeInDown}
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-secondary)',
+              }}
+            >
+              Why Reserve With Us
+            </motion.span>
+
+            <motion.h2
+              variants={fadeInUp}
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl'
+            >
+              Why Reserve With Us?
+            </motion.h2>
+
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-6 max-w-2xl text-base leading-8 text-gray-400 sm:text-lg'
+            >
+              Enjoy a seamless dining experience with priority seating,
+              personalized service, and authentic Nepali hospitality.
+            </motion.p>
+          </motion.div>
+
+          {/* Benefits Grid */}
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'
+          >
+            {benefits.map((benefit) => {
+              const Icon = benefit.icon;
+              return (
+                <motion.div
+                  key={benefit.id}
+                  variants={staggerItem}
+                  className='rounded-2xl border p-8 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
+                  style={{
+                    backgroundColor: 'var(--color-surface)',
+                    borderColor: 'var(--color-border)',
+                  }}
+                >
+                  <div
+                    className='mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full'
+                    style={{
+                      backgroundColor: 'rgba(249,115,22,0.12)',
+                      color: 'var(--color-primary)',
+                    }}
+                  >
+                    <Icon size={26} />
+                  </div>
+                  <h3 className='heading-font text-xl font-bold text-white'>
+                    {benefit.title}
+                  </h3>
+                  <p className='body-font mt-4 text-base leading-7 text-gray-400'>
+                    {benefit.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+        </div>
+      </section>
+
       {/* ── Group Booking CTA ── */}
-      <section className='pb-24 px-6'>
+      <section className='py-24 px-6'>
         <div className='mx-auto max-w-7xl'>
           <motion.div
             variants={fadeInUp}

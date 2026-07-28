@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   CalendarDays,
   UtensilsCrossed,
@@ -13,6 +14,8 @@ import {
   CalendarCheck,
   ChefHat,
   Sparkles,
+  Plus,
+  Minus,
 } from 'lucide-react';
 import {
   fadeInUp,
@@ -124,7 +127,32 @@ const benefits = [
   },
 ];
 
+const faqs = [
+  {
+    id: 1,
+    question: 'Do I need to reserve in advance?',
+    answer: 'Walk-ins are welcome, but reservations are recommended during weekends and holidays.',
+  },
+  {
+    id: 2,
+    question: 'How long will my reservation be held?',
+    answer: 'We hold reservations for 15 minutes after the scheduled time.',
+  },
+  {
+    id: 3,
+    question: 'Can I request a specific table?',
+    answer: 'Yes. We\'ll do our best to accommodate your request based on availability.',
+  },
+  {
+    id: 4,
+    question: 'Can I cancel or change my reservation?',
+    answer: 'Yes. Reservations can be modified or cancelled before your scheduled arrival.',
+  },
+];
+
 export default function ReservationPage() {
+  const [openId, setOpenId] = useState<number | null>(1);
+
   return (
     <main className='bg-[#111111] text-white'>
 
@@ -191,12 +219,12 @@ export default function ReservationPage() {
             Reserve your table today and let us make your dining experience
             unforgettable.
           </motion.p>
-
+          
           <motion.div variants={fadeInUp} className='mt-10'>
             <a
               href='#reservation-form'
-              className='body-font inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
               style={{ backgroundColor: 'var(--color-primary)' }}
+              className='body-font inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
             >
               <CalendarDays size={20} />
               Book Your Table
@@ -239,7 +267,7 @@ export default function ReservationPage() {
                     Reserve a Table
                   </h2>
                   <p className='body-font mt-1 text-sm text-gray-400'>
-                    Fill in the details below and we'll prepare the perfect
+                    Fill in the details below and we will prepare the perfect
                     dining experience for you.
                   </p>
                 </div>
@@ -360,7 +388,7 @@ export default function ReservationPage() {
                 </button>
 
                 <p className='body-font text-center text-sm text-gray-500'>
-                  ✅ Free cancellation up to 24 hours before your booking
+                  Free cancellation up to 24 hours before your booking
                 </p>
 
               </div>
@@ -416,7 +444,6 @@ export default function ReservationPage() {
       <section className='bg-[#0d0d0d] py-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
-          {/* Section Header */}
           <motion.div
             variants={staggerContainer}
             initial='hidden'
@@ -451,7 +478,6 @@ export default function ReservationPage() {
             </motion.p>
           </motion.div>
 
-          {/* Benefits Grid */}
           <motion.div
             variants={staggerContainer}
             initial='hidden'
@@ -494,8 +520,114 @@ export default function ReservationPage() {
         </div>
       </section>
 
+      {/* ── Step 5: FAQ Section ── */}
+      <section className='py-24'>
+        <div className='mx-auto max-w-5xl px-6'>
+
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='mb-16 text-center'
+          >
+            <motion.span
+              variants={fadeInDown}
+              className='body-font inline-block rounded-full px-4 py-2 text-sm font-semibold'
+              style={{
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-secondary)',
+              }}
+            >
+              FAQ
+            </motion.span>
+
+            <motion.h2
+              variants={fadeInUp}
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'
+            >
+              Frequently Asked Questions
+            </motion.h2>
+
+            <motion.p
+              variants={fadeInUp}
+              className='body-font mx-auto mt-6 max-w-2xl text-base leading-8 text-gray-400 sm:text-lg'
+            >
+              Find quick answers to common questions about reservations, seating,
+              and dining at NepRestro.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='space-y-4'
+          >
+            {faqs.map((faq) => (
+              <motion.div
+                key={faq.id}
+                variants={staggerItem}
+                className='overflow-hidden rounded-2xl border shadow-md transition-all duration-300 ease-out'
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: openId === faq.id ? 'var(--color-primary)' : 'var(--color-border)',
+                }}
+              >
+                <button
+                  type='button'
+                  aria-expanded={openId === faq.id}
+                  aria-controls={`faq-${faq.id}`}
+                  onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
+                  className='flex w-full items-center justify-between px-6 py-5 text-left transition-all duration-300 ease-out hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500'
+                >
+                  <span className='heading-font pr-4 text-lg font-semibold text-white'>
+                    {faq.question}
+                  </span>
+                  <span
+                    className='flex-shrink-0 transition-colors duration-300'
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    {openId === faq.id
+                      ? <Minus size={20} />
+                      : <Plus size={20} />
+                    }
+                  </span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {openId === faq.id && (
+                    <motion.div
+                      id={`faq-${faq.id}`}
+                      key={`faq-content-${faq.id}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                    >
+                      <div className='px-6 pb-6'>
+                        <hr
+                          className='mb-4'
+                          style={{ borderColor: 'var(--color-border)' }}
+                        />
+                        <p className='body-font leading-7 text-gray-400'>
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </div>
+      </section>
+
       {/* ── Group Booking CTA ── */}
-      <section className='py-24 px-6'>
+      <section className='pb-24 px-6'>
         <div className='mx-auto max-w-7xl'>
           <motion.div
             variants={fadeInUp}
@@ -522,8 +654,8 @@ export default function ReservationPage() {
               </p>
               <Link
                 href='/contact'
-                className='body-font mt-10 inline-flex rounded-full px-8 py-4 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
                 style={{ backgroundColor: 'var(--color-primary)' }}
+                className='body-font mt-10 inline-flex rounded-full px-8 py-4 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
               >
                 Contact Us
               </Link>

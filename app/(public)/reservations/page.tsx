@@ -4,11 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ReservationSuccess from '@/components/public/ReservationSuccess';
-import ReservationError from '@/components/public/ReservationError';
-{/* Uncomment one at a time to preview: */}
-{/* <ReservationSuccess /> */}
-{/* <ReservationError /> */}
 import {
   CalendarDays,
   UtensilsCrossed,
@@ -146,7 +141,7 @@ const faqs = [
   {
     id: 3,
     question: 'Can I request a specific table?',
-    answer: 'Yes. We\'ll do our best to accommodate your request based on availability.',
+    answer: 'Yes. We will do our best to accommodate your request based on availability.',
   },
   {
     id: 4,
@@ -162,7 +157,7 @@ export default function ReservationPage() {
     <main className='bg-[#111111] text-white'>
 
       {/* ── Step 1: Premium Hero ── */}
-      <section className='relative flex min-h-[60vh] items-center justify-center overflow-hidden'>
+      <section className='relative flex min-h-[55vh] items-center justify-center overflow-hidden md:min-h-[60vh]'>
 
         <Image
           src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop'
@@ -170,16 +165,17 @@ export default function ReservationPage() {
           fill
           className='object-cover'
           priority
+          sizes='100vw'
         />
 
         <div className='absolute inset-0 bg-black/65' />
 
         <div
-          className='absolute bottom-0 left-0 h-64 w-64 rounded-full blur-3xl'
+          className='absolute bottom-0 left-0 h-48 w-48 rounded-full blur-3xl md:h-64 md:w-64'
           style={{ background: 'rgba(249,115,22,0.15)' }}
         />
         <div
-          className='absolute right-0 top-0 h-64 w-64 rounded-full blur-3xl'
+          className='absolute right-0 top-0 h-48 w-48 rounded-full blur-3xl md:h-64 md:w-64'
           style={{ background: 'rgba(245,158,11,0.10)' }}
         />
 
@@ -187,20 +183,20 @@ export default function ReservationPage() {
           variants={staggerContainer}
           initial='hidden'
           animate='visible'
-          className='relative z-10 mx-auto max-w-4xl px-6 text-center'
+          className='relative z-10 mx-auto max-w-4xl px-6 py-16 text-center md:py-24'
         >
           <motion.div
             variants={fadeInDown}
             className='mb-6 flex items-center justify-center gap-3'
           >
-            <div className='h-px w-12 bg-orange-400/60' />
-            <UtensilsCrossed size={20} style={{ color: 'var(--color-primary)' }} />
-            <div className='h-px w-12 bg-orange-400/60' />
+            <div className='h-px w-8 bg-orange-400/60 sm:w-12' />
+            <UtensilsCrossed size={18} style={{ color: 'var(--color-primary)' }} />
+            <div className='h-px w-8 bg-orange-400/60 sm:w-12' />
           </motion.div>
 
           <motion.span
             variants={fadeInDown}
-            className='body-font inline-block rounded-full px-5 py-2 text-sm font-semibold'
+            className='body-font inline-block rounded-full px-4 py-2 text-xs font-semibold sm:px-5 sm:text-sm'
             style={{
               backgroundColor: 'rgba(249,115,22,0.15)',
               color: 'var(--color-secondary)',
@@ -211,25 +207,25 @@ export default function ReservationPage() {
 
           <motion.h1
             variants={fadeInUp}
-            className='heading-font mt-6 text-5xl font-bold text-white md:text-6xl lg:text-7xl'
+            className='heading-font mt-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'
           >
             Reserve Your Table
           </motion.h1>
 
           <motion.p
             variants={fadeInUp}
-            className='body-font mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300'
+            className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-300 sm:text-lg'
           >
             Experience authentic Nepali cuisine in a warm, elegant atmosphere.
             Reserve your table today and let us make your dining experience
             unforgettable.
           </motion.p>
-          
-          <motion.div variants={fadeInUp} className='mt-10'>
+
+          <motion.div variants={fadeInUp} className='mt-8 md:mt-10'>
             <a
               href='#reservation-form'
               style={{ backgroundColor: 'var(--color-primary)' }}
-              className='body-font inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+              className='body-font inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-8 sm:py-4 sm:text-lg'
             >
               <CalendarDays size={20} />
               Book Your Table
@@ -243,7 +239,7 @@ export default function ReservationPage() {
       {/* ── Steps 2 & 3: Form + Info Cards ── */}
       <section id='reservation-form' className='py-24'>
         <div className='mx-auto max-w-7xl px-6'>
-          <div className='grid items-start gap-12 lg:grid-cols-2'>
+          <div className='grid items-start gap-8 lg:grid-cols-2 lg:gap-12'>
 
             {/* ── Left: Premium Form Card ── */}
             <motion.div
@@ -251,38 +247,38 @@ export default function ReservationPage() {
               initial='hidden'
               whileInView='visible'
               viewport={viewport}
-              className='rounded-3xl border p-8 shadow-xl md:p-10'
+              className='rounded-3xl border p-6 shadow-xl sm:p-8 md:p-10'
               style={{
                 backgroundColor: 'var(--color-surface)',
                 borderColor: 'var(--color-border)',
               }}
             >
-              <div className='mb-6 flex items-center gap-4'>
+              <div className='mb-6 flex items-start gap-4 sm:items-center'>
                 <div
-                  className='flex h-14 w-14 items-center justify-center rounded-full'
+                  className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:h-14 sm:w-14'
                   style={{ backgroundColor: 'rgba(249,115,22,0.12)' }}
                 >
-                  <CalendarDays size={28} style={{ color: 'var(--color-primary)' }} />
+                  <CalendarDays size={24} style={{ color: 'var(--color-primary)' }} />
                 </div>
                 <div>
                   <h2
-                    className='heading-font text-3xl font-bold'
+                    className='heading-font text-2xl font-bold sm:text-3xl'
                     style={{ color: 'var(--color-heading)' }}
                   >
                     Reserve a Table
                   </h2>
                   <p className='body-font mt-1 text-sm text-gray-400'>
-                    Fill in the details below and we will prepare the perfect
+                    Fill in the details and we will prepare the perfect
                     dining experience for you.
                   </p>
                 </div>
               </div>
 
-              <hr className='mb-8' style={{ borderColor: 'var(--color-border)' }} />
+              <hr className='mb-6 md:mb-8' style={{ borderColor: 'var(--color-border)' }} />
 
-              <div className='space-y-6'>
+              <div className='space-y-5 md:space-y-6'>
 
-                <div className='grid gap-6 md:grid-cols-2'>
+                <div className='grid gap-5 sm:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Full Name
@@ -292,7 +288,7 @@ export default function ReservationPage() {
                       placeholder='John Doe'
                       aria-label='Full Name'
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                   <div>
@@ -304,12 +300,12 @@ export default function ReservationPage() {
                       placeholder='john@example.com'
                       aria-label='Email Address'
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                 </div>
 
-                <div className='grid gap-6 md:grid-cols-2'>
+                <div className='grid gap-5 sm:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Phone
@@ -319,7 +315,7 @@ export default function ReservationPage() {
                       placeholder='+977 98XXXXXXXX'
                       aria-label='Phone Number'
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                   <div>
@@ -329,7 +325,7 @@ export default function ReservationPage() {
                     <select
                       aria-label='Number of Guests'
                       className='body-font w-full rounded-xl border bg-[#1e293b] px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     >
                       {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                         <option key={n} value={n}>
@@ -340,7 +336,7 @@ export default function ReservationPage() {
                   </div>
                 </div>
 
-                <div className='grid gap-6 md:grid-cols-2'>
+                <div className='grid gap-5 sm:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Date
@@ -352,7 +348,7 @@ export default function ReservationPage() {
                       onFocus={(e) => { e.target.type = 'date'; }}
                       onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                   <div>
@@ -366,7 +362,7 @@ export default function ReservationPage() {
                       onFocus={(e) => { e.target.type = 'time'; }}
                       onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                 </div>
@@ -387,7 +383,7 @@ export default function ReservationPage() {
                 <button
                   type='button'
                   className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
-                  style={{ backgroundColor: 'var(--color-primary)' }}
+                  style={{ backgroundColor: 'var(--color-primary)', minHeight: '52px' }}
                 >
                   Reserve Your Table
                 </button>
@@ -405,7 +401,7 @@ export default function ReservationPage() {
               initial='hidden'
               whileInView='visible'
               viewport={viewport}
-              className='space-y-6'
+              className='space-y-4 sm:space-y-6'
             >
               {infoCards.map((card) => {
                 const Icon = card.icon;
@@ -413,7 +409,7 @@ export default function ReservationPage() {
                   <motion.div
                     key={card.id}
                     variants={staggerItem}
-                    className='rounded-2xl border p-6 shadow-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500/40 hover:shadow-xl'
+                    className='rounded-2xl border p-5 shadow-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500/40 hover:shadow-xl sm:p-6'
                     style={{
                       backgroundColor: 'var(--color-surface)',
                       borderColor: 'var(--color-border)',
@@ -421,16 +417,16 @@ export default function ReservationPage() {
                   >
                     <div className='flex items-start gap-4'>
                       <div
-                        className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full'
+                        className='flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full sm:h-12 sm:w-12'
                         style={{
                           backgroundColor: 'rgba(249,115,22,0.12)',
                           color: 'var(--color-primary)',
                         }}
                       >
-                        <Icon size={22} />
+                        <Icon size={20} />
                       </div>
-                      <div className='flex-1'>
-                        <h3 className='heading-font text-lg font-bold text-white'>
+                      <div className='flex-1 min-w-0'>
+                        <h3 className='heading-font text-base font-bold text-white sm:text-lg'>
                           {card.title}
                         </h3>
                         {card.content}
@@ -476,7 +472,7 @@ export default function ReservationPage() {
 
             <motion.p
               variants={fadeInUp}
-              className='body-font mx-auto mt-6 max-w-2xl text-base leading-8 text-gray-400 sm:text-lg'
+              className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
             >
               Enjoy a seamless dining experience with priority seating,
               personalized service, and authentic Nepali hospitality.
@@ -488,7 +484,7 @@ export default function ReservationPage() {
             initial='hidden'
             whileInView='visible'
             viewport={viewport}
-            className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'
+            className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8'
           >
             {benefits.map((benefit) => {
               const Icon = benefit.icon;
@@ -496,14 +492,14 @@ export default function ReservationPage() {
                 <motion.div
                   key={benefit.id}
                   variants={staggerItem}
-                  className='rounded-2xl border p-8 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
+                  className='flex flex-col rounded-2xl border p-6 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl lg:p-8'
                   style={{
                     backgroundColor: 'var(--color-surface)',
                     borderColor: 'var(--color-border)',
                   }}
                 >
                   <div
-                    className='mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full'
+                    className='mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full'
                     style={{
                       backgroundColor: 'rgba(249,115,22,0.12)',
                       color: 'var(--color-primary)',
@@ -511,10 +507,10 @@ export default function ReservationPage() {
                   >
                     <Icon size={26} />
                   </div>
-                  <h3 className='heading-font text-xl font-bold text-white'>
+                  <h3 className='heading-font text-lg font-bold text-white lg:text-xl'>
                     {benefit.title}
                   </h3>
-                  <p className='body-font mt-4 text-base leading-7 text-gray-400'>
+                  <p className='body-font mt-3 flex-grow text-sm leading-7 text-gray-400 lg:text-base'>
                     {benefit.description}
                   </p>
                 </motion.div>
@@ -556,7 +552,7 @@ export default function ReservationPage() {
 
             <motion.p
               variants={fadeInUp}
-              className='body-font mx-auto mt-6 max-w-2xl text-base leading-8 text-gray-400 sm:text-lg'
+              className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
             >
               Find quick answers to common questions about reservations, seating,
               and dining at NepRestro.
@@ -577,7 +573,9 @@ export default function ReservationPage() {
                 className='overflow-hidden rounded-2xl border shadow-md transition-all duration-300 ease-out'
                 style={{
                   backgroundColor: 'var(--color-surface)',
-                  borderColor: openId === faq.id ? 'var(--color-primary)' : 'var(--color-border)',
+                  borderColor: openId === faq.id
+                    ? 'var(--color-primary)'
+                    : 'var(--color-border)',
                 }}
               >
                 <button
@@ -585,9 +583,10 @@ export default function ReservationPage() {
                   aria-expanded={openId === faq.id}
                   aria-controls={`faq-${faq.id}`}
                   onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                  className='flex w-full items-center justify-between px-6 py-5 text-left transition-all duration-300 ease-out hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500'
+                  className='flex w-full items-center justify-between px-5 py-4 text-left transition-all duration-300 ease-out hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:px-6 sm:py-5'
+                  style={{ minHeight: '56px' }}
                 >
-                  <span className='heading-font pr-4 text-lg font-semibold text-white'>
+                  <span className='heading-font pr-4 text-base font-semibold text-white sm:text-lg'>
                     {faq.question}
                   </span>
                   <span
@@ -611,19 +610,18 @@ export default function ReservationPage() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: 'easeOut' }}
                     >
-                      <div className='px-6 pb-6'>
+                      <div className='px-5 pb-5 sm:px-6 sm:pb-6'>
                         <hr
                           className='mb-4'
                           style={{ borderColor: 'var(--color-border)' }}
                         />
-                        <p className='body-font leading-7 text-gray-400'>
+                        <p className='body-font text-sm leading-7 text-gray-400 sm:text-base'>
                           {faq.answer}
                         </p>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-
               </motion.div>
             ))}
           </motion.div>
@@ -639,7 +637,7 @@ export default function ReservationPage() {
             initial='hidden'
             whileInView='visible'
             viewport={viewport}
-            className='relative overflow-hidden rounded-3xl border px-8 py-16 text-center shadow-md'
+            className='relative overflow-hidden rounded-3xl border px-6 py-12 text-center shadow-md sm:px-8 sm:py-16'
             style={{
               background: 'linear-gradient(135deg, rgba(249,115,22,0.12), rgba(245,158,11,0.08))',
               borderColor: 'var(--color-border)',
@@ -650,17 +648,17 @@ export default function ReservationPage() {
               style={{ background: 'rgba(249,115,22,0.15)' }}
             />
             <div className='relative z-10'>
-              <h2 className='heading-font text-3xl font-bold text-white sm:text-4xl'>
+              <h2 className='heading-font text-2xl font-bold text-white sm:text-3xl lg:text-4xl'>
                 Need help with a group booking?
               </h2>
-              <p className='body-font mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-400'>
+              <p className='body-font mx-auto mt-4 max-w-2xl px-2 text-base leading-relaxed text-gray-400 sm:text-lg'>
                 Reach out to our team directly for large groups, private events,
                 and customized menus.
               </p>
               <Link
                 href='/contact'
                 style={{ backgroundColor: 'var(--color-primary)' }}
-                className='body-font mt-10 inline-flex rounded-full px-8 py-4 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                className='body-font mt-8 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:mt-10 sm:px-8 sm:py-4'
               >
                 Contact Us
               </Link>

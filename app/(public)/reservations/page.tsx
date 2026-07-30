@@ -370,28 +370,22 @@ export default function ReservationPage() {
                       Date
                     </label>
                     <input
-                      type='text'
-                      placeholder='DD/MM/YYYY'
+                      type='date'
                       aria-label='Reservation Date'
-                      onFocus={(e) => { e.target.type = 'date'; }}
-                      onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px', colorScheme: 'dark' }}
                     />
                   </div>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Time
                     </label>
-                    <input
-                      type='text'
-                      placeholder='HH:MM'
-                      aria-label='Reservation Time'
-                      onFocus={(e) => { e.target.type = 'time'; }}
-                      onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
-                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
-                    />
+                   <input
+                      type="time"
+                      aria-label="Reservation Time"
+                      className="body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40"
+                      style={{ borderColor: "var(--color-border)", minHeight: "48px" }}
+                   />
                   </div>
                 </div>
 

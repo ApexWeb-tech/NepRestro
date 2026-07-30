@@ -21,6 +21,7 @@ import {
   fadeInUp,
   fadeInDown,
   fadeInLeft,
+  fadeInRight,
   staggerContainer,
   staggerItem,
   viewport,
@@ -150,6 +151,27 @@ const faqs = [
   },
 ];
 
+// ── Custom animation variants with refined timing ──
+const heroStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const heroItem = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
+
 export default function ReservationPage() {
   const [openId, setOpenId] = useState<number | null>(1);
 
@@ -179,14 +201,16 @@ export default function ReservationPage() {
           style={{ background: 'rgba(245,158,11,0.10)' }}
         />
 
+        {/* Hero uses custom heroStagger for 0.15s delay between elements */}
         <motion.div
-          variants={staggerContainer}
+          variants={heroStagger}
           initial='hidden'
           animate='visible'
           className='relative z-10 mx-auto max-w-4xl px-6 py-16 text-center md:py-24'
         >
+          {/* 1. Accent */}
           <motion.div
-            variants={fadeInDown}
+            variants={heroItem}
             className='mb-6 flex items-center justify-center gap-3'
           >
             <div className='h-px w-8 bg-orange-400/60 sm:w-12' />
@@ -194,8 +218,9 @@ export default function ReservationPage() {
             <div className='h-px w-8 bg-orange-400/60 sm:w-12' />
           </motion.div>
 
+          {/* 2. Badge */}
           <motion.span
-            variants={fadeInDown}
+            variants={heroItem}
             className='body-font inline-block rounded-full px-4 py-2 text-xs font-semibold sm:px-5 sm:text-sm'
             style={{
               backgroundColor: 'rgba(249,115,22,0.15)',
@@ -205,15 +230,17 @@ export default function ReservationPage() {
             Table Reservations
           </motion.span>
 
+          {/* 3. Heading */}
           <motion.h1
-            variants={fadeInUp}
+            variants={heroItem}
             className='heading-font mt-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'
           >
             Reserve Your Table
           </motion.h1>
 
+          {/* 4. Description */}
           <motion.p
-            variants={fadeInUp}
+            variants={heroItem}
             className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-300 sm:text-lg'
           >
             Experience authentic Nepali cuisine in a warm, elegant atmosphere.
@@ -221,11 +248,12 @@ export default function ReservationPage() {
             unforgettable.
           </motion.p>
 
-          <motion.div variants={fadeInUp} className='mt-8 md:mt-10'>
+          {/* 5. CTA */}
+          <motion.div variants={heroItem} className='mt-8 md:mt-10'>
             <a
               href='#reservation-form'
               style={{ backgroundColor: 'var(--color-primary)' }}
-              className='body-font inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-8 sm:py-4 sm:text-lg'
+              className='body-font inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-8 sm:py-4 sm:text-lg'
             >
               <CalendarDays size={20} />
               Book Your Table
@@ -241,7 +269,7 @@ export default function ReservationPage() {
         <div className='mx-auto max-w-7xl px-6'>
           <div className='grid items-start gap-8 lg:grid-cols-2 lg:gap-12'>
 
-            {/* ── Left: Premium Form Card ── */}
+            {/* ── Left: Form Card — fadeInLeft ── */}
             <motion.div
               variants={fadeInLeft}
               initial='hidden'
@@ -382,7 +410,7 @@ export default function ReservationPage() {
 
                 <button
                   type='button'
-                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
                   style={{ backgroundColor: 'var(--color-primary)', minHeight: '52px' }}
                 >
                   Reserve Your Table
@@ -395,7 +423,7 @@ export default function ReservationPage() {
               </div>
             </motion.div>
 
-            {/* ── Right: Info Cards ── */}
+            {/* ── Right: Info Cards — staggered ── */}
             <motion.div
               variants={staggerContainer}
               initial='hidden'
@@ -425,7 +453,7 @@ export default function ReservationPage() {
                       >
                         <Icon size={20} />
                       </div>
-                      <div className='flex-1 min-w-0'>
+                      <div className='min-w-0 flex-1'>
                         <h3 className='heading-font text-base font-bold text-white sm:text-lg'>
                           {card.title}
                         </h3>
@@ -499,7 +527,7 @@ export default function ReservationPage() {
                   }}
                 >
                   <div
-                    className='mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full'
+                    className='mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110'
                     style={{
                       backgroundColor: 'rgba(249,115,22,0.12)',
                       color: 'var(--color-primary)',
@@ -589,15 +617,18 @@ export default function ReservationPage() {
                   <span className='heading-font pr-4 text-base font-semibold text-white sm:text-lg'>
                     {faq.question}
                   </span>
-                  <span
-                    className='flex-shrink-0 transition-colors duration-300'
+                  {/* Icon rotates smoothly via motion */}
+                  <motion.span
+                    animate={{ rotate: openId === faq.id ? 180 : 0 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    className='flex-shrink-0'
                     style={{ color: 'var(--color-primary)' }}
                   >
                     {openId === faq.id
                       ? <Minus size={20} />
                       : <Plus size={20} />
                     }
-                  </span>
+                  </motion.span>
                 </button>
 
                 <AnimatePresence initial={false}>
@@ -608,7 +639,7 @@ export default function ReservationPage() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
                     >
                       <div className='px-5 pb-5 sm:px-6 sm:pb-6'>
                         <hr
@@ -630,7 +661,7 @@ export default function ReservationPage() {
       </section>
 
       {/* ── Group Booking CTA ── */}
-      <section className='pb-24 px-6'>
+      <section className='px-6 pb-24'>
         <div className='mx-auto max-w-7xl'>
           <motion.div
             variants={fadeInUp}
@@ -658,7 +689,7 @@ export default function ReservationPage() {
               <Link
                 href='/contact'
                 style={{ backgroundColor: 'var(--color-primary)' }}
-                className='body-font mt-8 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:mt-10 sm:px-8 sm:py-4'
+                className='body-font mt-8 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:mt-10 sm:px-8 sm:py-4'
               >
                 Contact Us
               </Link>

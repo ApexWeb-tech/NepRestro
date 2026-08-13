@@ -30,3 +30,7 @@ Thumbs.db
 .env.local
 .env
 .env.*
+
+CLAUDE.md
+STAFF_MANAGEMENT_SETUP.md
+AGENTS.md

@@ -21,6 +21,13 @@ export default function AdminTablesManager() {
   const [status, setStatus] = useState<Table['status']>('available');
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editTableData, setEditTableData] = useState<Table | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editSeats, setEditSeats] = useState('');
+  const [editStatus, setEditStatus] = useState<Table['status']>('available');
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   const loadTables = async () => {
     setLoading(true);
@@ -116,11 +123,45 @@ export default function AdminTablesManager() {
     await loadTables();
   };
 
-  const deleteTable = async (tableId: string) => {
-    const confirmed = window.confirm('Remove this table from the inventory?');
-    if (!confirmed) return;
+  const openEditModal = (table: Table) => {
+    setEditTableData(table);
+    setEditName(table.name);
+    setEditSeats(table.seats.toString());
+    setEditStatus(table.status);
+    setEditModalOpen(true);
+  };
+
+  const confirmEditTable = async () => {
+    if (!editTableData) return;
+
+    const parsedSeats = Number(editSeats);
+    if (!editName.trim() || !parsedSeats || parsedSeats < 1) {
+      toast.error('Please enter a valid name and seating capacity.');
+      return;
+    }
+
     setActionLoading(true);
-    const { error } = await supabase.from('tables').delete().eq('id', tableId);
+    const { error } = await supabase
+      .from('tables')
+      .update({ name: editName.trim(), seats: parsedSeats, status: editStatus })
+      .eq('id', editTableData.id);
+    setActionLoading(false);
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    toast.success('Table updated successfully.');
+    setEditModalOpen(false);
+    await loadTables();
+  };
+
+  const deleteTable = async () => {
+    if (!deleteConfirmId) return;
+
+    setActionLoading(true);
+    const { error } = await supabase.from('tables').delete().eq('id', deleteConfirmId);
     setActionLoading(false);
 
     if (error) {
@@ -129,6 +170,8 @@ export default function AdminTablesManager() {
     }
 
     toast.success('Table removed successfully.');
+    setDeleteConfirmOpen(false);
+    setDeleteConfirmId(null);
     await loadTables();
   };
 
@@ -215,18 +258,146 @@ export default function AdminTablesManager() {
         {loading ? (
           <div className='rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center text-slate-700'>Loading table inventory...</div>
         ) : (
-          <div className='grid gap-6 xl:grid-cols-3'>
+          <div className='space-y-4'>
             {tables.map((table) => (
-              <TableCard
-                key={table.id}
-                table={table}
-                onStatusChange={(tableId, nextStatus) => updateTable(tableId, { status: nextStatus }, 'Table status updated.')}
-                onDelete={deleteTable}
-              />
+              <div key={table.id} className='rounded-3xl border border-slate-200 bg-slate-50 p-6'>
+                <div className='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
+                  <div>
+                    <h3 className='text-xl font-semibold text-slate-900'>{table.name}</h3>
+                    <p className='mt-1 text-sm text-slate-600'>{table.seats} seats</p>
+                    <span className={`mt-2 inline-block rounded-full px-3 py-1 text-sm font-semibold ${statusColor[table.status]}`}>
+                      {table.status}
+                    </span>
+                  </div>
+
+                  <div className='grid gap-2 sm:grid-cols-3 lg:grid-cols-4'>
+                    {tableStatusOptions.map((st) => (
+                      <button
+                        key={st}
+                        type='button'
+                        disabled={actionLoading || st === table.status}
+                        onClick={() => updateTable(table.id, { status: st }, 'Table status updated.')}
+                        className='rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-60'
+                      >
+                        {st}
+                      </button>
+                    ))}
+                    <button
+                      type='button'
+                      disabled={actionLoading}
+                      onClick={() => openEditModal(table)}
+                      className='rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-blue-600 transition hover:border-blue-300 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-60'
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type='button'
+                      disabled={actionLoading}
+                      onClick={() => {
+                        setDeleteConfirmId(table.id);
+                        setDeleteConfirmOpen(true);
+                      }}
+                      className='rounded-full border border-rose-300 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-600 transition hover:border-rose-400 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60'
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Edit Table Modal */}
+      {editModalOpen && editTableData && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4'>
+          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl'>
+            <h2 className='text-xl font-bold text-slate-900'>Edit Table</h2>
+
+            <div className='mt-4 space-y-4'>
+              <div>
+                <label className='block text-sm font-semibold text-slate-700'>Table Name</label>
+                <input
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  className='mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-500'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-semibold text-slate-700'>Seats</label>
+                <input
+                  type='number'
+                  min={1}
+                  value={editSeats}
+                  onChange={(e) => setEditSeats(e.target.value)}
+                  className='mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-500'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-semibold text-slate-700'>Status</label>
+                <select
+                  value={editStatus}
+                  onChange={(e) => setEditStatus(e.target.value as Table['status'])}
+                  className='mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-500'
+                >
+                  {tableStatusOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className='mt-6 flex gap-3'>
+              <button
+                onClick={() => setEditModalOpen(false)}
+                disabled={actionLoading}
+                className='flex-1 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmEditTable}
+                disabled={actionLoading}
+                className='flex-1 rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                {actionLoading ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmOpen && deleteConfirmId && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4'>
+          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl'>
+            <h2 className='text-xl font-bold text-rose-600'>Delete Table?</h2>
+            <p className='mt-2 text-sm text-slate-600'>
+              This will permanently remove the table from your inventory. Make sure no active reservations are using this table.
+            </p>
+
+            <div className='mt-6 flex gap-3'>
+              <button
+                onClick={() => setDeleteConfirmOpen(false)}
+                disabled={actionLoading}
+                className='flex-1 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                Keep it
+              </button>
+              <button
+                onClick={deleteTable}
+                disabled={actionLoading}
+                className='flex-1 rounded-full bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                {actionLoading ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

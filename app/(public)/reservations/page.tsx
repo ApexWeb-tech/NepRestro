@@ -174,6 +174,62 @@ const heroItem = {
 
 export default function ReservationPage() {
   const [openId, setOpenId] = useState<number | null>(1);
+  const initialForm = {
+    name: '',
+    email: '',
+    phone: '',
+    guests: '2',
+    date: '',
+    time: '',
+    requests: '',
+  };
+
+  const [formData, setFormData] = useState(initialForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const handleFieldChange = (field: keyof typeof initialForm, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage(null);
+
+    try {
+      const response = await fetch('/api/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          guests: Number(formData.guests),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result?.error || 'Unable to save reservation.');
+      }
+
+      const tableName = result?.reservation?.table?.name;
+      setSubmitMessage({
+        type: 'success',
+        text: tableName
+          ? `Your reservation is confirmed for ${formData.date} at ${formData.time}. Table ${tableName} has been reserved.`
+          : 'Your reservation was submitted successfully. We will confirm your table shortly.',
+      });
+      setFormData(initialForm);
+    } catch (error: any) {
+      setSubmitMessage({
+        type: 'error',
+        text: error?.message || 'Something went wrong while submitting your reservation.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main className='bg-[#111111] text-white'>
@@ -304,8 +360,7 @@ export default function ReservationPage() {
 
               <hr className='mb-6 md:mb-8' style={{ borderColor: 'var(--color-border)' }} />
 
-              <div className='space-y-5 md:space-y-6'>
-
+              <form onSubmit={handleSubmit} className='space-y-5 md:space-y-6'>
                 <div className='grid gap-5 sm:grid-cols-2'>
                   <div>
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
@@ -313,8 +368,11 @@ export default function ReservationPage() {
                     </label>
                     <input
                       type='text'
+                      value={formData.name}
+                      onChange={(event) => handleFieldChange('name', event.target.value)}
                       placeholder='John Doe'
                       aria-label='Full Name'
+                      required
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
@@ -325,8 +383,11 @@ export default function ReservationPage() {
                     </label>
                     <input
                       type='email'
+                      value={formData.email}
+                      onChange={(event) => handleFieldChange('email', event.target.value)}
                       placeholder='john@example.com'
                       aria-label='Email Address'
+                      required
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
@@ -340,6 +401,8 @@ export default function ReservationPage() {
                     </label>
                     <input
                       type='tel'
+                      value={formData.phone}
+                      onChange={(event) => handleFieldChange('phone', event.target.value)}
                       placeholder='+977 98XXXXXXXX'
                       aria-label='Phone Number'
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
@@ -351,6 +414,8 @@ export default function ReservationPage() {
                       Guests
                     </label>
                     <select
+                      value={formData.guests}
+                      onChange={(event) => handleFieldChange('guests', event.target.value)}
                       aria-label='Number of Guests'
                       className='body-font w-full rounded-xl border bg-[#1e293b] px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
@@ -371,7 +436,10 @@ export default function ReservationPage() {
                     </label>
                     <input
                       type='date'
+                      value={formData.date}
+                      onChange={(event) => handleFieldChange('date', event.target.value)}
                       aria-label='Reservation Date'
+                      required
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px', colorScheme: 'dark' }}
                     />
@@ -380,12 +448,15 @@ export default function ReservationPage() {
                     <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
                       Time
                     </label>
-                   <input
-                      type="time"
-                      aria-label="Reservation Time"
-                      className="body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40"
-                      style={{ borderColor: "var(--color-border)", minHeight: "48px" }}
-                   />
+                    <input
+                      type='time'
+                      value={formData.time}
+                      onChange={(event) => handleFieldChange('time', event.target.value)}
+                      aria-label='Reservation Time'
+                      required
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
+                    />
                   </div>
                 </div>
 
@@ -395,6 +466,8 @@ export default function ReservationPage() {
                   </label>
                   <textarea
                     rows={4}
+                    value={formData.requests}
+                    onChange={(event) => handleFieldChange('requests', event.target.value)}
                     placeholder='Let us know your preferences, dietary requirements, or any special occasion...'
                     aria-label='Special Requests'
                     className='body-font w-full resize-none rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
@@ -402,19 +475,31 @@ export default function ReservationPage() {
                   />
                 </div>
 
+                {submitMessage && (
+                  <div
+                    className={`rounded-xl border px-4 py-3 text-sm ${
+                      submitMessage.type === 'success'
+                        ? 'border-green-500/30 bg-green-500/10 text-green-200'
+                        : 'border-red-500/30 bg-red-500/10 text-red-200'
+                    }`}
+                  >
+                    {submitMessage.text}
+                  </div>
+                )}
+
                 <button
-                  type='button'
-                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                  type='submit'
+                  disabled={isSubmitting}
+                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70'
                   style={{ backgroundColor: 'var(--color-primary)', minHeight: '52px' }}
                 >
-                  Reserve Your Table
+                  {isSubmitting ? 'Submitting...' : 'Reserve Your Table'}
                 </button>
 
                 <p className='body-font text-center text-sm text-gray-500'>
                   Free cancellation up to 24 hours before your booking
                 </p>
-
-              </div>
+              </form>
             </motion.div>
 
             {/* ── Right: Info Cards — staggered ── */}

@@ -32,16 +32,52 @@ create index if not exists idx_reservations_table_id on reservations (table_id);
 alter table tables enable row level security;
 alter table reservations enable row level security;
 
-create policy "Allow authenticated staff to manage tables" on tables for select, insert, update, delete using (
-  auth.role() = 'authenticated' and auth.jwt() -> 'user_metadata' ->> 'role' = 'staff'
+create policy "Allow authenticated staff to manage tables"
+  on tables
+  for all
+  using (
+    auth.role() = 'authenticated'
+    and auth.jwt() -> 'user_metadata' ->> 'role' = 'staff'
+  );
+
+create policy "Allow authenticated staff to manage reservations"
+  on reservations
+  for all
+  using (
+    auth.role() = 'authenticated'
+    and auth.jwt() -> 'user_metadata' ->> 'role' = 'staff'
+  );
+
+-- Audit logs table for tracking all changes
+create table if not exists audit_logs (
+  id uuid primary key default gen_random_uuid(),
+  action text not null check (action in ('create', 'update', 'delete')),
+  entity_type text not null, -- 'reservation', 'table', 'staff'
+  entity_id uuid not null,
+  changed_by_email text not null,
+  changed_by_name text not null,
+  changed_by_role text not null,
+  changes jsonb, -- { field: { old_value, new_value } }
+  reason text,
+  ip_address text,
+  created_at timestamptz not null default now()
 );
 
-create policy "Allow authenticated staff to manage reservations" on reservations for select, update, delete using (
-  auth.role() = 'authenticated' and auth.jwt() -> 'user_metadata' ->> 'role' = 'staff'
-);
+create index if not exists idx_audit_logs_entity_id on audit_logs (entity_id);
+create index if not exists idx_audit_logs_created_at on audit_logs (created_at);
+create index if not exists idx_audit_logs_changed_by_email on audit_logs (changed_by_email);
+create index if not exists idx_audit_logs_action on audit_logs (action);
 
-create policy "Allow public reservation creation" on reservations for insert with (true);
+alter table audit_logs enable row level security;
 
-create policy "Allow reservation owners to view their reservations" on reservations for select using (
-  auth.role() = 'authenticated' and email = auth.email()
-);
+create policy "Allow authenticated users to view audit logs"
+  on audit_logs
+  for select
+  using (
+    auth.role() = 'authenticated'
+  );
+
+create policy "Allow system to insert audit logs"
+  on audit_logs
+  for insert
+  with check (true);

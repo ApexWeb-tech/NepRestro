@@ -4,8 +4,11 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { supabase } from '../../lib/supabase/client';
+import { fetchWithUserInfo } from '../../lib/api/client';
 import type { Reservation } from '../../types/reservation';
 import type { Table } from '../../types/table';
+import type { UserRole } from '../../types/auth';
+import { hasPermission } from '../../types/auth';
 
 const statusColors: Record<Reservation['status'], string> = {
   pending: 'bg-amber-100 text-amber-800',
@@ -32,6 +35,27 @@ export default function AdminReservationsManager() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
+  const [userRole, setUserRole] = useState<UserRole>('staff');
+  const [statusModalOpen, setStatusModalOpen] = useState(false);
+  const [statusModalData, setStatusModalData] = useState<{
+    reservationId: string;
+    newStatus: Reservation['status'];
+  } | null>(null);
+  const [statusReason, setStatusReason] = useState('');
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [deleteReason, setDeleteReason] = useState('');
+
+  useEffect(() => {
+    // Get user role from session
+    const getUserRole = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.user_metadata?.role) {
+        setUserRole(user.user_metadata.role as UserRole);
+      }
+    };
+    getUserRole();
+  }, []);
 
   const loadData = async () => {
     setLoading(true);
@@ -39,8 +63,8 @@ export default function AdminReservationsManager() {
       supabase
         .from('reservations')
         .select('*, table:tables(id,name,seats,status)')
-        .order('date', { ascending: true })
-        .order('time', { ascending: true }),
+        .order('date', { ascending: false })
+        .order('time', { ascending: false }),
       supabase.from('tables').select('*').order('seats', { ascending: true }),
     ]);
 
@@ -158,7 +182,74 @@ export default function AdminReservationsManager() {
   };
 
   const setStatus = async (reservationId: string, status: Reservation['status']) => {
-    await updateReservation(reservationId, { status }, 'Reservation status updated.');
+    setStatusModalData({ reservationId, newStatus: status });
+    setStatusReason('');
+    setStatusModalOpen(true);
+  };
+
+  const confirmStatusChange = async () => {
+    if (!statusModalData) return;
+
+    setActionLoading(true);
+    try {
+      const response = await fetchWithUserInfo('/api/reservations', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reservationId: statusModalData.reservationId,
+          status: statusModalData.newStatus,
+          reason: statusReason || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        toast.error(error.error || 'Failed to update status');
+        setActionLoading(false);
+        return;
+      }
+
+      toast.success('Status updated and customer notified via email!');
+      setStatusModalOpen(false);
+      setStatusModalData(null);
+      await loadData();
+    } catch (error) {
+      toast.error('Error updating reservation');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const deleteReservation = async () => {
+    if (!deleteConfirmId) return;
+
+    setActionLoading(true);
+    try {
+      const response = await fetchWithUserInfo('/api/reservations', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reservationId: deleteConfirmId,
+          reason: deleteReason || 'Your reservation has been cancelled.',
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        toast.error(error.error || 'Failed to delete reservation');
+        setActionLoading(false);
+        return;
+      }
+
+      toast.success('Reservation deleted and customer notified!');
+      setDeleteConfirmOpen(false);
+      setDeleteConfirmId(null);
+      await loadData();
+    } catch (error) {
+      toast.error('Error deleting reservation');
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   return (
@@ -272,6 +363,20 @@ export default function AdminReservationsManager() {
                         </button>
                       ))}
                     </div>
+                    {hasPermission(userRole, 'delete_reservations') && (
+                      <button
+                        type='button'
+                        disabled={actionLoading}
+                        onClick={() => {
+                          setDeleteConfirmId(reservation.id);
+                          setDeleteReason('');
+                          setDeleteConfirmOpen(true);
+                        }}
+                        className='rounded-full border border-rose-300 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:border-rose-400 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60'
+                      >
+                        Delete reservation
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -279,6 +384,86 @@ export default function AdminReservationsManager() {
           </div>
         )}
       </div>
+
+      {/* Status Change Modal */}
+      {statusModalOpen && statusModalData && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4'>
+          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl'>
+            <h2 className='text-xl font-bold text-slate-900'>Change Reservation Status</h2>
+            <p className='mt-2 text-sm text-slate-600'>
+              Set status to <span className='font-semibold capitalize'>{statusModalData.newStatus}</span>
+            </p>
+
+            <div className='mt-4'>
+              <label className='block text-sm font-semibold text-slate-700'>Reason (optional)</label>
+              <textarea
+                value={statusReason}
+                onChange={(e) => setStatusReason(e.target.value)}
+                placeholder='e.g., Table has been prepared, customer called in...'
+                className='mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-orange-500'
+                rows={3}
+              />
+            </div>
+
+            <div className='mt-6 flex gap-3'>
+              <button
+                onClick={() => setStatusModalOpen(false)}
+                disabled={actionLoading}
+                className='flex-1 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmStatusChange}
+                disabled={actionLoading}
+                className='flex-1 rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                {actionLoading ? 'Updating...' : 'Confirm'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmOpen && deleteConfirmId && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4'>
+          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl'>
+            <h2 className='text-xl font-bold text-rose-600'>Delete Reservation?</h2>
+            <p className='mt-2 text-sm text-slate-600'>
+              This will permanently delete the reservation and send a cancellation email to the customer.
+            </p>
+
+            <div className='mt-4'>
+              <label className='block text-sm font-semibold text-slate-700'>Cancellation Reason (optional)</label>
+              <textarea
+                value={deleteReason}
+                onChange={(e) => setDeleteReason(e.target.value)}
+                placeholder='e.g., Customer requested cancellation, table no longer available...'
+                className='mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-rose-500'
+                rows={3}
+              />
+            </div>
+
+            <div className='mt-6 flex gap-3'>
+              <button
+                onClick={() => setDeleteConfirmOpen(false)}
+                disabled={actionLoading}
+                className='flex-1 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                Keep it
+              </button>
+              <button
+                onClick={deleteReservation}
+                disabled={actionLoading}
+                className='flex-1 rounded-full bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-60'
+              >
+                {actionLoading ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

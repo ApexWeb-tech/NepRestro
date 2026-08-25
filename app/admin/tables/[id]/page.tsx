@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { supabaseAdmin } from '../../../../lib/supabase/server';
 
 type PageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TableDetailPage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = await params;
   const [{ data: table, error: tableError }, { data: reservations, error: reservationError }] = await Promise.all([
     supabaseAdmin.from('tables').select('*').eq('id', id).single(),
     supabaseAdmin

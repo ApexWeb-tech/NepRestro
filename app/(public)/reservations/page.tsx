@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import {
   CalendarDays,
   UtensilsCrossed,
@@ -163,7 +164,7 @@ const heroStagger = {
   },
 };
 
-const heroItem = {
+const heroItem: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,

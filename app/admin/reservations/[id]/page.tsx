@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { supabaseAdmin } from '../../../../lib/supabase/server';
 
 type PageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ReservationDetailPage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = await params;
 
   const { data: reservation, error } = await supabaseAdmin
     .from('reservations')

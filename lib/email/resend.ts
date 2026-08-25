@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function sendReservationEmail(
   email: string,
@@ -13,6 +13,11 @@ export async function sendReservationEmail(
     reservationId: string;
   }
 ) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY is not configured; skipping reservation confirmation email.');
+    return null;
+  }
+
   try {
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'noreply@neprestro.com',
@@ -96,6 +101,11 @@ export async function sendReservationStatusChangeEmail(
   };
 
   const statusInfo = statusMessages[data.status] || statusMessages.pending;
+
+  if (!resend) {
+    console.warn('RESEND_API_KEY is not configured; skipping reservation status email.');
+    return null;
+  }
 
   try {
     const result = await resend.emails.send({

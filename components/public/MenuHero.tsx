@@ -5,23 +5,23 @@ import {
   fadeInUp,
   fadeInDown,
   staggerContainer,
-  viewport,
 } from '@/lib/animations';
 
 export default function MenuHero() {
   return (
     <section
-      className='relative overflow-hidden py-24'
+      className='relative overflow-hidden py-24 lg:py-28'
       style={{
-        background: 'linear-gradient(180deg, rgba(15,23,42,1) 0%, rgba(30,41,59,1) 100%)',
+        background: 'linear-gradient(135deg, rgba(15,23,42,1) 0%, rgba(24,32,50,1) 50%, rgba(15,23,42,1) 100%)',
       }}
     >
+      {/* Glows */}
       <div
-        className='absolute -left-24 -top-24 h-80 w-80 rounded-full blur-3xl'
+        className='absolute -left-24 -top-24 h-72 w-72 rounded-full blur-3xl'
         style={{ background: 'rgba(249,115,22,0.10)' }}
       />
       <div
-        className='absolute -bottom-24 -right-24 h-80 w-80 rounded-full blur-3xl'
+        className='absolute -bottom-24 -right-24 h-72 w-72 rounded-full blur-3xl'
         style={{ background: 'rgba(245,158,11,0.08)' }}
       />
 
@@ -30,7 +30,7 @@ export default function MenuHero() {
           variants={staggerContainer}
           initial='hidden'
           animate='visible'
-          className='mx-auto max-w-4xl text-center'
+          className='mx-auto max-w-3xl text-center'
         >
           {/* Badge */}
           <motion.span
@@ -41,7 +41,7 @@ export default function MenuHero() {
               color: 'var(--color-secondary)',
             }}
           >
-            Authentic Nepali Cuisine
+            Our Menu
           </motion.span>
 
           {/* Heading */}
@@ -49,23 +49,22 @@ export default function MenuHero() {
             variants={fadeInUp}
             className='heading-font mt-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'
           >
-            Explore Our Menu
+            Authentic Flavors of Nepal
           </motion.h1>
 
           {/* Description */}
           <motion.p
             variants={fadeInUp}
-            className='body-font mx-auto mt-6 max-w-3xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+            className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
           >
-            From traditional Nepali favorites to modern street food,
-            every dish is prepared with fresh ingredients, authentic
-            recipes, and a passion for unforgettable dining.
+            Traditional recipes, fresh ingredients, and a passion for
+            unforgettable dining — explore every dish we have crafted for you.
           </motion.p>
 
-          {/* Trust message */}
+          {/* Trust line */}
           <motion.p
             variants={fadeInUp}
-            className='body-font mt-6 text-sm font-medium'
+            className='body-font mt-5 text-sm font-medium'
             style={{ color: 'var(--color-secondary)' }}
           >
             Fresh Ingredients • Authentic Recipes • Made with Love
@@ -74,6 +73,8 @@ export default function MenuHero() {
         </motion.div>
       </div>
 
+      {/* Bottom fade */}
+      <div className='pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#111111] to-transparent' />
     </section>
   );
 }

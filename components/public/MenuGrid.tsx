@@ -1,15 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {
   fadeInUp,
-  fadeInDown,
   staggerContainer,
   staggerItem,
   viewport,
 } from '@/lib/animations';
+import EmptyState from '@/components/ui/EmptyState';
 
 const menuItems = [
   {
@@ -75,87 +76,129 @@ const menuItems = [
 ];
 
 export default function MenuGrid() {
+  const showEmpty = false; // flip to true to preview EmptyState
+
   return (
-    <section className='bg-[#111111] pb-24'>
+    <section className='bg-[#111111] pb-24 pt-4'>
       <div className='mx-auto max-w-7xl px-6'>
 
-        {/* ── Menu Grid ── */}
+        {showEmpty ? (
+          <EmptyState
+            title='No Dishes Found'
+            description='We could not find any dishes in this category. Try selecting another category.'
+            actionLabel='View All Dishes'
+            actionHref='/menu'
+          />
+        ) : (
+          <motion.div
+            variants={staggerContainer}
+            initial='hidden'
+            whileInView='visible'
+            viewport={viewport}
+            className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'
+          >
+            {menuItems.map((item) => (
+              <motion.div
+                key={item.id}
+                variants={staggerItem}
+                className='group flex cursor-pointer flex-col overflow-hidden rounded-2xl border shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-2xl'
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: 'var(--color-border)',
+                }}
+              >
+                {/* Image */}
+                <div className='relative h-48 overflow-hidden sm:h-52'>
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className='object-cover transition-transform duration-500 ease-out group-hover:scale-110'
+                    quality={80}
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                  />
+                  <div className='absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/15' />
+                </div>
+
+                {/* Content */}
+                <div className='flex flex-1 flex-col p-5 sm:p-6'>
+
+                  {/* Rating & Badge */}
+                  <div className='flex items-center justify-between'>
+                    <span
+                      className='body-font flex items-center gap-1 text-sm font-semibold'
+                      style={{ color: 'var(--color-secondary)' }}
+                    >
+                      <Star size={13} fill='currentColor' aria-hidden='true' />
+                      {item.rating}
+                    </span>
+
+                    {item.featured && (
+                      <span
+                        className='body-font rounded-full px-2.5 py-1 font-semibold transition-all duration-300 group-hover:scale-105'
+                        style={{
+                          fontSize: '11px',
+                          backgroundColor: 'rgba(249,115,22,0.15)',
+                          color: 'var(--color-primary)',
+                        }}
+                      >
+                        Chef's Special
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Name */}
+                  <h3 className='heading-font mt-4 text-lg font-bold text-white sm:text-xl'>
+                    {item.name}
+                  </h3>
+
+                  {/* Description */}
+                  <p className='body-font mt-2 line-clamp-2 text-sm leading-6 text-gray-400 sm:text-base sm:leading-7'>
+                    {item.description}
+                  </p>
+
+                  {/* Price */}
+                  <div className='mt-auto pt-5'>
+                    <span
+                      className='body-font text-xl font-bold transition-all duration-300 group-hover:tracking-wide sm:text-2xl'
+                      style={{ color: 'var(--color-primary)' }}
+                    >
+                      {item.price}
+                    </span>
+                  </div>
+
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        {/* Menu CTA */}
         <motion.div
-          variants={staggerContainer}
+          variants={fadeInUp}
           initial='hidden'
           whileInView='visible'
           viewport={viewport}
-          className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'
+          className='mt-20 rounded-3xl border px-8 py-12 text-center'
+          style={{
+            background: 'linear-gradient(135deg, rgba(249,115,22,0.10), rgba(245,158,11,0.06))',
+            borderColor: 'var(--color-border)',
+          }}
         >
-          {menuItems.map((item) => (
-            <motion.div
-              key={item.id}
-              variants={staggerItem}
-              className='group flex cursor-pointer flex-col rounded-2xl border shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-2xl'
-              style={{
-                backgroundColor: 'var(--color-surface)',
-                borderColor: 'var(--color-border)',
-              }}
-            >
-              {/* Image */}
-              <div className='relative h-48 overflow-hidden rounded-t-2xl sm:h-56'>
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className='object-cover transition-transform duration-500 ease-out group-hover:scale-110'
-                  quality={90}
-                  sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
-                />
-                <div className='absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/20' />
-              </div>
-
-              {/* Content */}
-              <div className='flex flex-1 flex-col p-5 sm:p-6'>
-
-                <div className='flex items-center justify-between'>
-                  <span
-                    className='body-font flex items-center gap-1 text-sm font-semibold'
-                    style={{ color: 'var(--color-secondary)' }}
-                  >
-                    <Star size={14} fill='currentColor' />
-                    {item.rating}
-                  </span>
-
-                  {item.featured && (
-                    <span
-                      className='body-font rounded-full px-2.5 py-1 font-semibold transition-all duration-300 group-hover:scale-105 sm:px-3'
-                      style={{
-                        fontSize: '11px',
-                        backgroundColor: 'rgba(249,115,22,0.15)',
-                        color: 'var(--color-primary)',
-                      }}
-                    >
-                      Chef's Special
-                    </span>
-                  )}
-                </div>
-
-                <h3 className='heading-font mt-4 text-lg font-bold text-white sm:mt-5 sm:text-xl'>
-                  {item.name}
-                </h3>
-
-                <p className='body-font mt-3 line-clamp-3 text-sm leading-6 text-gray-400 sm:text-base sm:leading-7'>
-                  {item.description}
-                </p>
-
-                <div className='mt-auto pt-6'>
-                  <span
-                    className='body-font text-xl font-bold transition-all duration-300 group-hover:tracking-wide sm:text-2xl'
-                    style={{ color: 'var(--color-primary)' }}
-                  >
-                    {item.price}
-                  </span>
-                </div>
-
-              </div>
-            </motion.div>
-          ))}
+          <h2 className='heading-font text-2xl font-bold text-white sm:text-3xl'>
+            Ready to Experience Nepali Flavors?
+          </h2>
+          <p className='body-font mx-auto mt-4 max-w-xl text-base leading-8 text-gray-400'>
+            Reserve your table today and enjoy freshly prepared Nepali dishes
+            in a warm, welcoming atmosphere.
+          </p>
+          <Link
+            href='/reservations'
+            style={{ backgroundColor: 'var(--color-primary)' }}
+            className='body-font mt-8 inline-flex rounded-full px-8 py-4 font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+          >
+            Reserve a Table
+          </Link>
         </motion.div>
 
       </div>

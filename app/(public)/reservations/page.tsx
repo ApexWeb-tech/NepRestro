@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { Variants } from 'framer-motion';
 import {
   CalendarDays,
   UtensilsCrossed,
@@ -17,6 +16,8 @@ import {
   Sparkles,
   Plus,
   Minus,
+  MapPin,
+  CheckCircle,
 } from 'lucide-react';
 import {
   fadeInUp,
@@ -28,13 +29,15 @@ import {
   viewport,
 } from '@/lib/animations';
 
+// ── Data ──────────────────────────────────────────────
+
 const infoCards = [
   {
     id: 1,
     icon: Clock3,
     title: 'Opening Hours',
     content: (
-      <p className='body-font mt-3 leading-7 text-gray-400'>
+      <p className='body-font mt-3 text-sm leading-7 text-gray-400'>
         Monday – Sunday
         <br />
         10:00 AM – 10:00 PM
@@ -47,8 +50,18 @@ const infoCards = [
     title: 'Need Assistance?',
     content: (
       <div className='mt-3 space-y-1'>
-        <p className='body-font text-gray-400'>+977 9800000000</p>
-        <p className='body-font text-gray-400'>info@neprestro.com</p>
+        <a
+          href='tel:+9779800000000'
+          className='body-font block text-sm text-gray-400 transition-colors duration-300 hover:text-orange-400'
+        >
+          +977 9800000000
+        </a>
+        <a
+          href='mailto:info@neprestro.com'
+          className='body-font block text-sm text-gray-400 transition-colors duration-300 hover:text-orange-400'
+        >
+          info@neprestro.com
+        </a>
       </div>
     ),
   },
@@ -57,7 +70,7 @@ const infoCards = [
     icon: Info,
     title: 'Reservation Guidelines',
     content: (
-      <ul className='body-font mt-3 space-y-2 text-gray-400'>
+      <ul className='body-font mt-3 space-y-2 text-sm text-gray-400'>
         <li className='flex items-start gap-2'>
           <span style={{ color: 'var(--color-primary)' }}>•</span>
           Please arrive 10 minutes early.
@@ -68,35 +81,29 @@ const infoCards = [
         </li>
         <li className='flex items-start gap-2'>
           <span style={{ color: 'var(--color-primary)' }}>•</span>
-          Special requests are accommodated when possible.
+          Special requests accommodated when possible.
         </li>
       </ul>
     ),
   },
   {
     id: 4,
-    icon: Users,
-    title: 'Group Dining',
+    icon: MapPin,
+    title: 'Location',
     content: (
-      <div className='body-font mt-3 space-y-1 text-gray-400'>
-        <p>Suitable for:</p>
-        <ul className='mt-2 space-y-1'>
-          <li className='flex items-start gap-2'>
-            <span style={{ color: 'var(--color-primary)' }}>•</span>
-            Couples
-          </li>
-          <li className='flex items-start gap-2'>
-            <span style={{ color: 'var(--color-primary)' }}>•</span>
-            Families
-          </li>
-          <li className='flex items-start gap-2'>
-            <span style={{ color: 'var(--color-primary)' }}>•</span>
-            Groups up to 20 guests
-          </li>
-        </ul>
-        <p className='mt-3 text-sm text-gray-500'>
-          For larger events, please contact us directly.
+      <div className='mt-3 space-y-1'>
+        <p className='body-font text-sm text-gray-400'>
+          Lakeside, Pokhara, Nepal
         </p>
+        <a
+          href='https://maps.google.com/?q=Lakeside,Pokhara,Nepal'
+          target='_blank' 
+          rel='noopener noreferrer'
+          className='body-font text-sm transition-colors duration-300 hover:text-orange-400'
+          style={{ color: 'var(--color-primary)' }}
+        >
+          Get Directions →
+        </a>
       </div>
     ),
   },
@@ -107,25 +114,25 @@ const benefits = [
     id: 1,
     icon: CalendarCheck,
     title: 'Guaranteed Table',
-    description: 'Your table will be prepared before you arrive.',
+    description: 'Your table will be prepared and ready before you arrive.',
   },
   {
     id: 2,
     icon: ChefHat,
     title: 'Freshly Prepared Meals',
-    description: 'Every dish is prepared using fresh ingredients and traditional recipes.',
+    description: 'Every dish prepared with fresh ingredients and traditional recipes.',
   },
   {
     id: 3,
     icon: Users,
     title: 'Perfect for Groups',
-    description: 'Comfortable seating for families, friends, and celebrations.',
+    description: 'Comfortable seating for couples, families, and celebrations.',
   },
   {
     id: 4,
     icon: Sparkles,
     title: 'Warm Hospitality',
-    description: 'Experience attentive service in a welcoming Nepali atmosphere.',
+    description: 'Attentive service in a welcoming Nepali atmosphere.',
   },
 ];
 
@@ -133,114 +140,62 @@ const faqs = [
   {
     id: 1,
     question: 'Do I need to reserve in advance?',
-    answer: 'Walk-ins are welcome, but reservations are recommended during weekends and holidays.',
+    answer: 'Walk-ins are welcome, but reservations are recommended during weekends and holidays to guarantee your table.',
   },
   {
     id: 2,
     question: 'How long will my reservation be held?',
-    answer: 'We hold reservations for 15 minutes after the scheduled time.',
+    answer: 'We hold reservations for 15 minutes after the scheduled time before releasing the table.',
   },
   {
     id: 3,
     question: 'Can I request a specific table?',
-    answer: 'Yes. We will do our best to accommodate your request based on availability.',
+    answer: 'Yes. We will do our best to accommodate your seating preference based on availability.',
   },
   {
     id: 4,
     question: 'Can I cancel or change my reservation?',
-    answer: 'Yes. Reservations can be modified or cancelled before your scheduled arrival.',
+    answer: 'Yes. Reservations can be modified or cancelled before your scheduled arrival time.',
   },
 ];
 
-// ── Custom animation variants with refined timing ──
+const trustBadges = [
+  'Easy online booking',
+  'Friendly Nepali hospitality',
+  'No complicated process',
+  'Confirmation after booking',
+];
+
+// ── Custom hero animation ──────────────────────────────
+
 const heroStagger = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
   },
 };
 
-const heroItem: Variants = {
+const heroItem = {
   hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
+
+// ── Component ──────────────────────────────────────────
 
 export default function ReservationPage() {
   const [openId, setOpenId] = useState<number | null>(1);
-  const initialForm = {
-    name: '',
-    email: '',
-    phone: '',
-    guests: '2',
-    date: '',
-    time: '',
-    requests: '',
-  };
-
-  const [formData, setFormData] = useState(initialForm);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  const handleFieldChange = (field: keyof typeof initialForm, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitMessage(null);
-
-    try {
-      const response = await fetch('/api/reservations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          guests: Number(formData.guests),
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result?.error || 'Unable to save reservation.');
-      }
-
-      const tableName = result?.reservation?.table?.name;
-      setSubmitMessage({
-        type: 'success',
-        text: tableName
-          ? `Your reservation is confirmed for ${formData.date} at ${formData.time}. Table ${tableName} has been reserved.`
-          : 'Your reservation was submitted successfully. We will confirm your table shortly.',
-      });
-      setFormData(initialForm);
-    } catch (error: any) {
-      setSubmitMessage({
-        type: 'error',
-        text: error?.message || 'Something went wrong while submitting your reservation.',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const [guests, setGuests] = useState(2);
 
   return (
     <main className='bg-[#111111] text-white'>
 
-      {/* ── Step 1: Premium Hero ── */}
+      {/* ── Hero ── */}
       <section className='relative flex min-h-[55vh] items-center justify-center overflow-hidden md:min-h-[60vh]'>
 
         <Image
           src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop'
-          alt='NepRestro Restaurant Dining Area'
+          alt='NepRestro warm restaurant dining atmosphere'
           fill
           className='object-cover'
           priority
@@ -258,24 +213,21 @@ export default function ReservationPage() {
           style={{ background: 'rgba(245,158,11,0.10)' }}
         />
 
-        {/* Hero uses custom heroStagger for 0.15s delay between elements */}
         <motion.div
           variants={heroStagger}
           initial='hidden'
           animate='visible'
           className='relative z-10 mx-auto max-w-4xl px-6 py-16 text-center md:py-24'
         >
-          {/* 1. Accent */}
           <motion.div
             variants={heroItem}
             className='mb-6 flex items-center justify-center gap-3'
           >
             <div className='h-px w-8 bg-orange-400/60 sm:w-12' />
-            <UtensilsCrossed size={18} style={{ color: 'var(--color-primary)' }} />
+            <UtensilsCrossed size={18} style={{ color: 'var(--color-primary)' }} aria-hidden='true' />
             <div className='h-px w-8 bg-orange-400/60 sm:w-12' />
           </motion.div>
 
-          {/* 2. Badge */}
           <motion.span
             variants={heroItem}
             className='body-font inline-block rounded-full px-4 py-2 text-xs font-semibold sm:px-5 sm:text-sm'
@@ -287,33 +239,29 @@ export default function ReservationPage() {
             Table Reservations
           </motion.span>
 
-          {/* 3. Heading */}
           <motion.h1
             variants={heroItem}
             className='heading-font mt-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl'
           >
-            Reserve Your Table
+            Your Table Is Waiting
           </motion.h1>
 
-          {/* 4. Description */}
           <motion.p
             variants={heroItem}
             className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-300 sm:text-lg'
           >
-            Experience authentic Nepali cuisine in a warm, elegant atmosphere.
-            Reserve your table today and let us make your dining experience
-            unforgettable.
+            Enjoy authentic Nepali cuisine in a warm and welcoming atmosphere.
+            Reserve your table in minutes and let us take care of the rest.
           </motion.p>
 
-          {/* 5. CTA */}
           <motion.div variants={heroItem} className='mt-8 md:mt-10'>
             <a
               href='#reservation-form'
               style={{ backgroundColor: 'var(--color-primary)' }}
-              className='body-font inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-8 sm:py-4 sm:text-lg'
+              className='body-font inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:px-8 sm:py-4 sm:text-lg'
             >
-              <CalendarDays size={20} />
-              Book Your Table
+              <CalendarDays size={20} aria-hidden='true' />
+              Start Reservation
             </a>
           </motion.div>
         </motion.div>
@@ -321,12 +269,12 @@ export default function ReservationPage() {
         <div className='pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#111111] to-transparent' />
       </section>
 
-      {/* ── Steps 2 & 3: Form + Info Cards ── */}
+      {/* ── Form + Info Cards ── */}
       <section id='reservation-form' className='py-24'>
         <div className='mx-auto max-w-7xl px-6'>
           <div className='grid items-start gap-8 lg:grid-cols-2 lg:gap-12'>
 
-            {/* ── Left: Form Card — fadeInLeft ── */}
+            {/* ── Left: Form Card ── */}
             <motion.div
               variants={fadeInLeft}
               initial='hidden'
@@ -338,12 +286,13 @@ export default function ReservationPage() {
                 borderColor: 'var(--color-border)',
               }}
             >
+              {/* Form Header */}
               <div className='mb-6 flex items-start gap-4 sm:items-center'>
                 <div
                   className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:h-14 sm:w-14'
                   style={{ backgroundColor: 'rgba(249,115,22,0.12)' }}
                 >
-                  <CalendarDays size={24} style={{ color: 'var(--color-primary)' }} />
+                  <CalendarDays size={24} style={{ color: 'var(--color-primary)' }} aria-hidden='true' />
                 </div>
                 <div>
                   <h2
@@ -353,7 +302,7 @@ export default function ReservationPage() {
                     Reserve a Table
                   </h2>
                   <p className='body-font mt-1 text-sm text-gray-400'>
-                    Fill in the details and we will prepare the perfect
+                    Fill in the details below and we will prepare the perfect
                     dining experience for you.
                   </p>
                 </div>
@@ -361,156 +310,214 @@ export default function ReservationPage() {
 
               <hr className='mb-6 md:mb-8' style={{ borderColor: 'var(--color-border)' }} />
 
-              <form onSubmit={handleSubmit} className='space-y-5 md:space-y-6'>
+              <div className='space-y-5 md:space-y-6'>
+
+                {/* Row 1: Name & Email */}
                 <div className='grid gap-5 sm:grid-cols-2'>
                   <div>
-                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                      Full Name
+                    <label
+                      htmlFor='res-name'
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Full Name <span aria-hidden='true' className='text-orange-500'>*</span>
                     </label>
                     <input
+                      id='res-name'
                       type='text'
-                      value={formData.name}
-                      onChange={(event) => handleFieldChange('name', event.target.value)}
                       placeholder='John Doe'
-                      aria-label='Full Name'
                       required
-                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white placeholder-gray-500 outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                   <div>
-                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                      Email
+                    <label
+                      htmlFor='res-email'
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Email Address <span aria-hidden='true' className='text-orange-500'>*</span>
                     </label>
                     <input
+                      id='res-email'
                       type='email'
-                      value={formData.email}
-                      onChange={(event) => handleFieldChange('email', event.target.value)}
                       placeholder='john@example.com'
-                      aria-label='Email Address'
                       required
-                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white placeholder-gray-500 outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                 </div>
 
+                {/* Row 2: Phone & Date */}
                 <div className='grid gap-5 sm:grid-cols-2'>
                   <div>
-                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                      Phone
+                    <label
+                      htmlFor='res-phone'
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Phone Number
                     </label>
                     <input
+                      id='res-phone'
                       type='tel'
-                      value={formData.phone}
-                      onChange={(event) => handleFieldChange('phone', event.target.value)}
                       placeholder='+977 98XXXXXXXX'
-                      aria-label='Phone Number'
-                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white placeholder-gray-500 outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     />
                   </div>
                   <div>
-                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                      Guests
+                    <label
+                      htmlFor='res-date'
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Date <span aria-hidden='true' className='text-orange-500'>*</span>
                     </label>
-                    <select
-                      value={formData.guests}
-                      onChange={(event) => handleFieldChange('guests', event.target.value)}
-                      aria-label='Number of Guests'
-                      className='body-font w-full rounded-xl border bg-[#1e293b] px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                    <input
+                      id='res-date'
+                      type='date'
+                      required
+                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                      style={{
+                        borderColor: 'var(--color-border)',
+                        minHeight: '48px',
+                        colorScheme: 'dark',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Row 3: Guests & Time */}
+                <div className='grid gap-5 sm:grid-cols-2'>
+
+                  {/* Guest counter */}
+                  <div>
+                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
+                      Number of Guests <span aria-hidden='true' className='text-orange-500'>*</span>
+                    </label>
+                    <div
+                      className='flex items-center justify-between rounded-xl border px-4 py-2'
                       style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
                     >
-                      {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                        <option key={n} value={n}>
-                          {n} {n === 1 ? 'Guest' : 'Guests'}
-                        </option>
-                      ))}
-                    </select>
+                      <button
+                        type='button'
+                        aria-label='Decrease guests'
+                        onClick={() => setGuests(Math.max(1, guests - 1))}
+                        disabled={guests <= 1}
+                        className='flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300 hover:bg-orange-500/20 disabled:cursor-not-allowed disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-orange-500'
+                        style={{ color: 'var(--color-primary)' }}
+                      >
+                        <Minus size={16} aria-hidden='true' />
+                      </button>
+                      <span className='body-font text-sm font-semibold text-white'>
+                        {guests} {guests === 1 ? 'Guest' : 'Guests'}
+                      </span>
+                      <button
+                        type='button'
+                        aria-label='Increase guests'
+                        onClick={() => setGuests(Math.min(20, guests + 1))}
+                        disabled={guests >= 20}
+                        className='flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300 hover:bg-orange-500/20 disabled:cursor-not-allowed disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-orange-500'
+                        style={{ color: 'var(--color-primary)' }}
+                      >
+                        <Plus size={16} aria-hidden='true' />
+                      </button>
+                    </div>
                   </div>
-                </div>
 
-                <div className='grid gap-5 sm:grid-cols-2'>
+                  {/* Time */}
                   <div>
-                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                      Date
+                    <label
+                      htmlFor='res-time'
+                      className='body-font mb-2 block text-sm font-medium text-gray-300'
+                    >
+                      Preferred Time <span aria-hidden='true' className='text-orange-500'>*</span>
                     </label>
                     <input
-                      type='date'
-                      value={formData.date}
-                      onChange={(event) => handleFieldChange('date', event.target.value)}
-                      aria-label='Reservation Date'
-                      required
-                      className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)', minHeight: '48px', colorScheme: 'dark' }}
-                    />
-                  </div>
-                  <div>
-                    <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                      Time
-                    </label>
-                    <input
+                      id='res-time'
                       type='time'
-                      value={formData.time}
-                      onChange={(event) => handleFieldChange('time', event.target.value)}
-                      aria-label='Reservation Time'
                       required
                       className='body-font w-full rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
-                      style={{ borderColor: 'var(--color-border)', minHeight: '48px' }}
+                      style={{
+                        borderColor: 'var(--color-border)',
+                        minHeight: '48px',
+                        colorScheme: 'dark',
+                      }}
                     />
                   </div>
                 </div>
 
+                {/* Special Requests */}
                 <div>
-                  <label className='body-font mb-2 block text-sm font-medium text-gray-300'>
-                    Special Requests
+                  <label
+                    htmlFor='res-requests'
+                    className='body-font mb-2 block text-sm font-medium text-gray-300'
+                  >
+                    Special Requests{' '}
+                    <span className='text-xs font-normal text-gray-500'>(Optional)</span>
                   </label>
                   <textarea
+                    id='res-requests'
                     rows={4}
-                    value={formData.requests}
-                    onChange={(event) => handleFieldChange('requests', event.target.value)}
-                    placeholder='Let us know your preferences, dietary requirements, or any special occasion...'
-                    aria-label='Special Requests'
-                    className='body-font w-full resize-none rounded-xl border bg-transparent px-4 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                    placeholder='Dietary requirements, seating preferences, or special occasions...'
+                    className='body-font w-full resize-none rounded-xl border bg-transparent px-4 py-3 text-white placeholder-gray-500 outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                     style={{ borderColor: 'var(--color-border)' }}
                   />
                 </div>
 
-                {submitMessage && (
-                  <div
-                    className={`rounded-xl border px-4 py-3 text-sm ${
-                      submitMessage.type === 'success'
-                        ? 'border-green-500/30 bg-green-500/10 text-green-200'
-                        : 'border-red-500/30 bg-red-500/10 text-red-200'
-                    }`}
-                  >
-                    {submitMessage.text}
-                  </div>
-                )}
-
+                {/* Submit */}
                 <button
-                  type='submit'
-                  disabled={isSubmitting}
-                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70'
+                  type='button'
+                  className='body-font w-full rounded-full py-4 text-base font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
                   style={{ backgroundColor: 'var(--color-primary)', minHeight: '52px' }}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Reserve Your Table'}
+                  Reserve Your Table
                 </button>
 
-                <p className='body-font text-center text-sm text-gray-500'>
+                {/* Trust line */}
+                <p className='body-font text-center text-xs text-gray-500'>
+                  <span aria-hidden='true' className='text-orange-500'>*</span> Required fields &nbsp;•&nbsp;
                   Free cancellation up to 24 hours before your booking
                 </p>
-              </form>
+
+              </div>
             </motion.div>
 
-            {/* ── Right: Info Cards — staggered ── */}
+            {/* ── Right: Info Cards ── */}
             <motion.div
               variants={staggerContainer}
               initial='hidden'
               whileInView='visible'
               viewport={viewport}
-              className='space-y-4 sm:space-y-6'
+              className='space-y-4 sm:space-y-5'
             >
+              {/* Trust badges */}
+              <motion.div
+                variants={fadeInRight}
+                className='rounded-2xl border p-5 sm:p-6'
+                style={{
+                  backgroundColor: 'var(--color-surface)',
+                  borderColor: 'var(--color-border)',
+                }}
+              >
+                <h3 className='heading-font mb-4 text-lg font-bold text-white'>
+                  Why Reserve With Us?
+                </h3>
+                <div className='space-y-3'>
+                  {trustBadges.map((badge) => (
+                    <div key={badge} className='flex items-center gap-3'>
+                      <CheckCircle
+                        size={16}
+                        className='flex-shrink-0'
+                        style={{ color: 'var(--color-success)' }}
+                        aria-hidden='true'
+                      />
+                      <span className='body-font text-sm text-gray-300'>{badge}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Info cards */}
               {infoCards.map((card) => {
                 const Icon = card.icon;
                 return (
@@ -531,7 +538,7 @@ export default function ReservationPage() {
                           color: 'var(--color-primary)',
                         }}
                       >
-                        <Icon size={20} />
+                        <Icon size={20} aria-hidden='true' />
                       </div>
                       <div className='min-w-0 flex-1'>
                         <h3 className='heading-font text-base font-bold text-white sm:text-lg'>
@@ -549,7 +556,7 @@ export default function ReservationPage() {
         </div>
       </section>
 
-      {/* ── Step 4: Reservation Benefits ── */}
+      {/* ── Benefits ── */}
       <section className='bg-[#0d0d0d] py-24'>
         <div className='mx-auto max-w-7xl px-6'>
 
@@ -573,17 +580,17 @@ export default function ReservationPage() {
 
             <motion.h2
               variants={fadeInUp}
-              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl'
+              className='heading-font mt-6 text-3xl font-bold text-white sm:text-4xl'
             >
-              Why Reserve With Us?
+              A Reservation Made Easy
             </motion.h2>
 
             <motion.p
               variants={fadeInUp}
               className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
             >
-              Enjoy a seamless dining experience with priority seating,
-              personalized service, and authentic Nepali hospitality.
+              Enjoy priority seating, personalized service, and authentic
+              Nepali hospitality — all with a simple reservation.
             </motion.p>
           </motion.div>
 
@@ -592,7 +599,7 @@ export default function ReservationPage() {
             initial='hidden'
             whileInView='visible'
             viewport={viewport}
-            className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8'
+            className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'
           >
             {benefits.map((benefit) => {
               const Icon = benefit.icon;
@@ -600,25 +607,25 @@ export default function ReservationPage() {
                 <motion.div
                   key={benefit.id}
                   variants={staggerItem}
-                  className='flex flex-col rounded-2xl border p-6 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl lg:p-8'
+                  className='flex flex-col rounded-2xl border p-6 text-center shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:border-orange-500/40 hover:shadow-xl'
                   style={{
                     backgroundColor: 'var(--color-surface)',
                     borderColor: 'var(--color-border)',
                   }}
                 >
                   <div
-                    className='mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110'
+                    className='mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full'
                     style={{
                       backgroundColor: 'rgba(249,115,22,0.12)',
                       color: 'var(--color-primary)',
                     }}
                   >
-                    <Icon size={26} />
+                    <Icon size={26} aria-hidden='true' />
                   </div>
-                  <h3 className='heading-font text-lg font-bold text-white lg:text-xl'>
+                  <h3 className='heading-font text-lg font-bold text-white'>
                     {benefit.title}
                   </h3>
-                  <p className='body-font mt-3 flex-grow text-sm leading-7 text-gray-400 lg:text-base'>
+                  <p className='body-font mt-3 flex-grow text-sm leading-7 text-gray-400'>
                     {benefit.description}
                   </p>
                 </motion.div>
@@ -629,9 +636,9 @@ export default function ReservationPage() {
         </div>
       </section>
 
-      {/* ── Step 5: FAQ Section ── */}
+      {/* ── FAQ ── */}
       <section className='py-24'>
-        <div className='mx-auto max-w-5xl px-6'>
+        <div className='mx-auto max-w-4xl px-6'>
 
           <motion.div
             variants={staggerContainer}
@@ -660,10 +667,10 @@ export default function ReservationPage() {
 
             <motion.p
               variants={fadeInUp}
-              className='body-font mx-auto mt-6 max-w-2xl px-2 text-base leading-8 text-gray-400 sm:text-lg'
+              className='body-font mx-auto mt-6 max-w-xl px-2 text-base leading-8 text-gray-400'
             >
-              Find quick answers to common questions about reservations, seating,
-              and dining at NepRestro.
+              Find quick answers to common questions about reservations,
+              seating, and dining at NepRestro.
             </motion.p>
           </motion.div>
 
@@ -697,17 +704,14 @@ export default function ReservationPage() {
                   <span className='heading-font pr-4 text-base font-semibold text-white sm:text-lg'>
                     {faq.question}
                   </span>
-                  {/* Icon rotates smoothly via motion */}
                   <motion.span
                     animate={{ rotate: openId === faq.id ? 180 : 0 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
                     className='flex-shrink-0'
                     style={{ color: 'var(--color-primary)' }}
+                    aria-hidden='true'
                   >
-                    {openId === faq.id
-                      ? <Minus size={20} />
-                      : <Plus size={20} />
-                    }
+                    {openId === faq.id ? <Minus size={20} /> : <Plus size={20} />}
                   </motion.span>
                 </button>
 
@@ -722,10 +726,7 @@ export default function ReservationPage() {
                       transition={{ duration: 0.25, ease: 'easeOut' }}
                     >
                       <div className='px-5 pb-5 sm:px-6 sm:pb-6'>
-                        <hr
-                          className='mb-4'
-                          style={{ borderColor: 'var(--color-border)' }}
-                        />
+                        <hr className='mb-4' style={{ borderColor: 'var(--color-border)' }} />
                         <p className='body-font text-sm leading-7 text-gray-400 sm:text-base'>
                           {faq.answer}
                         </p>
@@ -741,7 +742,7 @@ export default function ReservationPage() {
       </section>
 
       {/* ── Group Booking CTA ── */}
-      <section className='px-6 pb-24'>
+      <section className='pb-24 px-6'>
         <div className='mx-auto max-w-7xl'>
           <motion.div
             variants={fadeInUp}
@@ -750,29 +751,41 @@ export default function ReservationPage() {
             viewport={viewport}
             className='relative overflow-hidden rounded-3xl border px-6 py-12 text-center shadow-md sm:px-8 sm:py-16'
             style={{
-              background: 'linear-gradient(135deg, rgba(249,115,22,0.12), rgba(245,158,11,0.08))',
+              background: 'linear-gradient(135deg, rgba(249,115,22,0.10), rgba(245,158,11,0.06))',
               borderColor: 'var(--color-border)',
             }}
           >
             <div
-              className='absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl'
+              className='absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl'
               style={{ background: 'rgba(249,115,22,0.15)' }}
             />
             <div className='relative z-10'>
-              <h2 className='heading-font text-2xl font-bold text-white sm:text-3xl lg:text-4xl'>
-                Need help with a group booking?
+              <h2 className='heading-font text-2xl font-bold text-white sm:text-3xl'>
+                Planning a Group Dining Experience?
               </h2>
-              <p className='body-font mx-auto mt-4 max-w-2xl px-2 text-base leading-relaxed text-gray-400 sm:text-lg'>
-                Reach out to our team directly for large groups, private events,
-                and customized menus.
+              <p className='body-font mx-auto mt-4 max-w-xl px-2 text-base leading-7 text-gray-400'>
+                For large groups, private events, or customized menus —
+                reach out to our team directly and we'll take care of everything.
               </p>
-              <Link
-                href='/contact'
-                style={{ backgroundColor: 'var(--color-primary)' }}
-                className='body-font mt-8 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 sm:mt-10 sm:px-8 sm:py-4'
-              >
-                Contact Us
-              </Link>
+              <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row'>
+                <Link
+                  href='/contact'
+                  style={{ backgroundColor: 'var(--color-primary)' }}
+                  className='body-font inline-flex rounded-full px-7 py-3 font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                >
+                  Contact Us
+                </Link>
+                <Link
+                  href='/menu'
+                  style={{
+                    borderColor: 'var(--color-border)',
+                    color: 'var(--color-primary)',
+                  }}
+                  className='body-font inline-flex rounded-full border px-7 py-3 font-semibold transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white/5 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                >
+                  View Menu
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>

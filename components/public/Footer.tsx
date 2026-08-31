@@ -38,17 +38,17 @@ const menuLinks = [
 ];
 
 const contactDetails = [
-  { id: 1, icon: MapPin, value: 'Lakeside, Pokhara, Nepal' },
-  { id: 2, icon: Phone, value: '+977 9800000000' },
-  { id: 3, icon: Mail, value: 'info@neprestro.com' },
-  { id: 4, icon: Clock3, value: '10:00 AM – 10:00 PM Daily' },
+  { id: 1, icon: MapPin, value: 'Lakeside, Pokhara, Nepal', href: 'https://maps.google.com/?q=Lakeside,Pokhara,Nepal' },
+  { id: 2, icon: Phone, value: '+977 9800000000', href: 'tel:+9779800000000' },
+  { id: 3, icon: Mail, value: 'info@neprestro.com', href: 'mailto:info@neprestro.com' },
+  { id: 4, icon: Clock3, value: '10:00 AM – 10:00 PM Daily', href: null },
 ];
 
 const socialLinks = [
-  { id: 1, icon: Share2, href: 'https://facebook.com', label: 'Facebook' },
-  { id: 2, icon: Camera, href: 'https://instagram.com', label: 'Instagram' },
-  { id: 3, icon: MessageCircle, href: 'https://twitter.com', label: 'Twitter' },
-  { id: 4, icon: PlayCircle, href: 'https://youtube.com', label: 'YouTube' },
+  { id: 1, icon: Share2, href: 'https://facebook.com', label: 'Visit our Facebook page' },
+  { id: 2, icon: Camera, href: 'https://instagram.com', label: 'Visit our Instagram page' },
+  { id: 3, icon: MessageCircle, href: 'https://twitter.com', label: 'Visit our Twitter page' },
+  { id: 4, icon: PlayCircle, href: 'https://youtube.com', label: 'Visit our YouTube channel' },
 ];
 
 export default function Footer() {
@@ -58,18 +58,18 @@ export default function Footer() {
     <footer
       className='relative overflow-hidden pt-20'
       style={{
-        background: 'linear-gradient(180deg, var(--color-background) 0%, #0a0f1e 100%)',
+        background: 'linear-gradient(180deg, var(--color-background) 0%, #080e1a 100%)',
         borderTop: '1px solid var(--color-border)',
       }}
     >
       {/* Decorative glows */}
       <div
-        className='absolute -left-24 -top-24 h-72 w-72 rounded-full blur-3xl'
-        style={{ background: 'rgba(249,115,22,0.08)' }}
+        className='absolute -left-24 -top-24 h-64 w-64 rounded-full blur-3xl'
+        style={{ background: 'rgba(249,115,22,0.07)' }}
       />
       <div
-        className='absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl'
-        style={{ background: 'rgba(245,158,11,0.06)' }}
+        className='absolute -right-24 -top-24 h-64 w-64 rounded-full blur-3xl'
+        style={{ background: 'rgba(245,158,11,0.05)' }}
       />
 
       <div className='relative z-10 mx-auto max-w-7xl px-6'>
@@ -80,41 +80,42 @@ export default function Footer() {
           initial='hidden'
           whileInView='visible'
           viewport={viewport}
-          className='mb-16 rounded-3xl border p-8 md:p-10'
+          className='mb-16 rounded-2xl border p-6 sm:p-8'
           style={{
-            background: 'linear-gradient(135deg, rgba(249,115,22,0.10), rgba(245,158,11,0.06))',
+            background: 'linear-gradient(135deg, rgba(249,115,22,0.08), rgba(245,158,11,0.05))',
             borderColor: 'var(--color-border)',
           }}
         >
-          <div className='flex flex-col items-center justify-between gap-8 md:flex-row'>
-
+          <div className='flex flex-col items-center justify-between gap-6 md:flex-row'>
             <div className='text-center md:text-left'>
-              <h3 className='heading-font text-2xl font-bold text-white'>
+              <h3 className='heading-font text-xl font-bold text-white sm:text-2xl'>
                 Stay Updated with NepRestro
               </h3>
-              <p className='body-font mt-3 text-gray-400'>
-                Subscribe to receive our latest offers, new dishes, and special events.
+              <p className='body-font mt-2 text-sm text-gray-400'>
+                Subscribe for latest offers, new dishes, and special events.
               </p>
             </div>
 
-            <div className='flex w-full max-w-md flex-col gap-3 sm:flex-row'>
+            <div className='flex w-full max-w-sm flex-col gap-3 sm:flex-row'>
+              <label htmlFor='footer-email' className='sr-only'>
+                Email address for newsletter
+              </label>
               <input
+                id='footer-email'
                 type='email'
-                placeholder='Enter your email address'
-                aria-label='Email address for newsletter'
-                className='body-font flex-1 rounded-full border bg-transparent px-5 py-3 text-white outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
+                placeholder='Your email address'
+                className='body-font flex-1 rounded-full border bg-transparent px-5 py-3 text-sm text-white placeholder-gray-500 outline-none transition-all duration-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/40'
                 style={{ borderColor: 'var(--color-border)' }}
               />
               <button
                 type='button'
                 aria-label='Subscribe to newsletter'
-                className='body-font rounded-full px-6 py-3 font-semibold text-white transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                className='body-font rounded-full px-5 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
                 style={{ backgroundColor: 'var(--color-primary)' }}
               >
                 Subscribe
               </button>
             </div>
-
           </div>
         </motion.div>
 
@@ -124,27 +125,35 @@ export default function Footer() {
           initial='hidden'
           whileInView='visible'
           viewport={viewport}
-          className='grid gap-12 pb-16 md:grid-cols-2 lg:grid-cols-4'
+          className='grid gap-10 pb-16 sm:grid-cols-2 lg:grid-cols-4'
         >
 
           {/* Column 1: Brand */}
           <motion.div variants={staggerItem}>
             <Link
               href='/'
-              className='heading-font inline-flex items-center gap-2 text-3xl font-extrabold tracking-tight'
-              style={{ color: 'var(--color-primary)' }}
+              aria-label='NepRestro — go to homepage'
+              className='group inline-flex items-center gap-2'
             >
-              <UtensilsCrossed size={28} />
-              RESTRO
+              <div
+                className='flex h-9 w-9 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110'
+                style={{ backgroundColor: 'rgba(249,115,22,0.15)' }}
+              >
+                <UtensilsCrossed size={18} style={{ color: 'var(--color-primary)' }} aria-hidden='true' />
+              </div>
+              <span className='heading-font text-xl font-extrabold tracking-tight text-white'>
+                Nep<span style={{ color: 'var(--color-primary)' }}>Restro</span>
+              </span>
             </Link>
 
-            <p className='body-font mt-6 leading-8 text-gray-400'>
+            <p className='body-font mt-5 text-sm leading-7 text-gray-400'>
               Authentic Nepali cuisine crafted with fresh ingredients,
-              traditional recipes, and warm hospitality — served with love
+              traditional recipes, and warm hospitality — made with love
               from the heart of Nepal.
             </p>
 
-            <div className='mt-8 flex gap-4'>
+            {/* Social Links */}
+            <div className='mt-6 flex gap-3'>
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -153,13 +162,14 @@ export default function Footer() {
                     href={social.href}
                     target='_blank'
                     rel='noopener noreferrer'
-                    aria-label={`Visit our ${social.label} page`}
-                    className='group flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+                    aria-label={social.label}
+                    className='group flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#111111]'
                     style={{ borderColor: 'var(--color-border)' }}
                   >
                     <Icon
-                      size={18}
+                      size={16}
                       className='text-gray-400 transition-colors duration-300 group-hover:text-white'
+                      aria-hidden='true'
                     />
                   </a>
                 );
@@ -170,22 +180,23 @@ export default function Footer() {
           {/* Column 2: Quick Links */}
           <motion.div variants={staggerItem}>
             <h3
-              className='heading-font text-xl font-bold'
+              className='heading-font text-base font-bold uppercase tracking-wider'
               style={{ color: 'var(--color-heading)' }}
             >
               Quick Links
             </h3>
-            <hr className='my-6' style={{ borderColor: 'var(--color-border)' }} />
-            <ul className='space-y-4'>
+            <hr className='my-4' style={{ borderColor: 'var(--color-border)' }} />
+            <ul className='space-y-3'>
               {quickLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className='body-font flex items-center gap-2 text-gray-400 transition-all duration-300 ease-out hover:translate-x-1 hover:text-orange-400'
+                    className='body-font flex items-center gap-2 text-sm text-gray-400 transition-all duration-300 ease-out hover:translate-x-1 hover:text-orange-400 focus:outline-none focus:ring-1 focus:ring-orange-500 rounded'
                   >
                     <span
-                      className='h-1.5 w-1.5 flex-shrink-0 rounded-full'
+                      className='h-1 w-1 flex-shrink-0 rounded-full'
                       style={{ backgroundColor: 'var(--color-primary)' }}
+                      aria-hidden='true'
                     />
                     {link.label}
                   </Link>
@@ -197,22 +208,23 @@ export default function Footer() {
           {/* Column 3: Our Menu */}
           <motion.div variants={staggerItem}>
             <h3
-              className='heading-font text-xl font-bold'
+              className='heading-font text-base font-bold uppercase tracking-wider'
               style={{ color: 'var(--color-heading)' }}
             >
               Our Menu
             </h3>
-            <hr className='my-6' style={{ borderColor: 'var(--color-border)' }} />
-            <ul className='space-y-4'>
+            <hr className='my-4' style={{ borderColor: 'var(--color-border)' }} />
+            <ul className='space-y-3'>
               {menuLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className='body-font flex items-center gap-2 text-gray-400 transition-all duration-300 ease-out hover:translate-x-1 hover:text-orange-400'
+                    className='body-font flex items-center gap-2 text-sm text-gray-400 transition-all duration-300 ease-out hover:translate-x-1 hover:text-orange-400 focus:outline-none focus:ring-1 focus:ring-orange-500 rounded'
                   >
                     <span
-                      className='h-1.5 w-1.5 flex-shrink-0 rounded-full'
+                      className='h-1 w-1 flex-shrink-0 rounded-full'
                       style={{ backgroundColor: 'var(--color-primary)' }}
+                      aria-hidden='true'
                     />
                     {link.label}
                   </Link>
@@ -224,29 +236,46 @@ export default function Footer() {
           {/* Column 4: Contact */}
           <motion.div variants={staggerItem}>
             <h3
-              className='heading-font text-xl font-bold'
+              className='heading-font text-base font-bold uppercase tracking-wider'
               style={{ color: 'var(--color-heading)' }}
             >
               Contact Us
             </h3>
-            <hr className='my-6' style={{ borderColor: 'var(--color-border)' }} />
-            <ul className='space-y-5'>
+            <hr className='my-4' style={{ borderColor: 'var(--color-border)' }} />
+            <ul className='space-y-4'>
               {contactDetails.map((item) => {
                 const Icon = item.icon;
-                return (
-                  <li key={item.id} className='flex items-start gap-3'>
+                const content = (
+                  <div className='flex items-start gap-3'>
                     <div
-                      className='mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full'
+                      className='mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full'
                       style={{
-                        backgroundColor: 'rgba(249,115,22,0.12)',
+                        backgroundColor: 'rgba(249,115,22,0.10)',
                         color: 'var(--color-primary)',
                       }}
                     >
-                      <Icon size={16} />
+                      <Icon size={14} aria-hidden='true' />
                     </div>
                     <span className='body-font text-sm leading-6 text-gray-400'>
                       {item.value}
                     </span>
+                  </div>
+                );
+
+                return (
+                  <li key={item.id}>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target={item.href.startsWith('http') ? '_blank' : undefined}
+                        rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className='block rounded transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      content
+                    )}
                   </li>
                 );
               })}
@@ -261,38 +290,27 @@ export default function Footer() {
           initial='hidden'
           whileInView='visible'
           viewport={viewport}
-          className='flex flex-col items-center justify-between gap-6 border-t py-8 sm:flex-row'
+          className='flex flex-col items-center justify-between gap-4 border-t py-8 sm:flex-row'
           style={{ borderColor: 'var(--color-border)' }}
         >
-          <p className='body-font text-sm text-gray-500'>
+          <p className='body-font text-xs text-gray-500'>
             © {currentYear} NepRestro. All rights reserved. Made with ❤️ in Nepal.
           </p>
 
-          <div className='flex flex-wrap items-center justify-center gap-6'>
-            <Link
-              href='/contact'
-              className='body-font text-sm text-gray-500 transition-colors duration-300 hover:text-orange-400'
-            >
+          <div className='flex flex-wrap items-center justify-center gap-4 sm:gap-6'>
+            {/* Note: These pages don't exist yet — flagged for Step 9 content cleanup */}
+            <span className='body-font text-xs text-gray-600'>
               Privacy Policy
-            </Link>
-            <Link
-              href='/contact'
-              className='body-font text-sm text-gray-500 transition-colors duration-300 hover:text-orange-400'
-            >
+            </span>
+            <span className='body-font text-xs text-gray-600'>
               Terms of Service
-            </Link>
-            <Link
-              href='/contact'
-              className='body-font text-sm text-gray-500 transition-colors duration-300 hover:text-orange-400'
-            >
-              Cookie Policy
-            </Link>
+            </span>
 
             <button
               type='button'
-              aria-label='Back to top'
+              aria-label='Scroll back to top of page'
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className='body-font flex items-center gap-1 rounded-full border px-4 py-2 text-sm font-semibold text-gray-400 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500 hover:text-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+              className='body-font flex items-center gap-1 rounded-full border px-4 py-2 text-xs font-semibold text-gray-400 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-orange-500 hover:text-orange-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#111111]'
               style={{ borderColor: 'var(--color-border)' }}
             >
               ↑ Back to Top

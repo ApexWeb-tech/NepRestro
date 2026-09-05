@@ -31,7 +31,7 @@ const menuItems = [
     rating: 4.8,
     featured: false,
     category: 'momo',
-    image: 'https://images.unsplash.com/photo-1563379091339-03246963d29a?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=1200&auto=format&fit=crop',
   },
   {
     id: 3,
@@ -75,14 +75,21 @@ const menuItems = [
   },
 ];
 
-export default function MenuGrid() {
-  const showEmpty = false; // flip to true to preview EmptyState
+interface MenuGridProps {
+  selectedCategory: string;
+}
+
+export default function MenuGrid({ selectedCategory }: MenuGridProps) {
+  const filteredItems =
+    selectedCategory === 'all'
+      ? menuItems
+      : menuItems.filter((item) => item.category === selectedCategory);
 
   return (
     <section className='bg-[#111111] pb-24 pt-4'>
       <div className='mx-auto max-w-7xl px-6'>
 
-        {showEmpty ? (
+        {filteredItems.length === 0 ? (
           <EmptyState
             title='No Dishes Found'
             description='We could not find any dishes in this category. Try selecting another category.'
@@ -91,13 +98,13 @@ export default function MenuGrid() {
           />
         ) : (
           <motion.div
+            key={selectedCategory}
             variants={staggerContainer}
             initial='hidden'
-            whileInView='visible'
-            viewport={viewport}
+            animate='visible'
             className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'
           >
-            {menuItems.map((item) => (
+            {filteredItems.map((item) => (
               <motion.div
                 key={item.id}
                 variants={staggerItem}
@@ -194,6 +201,7 @@ export default function MenuGrid() {
           </p>
           <Link
             href='/reservations'
+            aria-label='Reserve a table at NepRestro'
             style={{ backgroundColor: 'var(--color-primary)' }}
             className='body-font mt-8 inline-flex rounded-full px-8 py-4 font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
           >

@@ -60,7 +60,7 @@ const chefs = [
     name: 'Chef Ram Bahadur',
     role: 'Head Chef',
     bio: 'With over 15 years of experience, Chef Ram specializes in authentic Nepali cuisine and traditional Himalayan flavors.',
-    image: 'https://images.unsplash.com/photo-1583394293214-0d2b3a4f3a47?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=800&auto=format&fit=crop',
   },
   {
     id: 2,
